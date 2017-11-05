@@ -1,0 +1,10 @@
+; Exporting from a DLL Using __declspec(dllexport)
+; http://msdn.microsoft.com/en-US/library/a90k134d(v=vs.80).aspx
+
+; Exporting from a DLL Using DEF Files
+; http://msdn.microsoft.com/en-US/library/d91k01sh(v=vs.80).aspx
+
+LIBRARY	kernel.dll BASE=0x20000000
+
+EXPORTS
+Run @1

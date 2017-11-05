@@ -1,0 +1,10 @@
+[16 мая 2013]
+Утилита для шифрования файлов.
+
+Системные требования
+1) Windows XP or later
+- rand_s depends on the RtlGenRandom API, which is only available in Windows XP and later
+// 2) Windows Vista or Windows XP Professional x64 Edition
+// - RegGetValue
+2) Windows XP
+- EM_SHOWBALLOONTIP : to use this API, you must provide a manifest specifying comclt32.dll version 6.0

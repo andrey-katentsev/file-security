@@ -1,0 +1,97 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30110.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documents", "Documents", "{17DA200B-6A25-4C5D-9BC4-1EE1A7D43747}"
+	ProjectSection(SolutionItems) = preProject
+		Development.txt = Development.txt
+		Requirements.txt = Requirements.txt
+		User Guide.txt = User Guide.txt
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Temp", "Temp", "{12106F59-82D7-475C-A801-462010DB51A9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Header", "Header", "{A3A2A4AD-15EF-45FE-9698-B6AB31041DFF}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\..\..\SDK\HS\include\hsChecksum.h = ..\..\..\..\SDK\HS\include\hsChecksum.h
+		..\..\..\..\SDK\HS\include\hsConvert.h = ..\..\..\..\SDK\HS\include\hsConvert.h
+		..\..\..\..\SDK\HS\include\hsConvertUtilities.h = ..\..\..\..\SDK\HS\include\hsConvertUtilities.h
+		..\..\..\..\SDK\HS\include\hsCrypt.h = ..\..\..\..\SDK\HS\include\hsCrypt.h
+		..\..\..\..\SDK\HS\include\hsDES.h = ..\..\..\..\SDK\HS\include\hsDES.h
+		..\..\..\..\SDK\HS\include\hsDS.h = ..\..\..\..\SDK\HS\include\hsDS.h
+		..\..\..\..\SDK\HS\include\hsHash.h = ..\..\..\..\SDK\HS\include\hsHash.h
+		..\..\..\..\SDK\HS\include\hsRNG.h = ..\..\..\..\SDK\HS\include\hsRNG.h
+		..\..\..\..\SDK\HS\include\hsRSA.h = ..\..\..\..\SDK\HS\include\hsRSA.h
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Source", "Source", "{E96B453B-FA14-49D1-92FD-75CB68C296AA}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\..\..\SDK\HS\source\hsAES.cpp = ..\..\..\..\SDK\HS\source\hsAES.cpp
+		..\..\..\..\SDK\HS\source\hsChecksum.cpp = ..\..\..\..\SDK\HS\source\hsChecksum.cpp
+		..\..\..\..\SDK\HS\source\hsConvert.cpp = ..\..\..\..\SDK\HS\source\hsConvert.cpp
+		..\..\..\..\SDK\HS\source\hsConvertUtilities.cpp = ..\..\..\..\SDK\HS\source\hsConvertUtilities.cpp
+		..\..\..\..\SDK\HS\source\hsCrypt.cpp = ..\..\..\..\SDK\HS\source\hsCrypt.cpp
+		..\..\..\..\SDK\HS\source\hsDES.cpp = ..\..\..\..\SDK\HS\source\hsDES.cpp
+		..\..\..\..\SDK\HS\source\hsDS.cpp = ..\..\..\..\SDK\HS\source\hsDS.cpp
+		..\..\..\..\SDK\HS\source\hsGOST.cpp = ..\..\..\..\SDK\HS\source\hsGOST.cpp
+		..\..\..\..\SDK\HS\source\hsHash.cpp = ..\..\..\..\SDK\HS\source\hsHash.cpp
+		..\..\..\..\SDK\HS\source\hsRNG.cpp = ..\..\..\..\SDK\HS\source\hsRNG.cpp
+		..\..\..\..\SDK\HS\source\hsRSA.cpp = ..\..\..\..\SDK\HS\source\hsRSA.cpp
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TDD", "TDD", "{134A3052-D125-49A6-BB4C-80E1F42DD7A0}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GUI", "GUI\GUI.vcxproj", "{1FA0B3CB-1FB2-4983-9DD2-E6BD535EAA58}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Kernel", "Kernel\Kernel.vcxproj", "{B35B959C-2026-4F88-8EB8-DDBBAC93759F}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SDK", "SDK\SDK.vcxproj", "{0D31B96A-CA6B-49CB-907B-848FD7A749B5}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SDK", "TDD\SDK\SDK.vcxproj", "{6778424C-F54F-41A7-8A6D-F7B2D5B662E7}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Kernel", "TDD\Kernel\Kernel.vcxproj", "{B91FB545-BF1D-4A82-93A0-12CA0ECB38C2}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Common", "Common\Common.vcxproj", "{077995E2-6AB9-494F-A3FF-F81D595D4D5C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1FA0B3CB-1FB2-4983-9DD2-E6BD535EAA58}.Debug|Win32.ActiveCfg = Debug|Win32
+		{1FA0B3CB-1FB2-4983-9DD2-E6BD535EAA58}.Debug|Win32.Build.0 = Debug|Win32
+		{1FA0B3CB-1FB2-4983-9DD2-E6BD535EAA58}.Release|Win32.ActiveCfg = Release|Win32
+		{1FA0B3CB-1FB2-4983-9DD2-E6BD535EAA58}.Release|Win32.Build.0 = Release|Win32
+		{B35B959C-2026-4F88-8EB8-DDBBAC93759F}.Debug|Win32.ActiveCfg = Debug|Win32
+		{B35B959C-2026-4F88-8EB8-DDBBAC93759F}.Debug|Win32.Build.0 = Debug|Win32
+		{B35B959C-2026-4F88-8EB8-DDBBAC93759F}.Release|Win32.ActiveCfg = Release|Win32
+		{B35B959C-2026-4F88-8EB8-DDBBAC93759F}.Release|Win32.Build.0 = Release|Win32
+		{0D31B96A-CA6B-49CB-907B-848FD7A749B5}.Debug|Win32.ActiveCfg = Debug|Win32
+		{0D31B96A-CA6B-49CB-907B-848FD7A749B5}.Debug|Win32.Build.0 = Debug|Win32
+		{0D31B96A-CA6B-49CB-907B-848FD7A749B5}.Release|Win32.ActiveCfg = Release|Win32
+		{0D31B96A-CA6B-49CB-907B-848FD7A749B5}.Release|Win32.Build.0 = Release|Win32
+		{6778424C-F54F-41A7-8A6D-F7B2D5B662E7}.Debug|Win32.ActiveCfg = Debug|Win32
+		{6778424C-F54F-41A7-8A6D-F7B2D5B662E7}.Debug|Win32.Build.0 = Debug|Win32
+		{6778424C-F54F-41A7-8A6D-F7B2D5B662E7}.Release|Win32.ActiveCfg = Release|Win32
+		{6778424C-F54F-41A7-8A6D-F7B2D5B662E7}.Release|Win32.Build.0 = Release|Win32
+		{B91FB545-BF1D-4A82-93A0-12CA0ECB38C2}.Debug|Win32.ActiveCfg = Debug|Win32
+		{B91FB545-BF1D-4A82-93A0-12CA0ECB38C2}.Debug|Win32.Build.0 = Debug|Win32
+		{B91FB545-BF1D-4A82-93A0-12CA0ECB38C2}.Release|Win32.ActiveCfg = Release|Win32
+		{B91FB545-BF1D-4A82-93A0-12CA0ECB38C2}.Release|Win32.Build.0 = Release|Win32
+		{077995E2-6AB9-494F-A3FF-F81D595D4D5C}.Debug|Win32.ActiveCfg = Debug|Win32
+		{077995E2-6AB9-494F-A3FF-F81D595D4D5C}.Debug|Win32.Build.0 = Debug|Win32
+		{077995E2-6AB9-494F-A3FF-F81D595D4D5C}.Release|Win32.ActiveCfg = Release|Win32
+		{077995E2-6AB9-494F-A3FF-F81D595D4D5C}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A3A2A4AD-15EF-45FE-9698-B6AB31041DFF} = {12106F59-82D7-475C-A801-462010DB51A9}
+		{E96B453B-FA14-49D1-92FD-75CB68C296AA} = {12106F59-82D7-475C-A801-462010DB51A9}
+		{6778424C-F54F-41A7-8A6D-F7B2D5B662E7} = {134A3052-D125-49A6-BB4C-80E1F42DD7A0}
+		{B91FB545-BF1D-4A82-93A0-12CA0ECB38C2} = {134A3052-D125-49A6-BB4C-80E1F42DD7A0}
+	EndGlobalSection
+EndGlobal
