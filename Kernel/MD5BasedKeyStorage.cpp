@@ -7,6 +7,22 @@
 namespace
 {
 	const std::wstring key_file_extension(L".bin");
+
+	std::wstring AppendBackslash(std::wstring path)
+	{
+		const auto slash = L'\\';
+		const auto backslash = L'/';
+		const auto last_symbol = path.back();
+		if (slash == last_symbol || backslash == last_symbol)
+		{
+			return path;
+		}
+		else
+		{
+			path.push_back(slash);
+			return path;
+		}
+	}
 }
 
 namespace KAA
@@ -36,7 +52,7 @@ namespace KAA
 			const void* data = path.c_str();
 			const size_t data_size = sizeof(std::wstring::value_type) * path.length();
 			const cryptography::md5 hash = cryptography::calculate_md5(csp, data, data_size);
-			return key_storage_path + cryptography::to_wstring(hash) + key_file_extension;
+			return AppendBackslash(key_storage_path) + cryptography::to_wstring(hash) + key_file_extension;
 		}
 	}
 }

@@ -182,7 +182,7 @@ namespace
 		{
 			if(ERROR_FILE_NOT_FOUND == error)
 			{
-				const std::wstring default_key_storage_path(L".\\Keys\\");
+				const std::wstring default_key_storage_path(L".\\keys");
 				const KAA::system::registry::key_access set_value = { false, false, false, false, false, true };
 				const std::auto_ptr<KAA::system::registry_key> software_root(registry->create_key(KAA::system::registry::current_user, registry_software_sub_key, KAA::system::registry::persistent, set_value));
 				software_root->set_string_value(registry_key_storage_path_value_name, default_key_storage_path);
