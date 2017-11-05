@@ -147,6 +147,15 @@
     <ClCompile Include="..\..\..\..\..\SDK\KAA\source\dll\get_module_handle.cpp">
       <Filter>Source Files\DLL</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\..\SDK\KAA\source\filesystem\crt_directory_control.cpp">
+      <Filter>Source Files\filesystem</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\SDK\KAA\source\RAII\crt_heap_memory.cpp">
+      <Filter>Source Files\RAII</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\SDK\KAA\source\filesystem\directory_control.cpp">
+      <Filter>Source Files\filesystem</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\..\SDK\KAA\include\convert.h">
@@ -253,6 +262,15 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\..\SDK\KAA\include\dll\get_module_handle.h">
       <Filter>Header Files\DLL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\SDK\KAA\include\filesystem\crt_directory_control.h">
+      <Filter>Header Files\filesystem</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\SDK\KAA\include\RAII\crt_heap_memory.h">
+      <Filter>Header Files\RAII</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\SDK\KAA\include\filesystem\directory_control.h">
+      <Filter>Header Files\filesystem</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

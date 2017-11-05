@@ -5,6 +5,7 @@
 #include "SDK/KAA/include/windows_registry.h"
 #include "SDK/KAA/include/exception/windows_api_failure.h"
 #include "SDK/KAA/include/UI/controls.h"
+#include "SDK/KAA/include/filesystem/crt_directory_control.h"
 #undef EncryptFile
 #undef DecryptFile
 
@@ -92,6 +93,24 @@ namespace
 		key->set_dword_value(registry_window_vertical_position_value_name, coordinates.y);
 	}
 
+	// FUTURE: KAA: move to separate file.
+	class CWDRestorer
+	{
+	public:
+		CWDRestorer() : path(m_filesystem.get_current_working_directory())
+		{}
+
+		~CWDRestorer()
+		{
+			// FIX: KAA: exception unsafe!
+			m_filesystem.set_current_working_directory(path);
+		}
+
+	private:
+		KAA::filesystem::crt_directory_control m_filesystem; // FUTURE: KAA: replace with interface KAA::filesystem::directory_control.
+		const std::wstring path;
+	};
+
 	void UpdateButtonsState(const HWND dialog)
 	{
 		const HWND encrypt_button = ::GetDlgItem(dialog, IDC_MAIN_ENCRYPT_SPECIFIED_FILE_BUTTON);
@@ -133,20 +152,24 @@ namespace
 						//setup.lpstrTitle;
 						setup.Flags = OFN_DONTADDTORECENT | OFN_FILEMUSTEXIST | OFN_HIDEREADONLY | OFN_NOREADONLYRETURN | OFN_PATHMUSTEXIST;
 						setup.FlagsEx = OFN_EX_NOPLACESBAR;
-						if(0 != ::GetOpenFileNameW(&setup))
+
 						{
-							const std::wstring selected_file_path(&buffer[0]);
-							set_control_text(dialog, IDC_MAIN_FILE_TO_ENCRYPT_PATH_EDIT, selected_file_path);
-						}
-						else
-						{
-							const DWORD code = ::CommDlgExtendedError();
-							if(0 != code) // 0 == user closed or canceled the dialog box
+							const CWDRestorer cwd_for_this_session; // GetOpenFileNameW changes current working directory
+							if(0 != ::GetOpenFileNameW(&setup))
 							{
-								const std::wstring message_format(KAA::resources::load_string(IDS_GET_OPEN_FILE_NAME_DIALOG_FAILED_FORMAT));
-								const std::wstring message_box_title(KAA::resources::load_string(IDS_GET_OPEN_FILE_NAME_DIALOG_FAILED_TITLE));
-								const std::wstring message(KAA::format_string(message_format, code));
-								::MessageBoxW(dialog, message.c_str(), message_box_title.c_str(), MB_OK | MB_ICONEXCLAMATION);
+								const std::wstring selected_file_path(&buffer[0]);
+								set_control_text(dialog, IDC_MAIN_FILE_TO_ENCRYPT_PATH_EDIT, selected_file_path);
+							}
+							else
+							{
+								const DWORD code = ::CommDlgExtendedError();
+								if(0 != code) // 0 == user closed or canceled the dialog box
+								{
+									const std::wstring message_format(KAA::resources::load_string(IDS_GET_OPEN_FILE_NAME_DIALOG_FAILED_FORMAT));
+									const std::wstring message_box_title(KAA::resources::load_string(IDS_GET_OPEN_FILE_NAME_DIALOG_FAILED_TITLE));
+									const std::wstring message(KAA::format_string(message_format, code));
+									::MessageBoxW(dialog, message.c_str(), message_box_title.c_str(), MB_OK | MB_ICONEXCLAMATION);
+								}
 							}
 						}
 					} break;

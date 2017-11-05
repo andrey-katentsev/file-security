@@ -27,7 +27,9 @@ LANGUAGE LANG_NEUTRAL, SUBLANG_DEFAULT
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
 IDI_LOCK_XP             ICON                    "Resource\\Shell32(048).ico"
+
 IDI_EXPLORER_XP         ICON                    "Resource\\Shdocvw(020).ico"
+
 #endif    // Neutral (Default) resources
 /////////////////////////////////////////////////////////////////////////////
 
@@ -193,7 +195,7 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 0,9,3,6
+ FILEVERSION 0,9,3,7
  PRODUCTVERSION 0,9,0,1
  FILEFLAGSMASK 0x17L
 #ifdef _DEBUG
@@ -212,7 +214,7 @@ BEGIN
             VALUE "Comments", "Новосибирск, 2014"
             VALUE "CompanyName", "Hyperlink Software"
             VALUE "FileDescription", "Графический интерфейс"
-            VALUE "FileVersion", "0.9.3.6"
+            VALUE "FileVersion", "0.9.3.7"
             VALUE "LegalCopyright", "© Катенцев Андрей Александрович, 2014"
             VALUE "OriginalFilename", "security.exe"
             VALUE "ProductName", "Безопасность данных"
