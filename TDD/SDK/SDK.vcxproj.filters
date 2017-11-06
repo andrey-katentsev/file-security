@@ -35,10 +35,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\..\..\..\TDD\bin\byte.bin">
-      <Filter>bin</Filter>
-    </None>
-    <None Include="..\..\..\..\..\TDD\bin\zero.bin">
+    <None Include="bin\KiB.bin">
       <Filter>bin</Filter>
     </None>
   </ItemGroup>

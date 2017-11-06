@@ -1,6 +1,6 @@
 #include "gtest/gtest.h"
 
-#include "C:/SDK/KAA/include/filesystem/split_path.h"
+#include "SDK/KAA/include/filesystem/split_path.h"
 
 using KAA::filesystem::split_drive;
 using KAA::filesystem::split_directory;

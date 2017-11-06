@@ -1,5 +1,5 @@
 #include "gtest/gtest.h"
-#include "C:/SDK/KAA/include/cryptography.h"
+#include "SDK/KAA/include/cryptography.h"
 
 TEST(cryptography, gamma)
 {
