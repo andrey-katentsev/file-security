@@ -7,18 +7,18 @@
 
 //#include <cstdlib>
 
-#include "SDK/KAA/include/convert.h"
-#include "SDK/KAA/include/cryptography.h"
+#include "KAA/include/convert.h"
+#include "KAA/include/cryptography.h"
 #undef EncryptFile
 #undef DecryptFile
 
-#include "SDK/KAA/include/keywords.h"
-#include "SDK/KAA/include/stdtypes.h"
+#include "KAA/include/keywords.h"
+#include "KAA/include/stdtypes.h"
 //#include "C:/SDK/KAA/include/exception/system_failure.h"
-#include "SDK/KAA/include/filesystem/driver.h"
+#include "KAA/include/filesystem/driver.h"
 //#include "C:/SDK/KAA/include/filesystem/split_path.h"
 //#include "C:/SDK/KAA/include/RAII/invalid_parameter_handler.h"
-#include "SDK/KAA/include/exception/operation_failure.h"
+#include "KAA/include/exception/operation_failure.h"
 
 #include "FileProgressHandler.h"
 

@@ -9,25 +9,25 @@
 
 #include <cerrno>
 
-#include "SDK/KAA/include/keywords.h"
-#include "SDK/KAA/include/load_string.h"
-#include "SDK/KAA/include/module_context.h"
-#include "SDK/KAA/include/random.h"
-#include "SDK/KAA/include/registry_key.h"
-#include "SDK/KAA/include/windows_registry.h"
-#include "SDK/KAA/include/exception/windows_api_failure.h"
+#include "KAA/include/keywords.h"
+#include "KAA/include/load_string.h"
+#include "KAA/include/module_context.h"
+#include "KAA/include/random.h"
+#include "KAA/include/registry_key.h"
+#include "KAA/include/windows_registry.h"
+#include "KAA/include/exception/windows_api_failure.h"
 #undef EncryptFile
 #undef DecryptFile
 #undef CopyFile
 #undef max
 
-#include "SDK/KAA/include/exception/system_failure.h"
-#include "SDK/KAA/include/filesystem/driver.h"
-#include "SDK/KAA/include/filesystem/filesystem.h"
-#include "SDK/KAA/include/filesystem/ordinary_file_remover.h"
-#include "SDK/KAA/include/filesystem/simple_overwrite_wiper.h"
-#include "SDK/KAA/include/filesystem/split_path.h"
-#include "SDK/KAA/include/filesystem/wiper.h"
+#include "KAA/include/exception/system_failure.h"
+#include "KAA/include/filesystem/driver.h"
+#include "KAA/include/filesystem/filesystem.h"
+#include "KAA/include/filesystem/ordinary_file_remover.h"
+#include "KAA/include/filesystem/simple_overwrite_wiper.h"
+#include "KAA/include/filesystem/split_path.h"
+#include "KAA/include/filesystem/wiper.h"
 
 #include "./Core/Core.h"
 

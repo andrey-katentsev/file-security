@@ -1,4 +1,4 @@
-#include "SDK/KAA/include/keywords.h"
+#include "KAA/include/keywords.h"
 
 #include <windows.h>
 #include "resource.h"

@@ -2,7 +2,7 @@
 
 #include <stdexcept>
 
-#include "SDK/KAA/include/exception/operation_failure.h"
+#include "KAA/include/exception/operation_failure.h"
 
 #include "GammaFileCipher.h"
 

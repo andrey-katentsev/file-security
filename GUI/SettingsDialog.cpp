@@ -2,14 +2,14 @@
 #include <stdexcept>
 #include <vector>
 
-#include "SDK/KAA/include/keywords.h"
-#include "SDK/KAA/include/load_string.h"
-#include "SDK/KAA/include/exception/com_failure.h"
-#include "SDK/KAA/include/exception/operation_failure.h"
-#include "SDK/KAA/include/exception/windows_api_failure.h"
-#include "SDK/KAA/include/RAII/com_initializer.h"
-#include "SDK/KAA/include/RAII/com_task_memory.h"
-#include "SDK/KAA/include/UI/controls.h"
+#include "KAA/include/keywords.h"
+#include "KAA/include/load_string.h"
+#include "KAA/include/exception/com_failure.h"
+#include "KAA/include/exception/operation_failure.h"
+#include "KAA/include/exception/windows_api_failure.h"
+#include "KAA/include/RAII/com_initializer.h"
+#include "KAA/include/RAII/com_task_memory.h"
+#include "KAA/include/UI/controls.h"
 
 #include "ClientCommunicator.h"
 #include "../Common/UserReport.h"

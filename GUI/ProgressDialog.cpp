@@ -1,5 +1,5 @@
-#include "SDK/KAA/include/keywords.h"
-#include "SDK/KAA/include/load_string.h"
+#include "KAA/include/keywords.h"
+#include "KAA/include/load_string.h"
 
 #include <process.h>
 

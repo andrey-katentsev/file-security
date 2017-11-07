@@ -1,11 +1,11 @@
-#include "SDK/KAA/include/format_string.h"
-#include "SDK/KAA/include/load_string.h"
-#include "SDK/KAA/include/registry.h"
-#include "SDK/KAA/include/registry_key.h"
-#include "SDK/KAA/include/windows_registry.h"
-#include "SDK/KAA/include/exception/windows_api_failure.h"
-#include "SDK/KAA/include/UI/controls.h"
-#include "SDK/KAA/include/filesystem/crt_directory_control.h"
+#include "KAA/include/format_string.h"
+#include "KAA/include/load_string.h"
+#include "KAA/include/registry.h"
+#include "KAA/include/registry_key.h"
+#include "KAA/include/windows_registry.h"
+#include "KAA/include/exception/windows_api_failure.h"
+#include "KAA/include/UI/controls.h"
+#include "KAA/include/filesystem/crt_directory_control.h"
 #undef EncryptFile
 #undef DecryptFile
 

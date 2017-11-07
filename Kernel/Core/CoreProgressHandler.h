@@ -4,8 +4,8 @@
 
 #include <string>
 
-#include "SDK/KAA/include/progress_state.h"
-#include "SDK/KAA/include/stdtypes.h"
+#include "KAA/include/progress_state.h"
+#include "KAA/include/stdtypes.h"
 
 namespace KAA
 {

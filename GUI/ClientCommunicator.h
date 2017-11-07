@@ -2,7 +2,7 @@
 
 #include <memory>
 
-#include "SDK/KAA/include/keywords.h"
+#include "KAA/include/keywords.h"
 
 #include "../Common/Communicator.h"
 

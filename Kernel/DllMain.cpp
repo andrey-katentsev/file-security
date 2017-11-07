@@ -1,5 +1,5 @@
-#include "SDK/KAA/include/keywords.h"
-#include "SDK/KAA/include/module_context.h"
+#include "KAA/include/keywords.h"
+#include "KAA/include/module_context.h"
 
 #include <windows.h>
 

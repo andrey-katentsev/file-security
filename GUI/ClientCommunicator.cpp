@@ -1,8 +1,8 @@
 #include "ClientCommunicator.h"
 
-#include "SDK/KAA/include/format_string.h"
-#include "SDK/KAA/include/load_string.h"
-#include "SDK/KAA/include/exception/failure.h"
+#include "KAA/include/format_string.h"
+#include "KAA/include/load_string.h"
+#include "KAA/include/exception/failure.h"
 #undef EncryptFile
 #undef DecryptFile
 

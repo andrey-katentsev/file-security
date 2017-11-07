@@ -1,10 +1,10 @@
 #include <exception>
 
-#include "SDK/KAA/include/convert.h"
-#include "SDK/KAA/include/format_string.h"
-#include "SDK/KAA/include/keywords.h"
-#include "SDK/KAA/include/load_string.h"
-#include "SDK/KAA/include/exception/failure.h"
+#include "KAA/include/convert.h"
+#include "KAA/include/format_string.h"
+#include "KAA/include/keywords.h"
+#include "KAA/include/load_string.h"
+#include "KAA/include/exception/failure.h"
 
 #include <windows.h> // FUTURE: KAA: research EncryptFile.
 #include "resource.h"

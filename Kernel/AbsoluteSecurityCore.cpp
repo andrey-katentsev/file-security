@@ -5,18 +5,18 @@
 
 #include <cerrno>
 
-#include "SDK/KAA/include/cryptography.h" // FUTURE: KAA: remove <windows.h>
+#include "KAA/include/cryptography.h" // FUTURE: KAA: remove <windows.h>
 #undef EncryptFile
 #undef DecryptFile
 
-#include "SDK/KAA/include/keywords.h"
-#include "SDK/KAA/include/load_string.h"
-#include "SDK/KAA/include/module_context.h"
-#include "SDK/KAA/include/stdtypes.h"
-#include "SDK/KAA/include/exception/operation_failure.h"
-#include "SDK/KAA/include/exception/system_failure.h"
-#include "SDK/KAA/include/filesystem/driver.h"
-#include "SDK/KAA/include/filesystem/filesystem.h"
+#include "KAA/include/keywords.h"
+#include "KAA/include/load_string.h"
+#include "KAA/include/module_context.h"
+#include "KAA/include/stdtypes.h"
+#include "KAA/include/exception/operation_failure.h"
+#include "KAA/include/exception/system_failure.h"
+#include "KAA/include/filesystem/driver.h"
+#include "KAA/include/filesystem/filesystem.h"
 
 #include "./Core/CoreProgressHandler.h"
 #include "CipherProgressDispatcher.h"

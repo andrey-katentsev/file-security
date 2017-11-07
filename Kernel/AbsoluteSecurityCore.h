@@ -3,9 +3,9 @@
 #include <memory>
 #include <vector> // private
 
-#include "SDK/KAA/include/keywords.h"
-#include "SDK/KAA/include/progress_state.h"
-#include "SDK/KAA/include/stdtypes.h"
+#include "KAA/include/keywords.h"
+#include "KAA/include/progress_state.h"
+#include "KAA/include/stdtypes.h"
 
 #include "./Core/Core.h"
 

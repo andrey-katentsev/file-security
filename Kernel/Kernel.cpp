@@ -9,7 +9,7 @@
 
 #include "Kernel.h"
 
-#include "SDK/KAA/include/filesystem/crt_file_system.h"
+#include "KAA/include/filesystem/crt_file_system.h"
 
 #include "ServerCommunicator.h"
 

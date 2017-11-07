@@ -1,8 +1,8 @@
 #include "MD5BasedKeyStorage.h"
 
-#include "SDK/KAA/include/cryptography.h"
-#include "SDK/KAA/include/md5.h"
-#include "SDK/KAA/include/keywords.h"
+#include "KAA/include/cryptography.h"
+#include "KAA/include/md5.h"
+#include "KAA/include/keywords.h"
 
 namespace
 {
