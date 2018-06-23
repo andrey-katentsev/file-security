@@ -9,7 +9,7 @@
 
 #pragma once
 
-#include "KAA/include/filesystem/crt_directory_control.h"
+#include "KAA/include/filesystem/directory_control.h"
 
 #include <memory>
 #include <string>
@@ -30,7 +30,7 @@ namespace KAA
 			CWDRestorer& operator = (CWDRestorer&&) noexcept = delete;
 
 		private:
-			KAA::filesystem::crt_directory_control m_filesystem;
+			std::unique_ptr<KAA::filesystem::directory_control> m_filesystem;
 			const std::wstring path;
 		};
 	}
