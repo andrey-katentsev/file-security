@@ -5,11 +5,11 @@
 #include "KAA/include/windows_registry.h"
 #include "KAA/include/exception/windows_api_failure.h"
 #include "KAA/include/UI/controls.h"
-#include "KAA/include/filesystem/crt_directory_control.h"
 #undef EncryptFile
 #undef DecryptFile
 
 #include "ClientCommunicator.h"
+#include "CWDRestorer.h"
 #include "OperationContext.h"
 #include "../Common/UserReport.h"
 
@@ -93,24 +93,6 @@ namespace
 		key->set_dword_value(registry_window_vertical_position_value_name, coordinates.y);
 	}
 
-	// FUTURE: KAA: move to separate file.
-	class CWDRestorer
-	{
-	public:
-		CWDRestorer() : path(m_filesystem.get_current_working_directory())
-		{}
-
-		~CWDRestorer()
-		{
-			// FIX: KAA: exception unsafe!
-			m_filesystem.set_current_working_directory(path);
-		}
-
-	private:
-		KAA::filesystem::crt_directory_control m_filesystem; // FUTURE: KAA: replace with interface KAA::filesystem::directory_control.
-		const std::wstring path;
-	};
-
 	void UpdateButtonsState(const HWND dialog)
 	{
 		const HWND encrypt_button = ::GetDlgItem(dialog, IDC_MAIN_ENCRYPT_SPECIFIED_FILE_BUTTON);
@@ -154,7 +136,7 @@ namespace
 						setup.FlagsEx = OFN_EX_NOPLACESBAR;
 
 						{
-							const CWDRestorer cwd_for_this_session; // GetOpenFileNameW changes current working directory
+							const KAA::FileSecurity::CWDRestorer cwd_for_this_session; // GetOpenFileNameW changes the current working directory
 							if(0 != ::GetOpenFileNameW(&setup))
 							{
 								const std::wstring selected_file_path(&buffer[0]);

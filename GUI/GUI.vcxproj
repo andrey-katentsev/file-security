@@ -104,6 +104,7 @@
   <ItemGroup>
     <ClCompile Include="AboutDialog.cpp" />
     <ClCompile Include="ClientCommunicator.cpp" />
+    <ClCompile Include="CWDRestorer.cpp" />
     <ClCompile Include="EncryptDialog.cpp" />
     <ClCompile Include="ProgressDialog.cpp" />
     <ClCompile Include="SettingsDialog.cpp" />
@@ -111,6 +112,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ClientCommunicator.h" />
+    <ClInclude Include="CWDRestorer.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
