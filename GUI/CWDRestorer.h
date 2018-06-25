@@ -10,6 +10,7 @@
 #pragma once
 
 #include "KAA/include/filesystem/directory_control.h"
+#include "KAA/include/filesystem/path.h"
 
 #include <memory>
 #include <string>
@@ -31,7 +32,7 @@ namespace KAA
 
 		private:
 			std::unique_ptr<KAA::filesystem::directory_control> m_filesystem;
-			const std::wstring path;
+			const KAA::filesystem::path::directory path;
 		};
 	}
 }
