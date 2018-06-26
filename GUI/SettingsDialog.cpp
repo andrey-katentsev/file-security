@@ -139,7 +139,7 @@ namespace
 						setup.lpfn = BrowseForFolderCallback;
 
 						// DEFECT: KAA: may be empty control.
-						const std::wstring initial_directory(MakeWinAPIDirectoryPath(MakeConsistentPath(get_control_text(dialog, IDC_SETTINGS_KEY_STORAGE_PATH_EDIT))));
+						const auto initial_directory = MakeWinAPIDirectoryPath(MakeConsistentPath(get_control_text(dialog, IDC_SETTINGS_KEY_STORAGE_PATH_EDIT)));
 						setup.lParam = reinterpret_cast<LPARAM>(&initial_directory);
 
 						std::vector<wchar_t> buffer(MAX_PATH, L'\0');
@@ -155,7 +155,7 @@ namespace
 								throw KAA::windows_api_failure(__FUNCTIONW__, L"Unable to convert an item identifier list to a file system path.", error);
 							}
 
-							const std::wstring new_key_storage_path(MakeCRTDirectoryPath(&buffer[0]));
+							const auto new_key_storage_path = MakeCRTDirectoryPath(MakeConsistentPath(&buffer[0]));
 							set_control_text(dialog, IDC_SETTINGS_KEY_STORAGE_PATH_EDIT, new_key_storage_path);
 						}
 					} break;
@@ -171,7 +171,7 @@ namespace
 					{
 						// DEFECT: KAA: user-provided data must be validated.
 						// KAA: check that path is valid.
-						const std::wstring key_storage_path(get_control_text(dialog, IDC_SETTINGS_KEY_STORAGE_PATH_EDIT));
+						const auto key_storage_path = MakeConsistentPath(get_control_text(dialog, IDC_SETTINGS_KEY_STORAGE_PATH_EDIT));
 						if(!key_storage_path.empty())
 						{
 							try
