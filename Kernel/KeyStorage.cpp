@@ -7,12 +7,12 @@ namespace KAA
 		KeyStorage::~KeyStorage()
 		{}
 
-		void KeyStorage::SetPath(const std::wstring& path)
+		void KeyStorage::SetPath(const filesystem::path::directory& path)
 		{
 			return ISetPath(path);
 		}
 
-		std::wstring KeyStorage::GetPath(void) const
+		filesystem::path::directory KeyStorage::GetPath(void) const
 		{
 			return IGetPath();
 		}

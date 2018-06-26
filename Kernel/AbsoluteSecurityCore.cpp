@@ -67,12 +67,12 @@ namespace KAA
 
 		std::wstring AbsoluteSecurityCore::IGetKeyStoragePath(void) const
 		{
-			return m_key_storage->GetPath();
+			return m_key_storage->GetPath().to_wstring();
 		}
 
 		void AbsoluteSecurityCore::ISetKeyStoragePath(const std::wstring& key_storage_path)
 		{
-			m_key_storage->SetPath(key_storage_path);
+			m_key_storage->SetPath(filesystem::path::directory { key_storage_path });
 		}
 
 		void AbsoluteSecurityCore::IEncryptFile(const std::wstring& file_to_encrypt_path)

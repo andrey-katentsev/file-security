@@ -2,6 +2,8 @@
 
 #include <string>
 
+#include "KAA/include/filesystem/path.h"
+
 namespace KAA
 {
 	namespace FileSecurity
@@ -11,14 +13,14 @@ namespace KAA
 		public:
 			virtual ~KeyStorage();
 
-			void SetPath(const std::wstring&);
-			std::wstring GetPath(void) const;
+			void SetPath(const filesystem::path::directory&);
+			filesystem::path::directory GetPath(void) const;
 
 			std::wstring GetKeyPathForSpecifiedPath(const std::wstring&) const;
 
 		private:
-			virtual void ISetPath(const std::wstring&) = 0;
-			virtual std::wstring IGetPath(void) const = 0;
+			virtual void ISetPath(const filesystem::path::directory&) = 0;
+			virtual filesystem::path::directory IGetPath(void) const = 0;
 
 			virtual std::wstring IGetKeyPathForSpecifiedPath(const std::wstring&) const = 0;
 		};
