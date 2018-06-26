@@ -8,3 +8,7 @@
 // - RegGetValue
 2) Windows XP
 - EM_SHOWBALLOONTIP : to use this API, you must provide a manifest specifying comclt32.dll version 6.0
+
+Ограничения
+1) CRT directory control (_wchdir, _wgetcwd) : This API cannot be used in applications that execute in the Windows Runtime.
+https://docs.microsoft.com/ru-ru/cpp/cppcx/crt-functions-not-supported-in-universal-windows-platform-apps
