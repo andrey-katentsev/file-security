@@ -275,12 +275,12 @@ namespace
 			const HWND wipe_method_combo = ::GetDlgItem(dialog, IDC_SETTINGS_WIPE_METHOD_COMBO);
 			try
 			{
-				const std::vector< std::pair<std::wstring, KAA::FileSecurity::wipe_method_id> > available_wipe_methods(GetCommunicator().GetAvailableWipeMethods());
-				for(unsigned i = 0; i < available_wipe_methods.size(); ++i) // FUTURE: KAA: std::for_each()
+				const auto available_wipe_methods = GetCommunicator().GetAvailableWipeMethods();
+				for (const auto& wipe_method : available_wipe_methods)
 				{
 					// FUTURE: KAA: potential CB_ERR or CB_ERRSPACE
-					const LRESULT index = ::SendMessageW(wipe_method_combo, CB_ADDSTRING, 0, reinterpret_cast<LPARAM>(available_wipe_methods[i].first.c_str()));
-					::SendMessageW(wipe_method_combo, CB_SETITEMDATA , index, available_wipe_methods[i].second);
+					const LRESULT index = ::SendMessageW(wipe_method_combo, CB_ADDSTRING, 0, reinterpret_cast<LPARAM>(wipe_method.first.c_str()));
+					::SendMessageW(wipe_method_combo, CB_SETITEMDATA , index, wipe_method.second);
 				}
 				unsigned current_method = ToIndex(wipe_method_combo, GetCommunicator().GetWipeMethod());
 				::SendMessageW(wipe_method_combo, CB_SETCURSEL, current_method, 0);
