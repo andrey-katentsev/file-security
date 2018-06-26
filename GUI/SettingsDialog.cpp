@@ -1,4 +1,3 @@
-#include <algorithm>
 #include <stdexcept>
 #include <vector>
 
@@ -7,6 +6,7 @@
 #include "KAA/include/exception/com_failure.h"
 #include "KAA/include/exception/operation_failure.h"
 #include "KAA/include/exception/windows_api_failure.h"
+#include "KAA/include/filesystem/path.h"
 #include "KAA/include/RAII/com_initializer.h"
 #include "KAA/include/RAII/com_task_memory.h"
 #include "KAA/include/UI/controls.h"
@@ -30,13 +30,6 @@ namespace
 	void ShowBallonTip(HWND control, const EDITBALLOONTIP& information)
 	{
 		::SendMessageW(control, EM_SHOWBALLOONTIP, 0, reinterpret_cast<LPARAM>(&information));
-	}
-
-	std::wstring MakeConsistentPath(const std::wstring& path)
-	{
-		std::wstring consistent_path(path);
-		std::replace(consistent_path.begin(), consistent_path.end(), L'/', L'\\');
-		return consistent_path;
 	}
 
 	// EXAMPLE: 'D:\Temp'
@@ -139,7 +132,8 @@ namespace
 						setup.lpfn = BrowseForFolderCallback;
 
 						// DEFECT: KAA: may be empty control.
-						const auto initial_directory = MakeWinAPIDirectoryPath(MakeConsistentPath(get_control_text(dialog, IDC_SETTINGS_KEY_STORAGE_PATH_EDIT)));
+						auto directory = KAA::filesystem::path::directory { get_control_text(dialog, IDC_SETTINGS_KEY_STORAGE_PATH_EDIT) };
+						const auto initial_directory = MakeWinAPIDirectoryPath(directory.to_wstring());
 						setup.lParam = reinterpret_cast<LPARAM>(&initial_directory);
 
 						std::vector<wchar_t> buffer(MAX_PATH, L'\0');
@@ -155,7 +149,8 @@ namespace
 								throw KAA::windows_api_failure(__FUNCTIONW__, L"Unable to convert an item identifier list to a file system path.", error);
 							}
 
-							const auto new_key_storage_path = MakeCRTDirectoryPath(MakeConsistentPath(&buffer[0]));
+							directory = KAA::filesystem::path::directory { &buffer[0] };
+							const auto new_key_storage_path = MakeCRTDirectoryPath(directory.to_wstring());
 							set_control_text(dialog, IDC_SETTINGS_KEY_STORAGE_PATH_EDIT, new_key_storage_path);
 						}
 					} break;
@@ -171,7 +166,8 @@ namespace
 					{
 						// DEFECT: KAA: user-provided data must be validated.
 						// KAA: check that path is valid.
-						const auto key_storage_path = MakeConsistentPath(get_control_text(dialog, IDC_SETTINGS_KEY_STORAGE_PATH_EDIT));
+						const auto directory = KAA::filesystem::path::directory { get_control_text(dialog, IDC_SETTINGS_KEY_STORAGE_PATH_EDIT) };
+						const auto key_storage_path = directory.to_wstring();
 						if(!key_storage_path.empty())
 						{
 							try
