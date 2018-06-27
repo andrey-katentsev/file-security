@@ -29,7 +29,7 @@ namespace KAA
 		class AbsoluteSecurityCore : public Core
 		{
 		public:
-			AbsoluteSecurityCore(filesystem::driver*, const std::wstring& key_storage_path);
+			AbsoluteSecurityCore(filesystem::driver*, const filesystem::path::directory& key_storage_path);
 			~AbsoluteSecurityCore();
 
 		private:
@@ -40,8 +40,8 @@ namespace KAA
 
 			CoreProgressHandler* core_progress;
 
-			std::wstring IGetKeyStoragePath(void) const override;
-			void ISetKeyStoragePath(const std::wstring&) override;
+			filesystem::path::directory IGetKeyStoragePath(void) const override;
+			void ISetKeyStoragePath(const filesystem::path::directory&) override;
 
 			void IEncryptFile(const std::wstring&) override;
 			void IDecryptFile(const std::wstring&) override;

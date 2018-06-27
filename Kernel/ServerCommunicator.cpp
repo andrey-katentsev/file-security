@@ -233,7 +233,7 @@ namespace
 		case KAA::FileSecurity::strong_security:
 			throw std::invalid_argument(__FUNCTION__);
 		case KAA::FileSecurity::absolute_security:
-			return std::auto_ptr<KAA::FileSecurity::Core>(new KAA::FileSecurity::AbsoluteSecurityCore(filesystem, key_storage_path));
+			return std::auto_ptr<KAA::FileSecurity::Core>(new KAA::FileSecurity::AbsoluteSecurityCore(filesystem, KAA::filesystem::path::directory { key_storage_path }));
 		default:
 			throw std::invalid_argument(__FUNCTION__);
 		}
@@ -260,7 +260,7 @@ namespace KAA
 		{
 			try
 			{
-				m_filesystem->create_directory(m_core->GetKeyStoragePath());
+				m_filesystem->create_directory(m_core->GetKeyStoragePath().to_wstring());
 			}
 			catch(const KAA::system_failure& error)
 			{
@@ -323,8 +323,8 @@ namespace KAA
 		void ServerCommunicator::ISetCipher(const core_id value)
 		{
 			const core_t engine = ToCoreType(value);
-			const std::wstring current_key_storage_path(m_core->GetKeyStoragePath());
-			m_core.reset(QueryCore(engine, m_filesystem.get(), current_key_storage_path).release());
+			const auto current_key_storage_path = m_core->GetKeyStoragePath();
+			m_core.reset(QueryCore(engine, m_filesystem.get(), current_key_storage_path.to_wstring()).release());
 			SaveCoreType(m_registry.get(), engine);
 		}
 
@@ -350,15 +350,16 @@ namespace KAA
 
 		std::wstring ServerCommunicator::IGetKeyStoragePath(void) const
 		{
-			return m_core->GetKeyStoragePath();
+			return m_core->GetKeyStoragePath().to_wstring();
 		}
 
 		// FUTURE: KAA: consider use SetWorkingDirectory / _wchdir.
 		void ServerCommunicator::ISetKeyStoragePath(const std::wstring& new_key_storage_path)
 		{
-			const std::wstring previous_key_storage_path(m_core->GetKeyStoragePath());
+			const auto previous_key_storage_path = m_core->GetKeyStoragePath();
 
-			if(previous_key_storage_path != new_key_storage_path)
+			// TODO: KAA: implement operator == / != for the filesystem::path::directory.
+			if(previous_key_storage_path.to_wstring() != new_key_storage_path)
 			{
 				try
 				{
@@ -370,12 +371,12 @@ namespace KAA
 						throw;
 				}
 
-				m_core->SetKeyStoragePath(new_key_storage_path);
+				m_core->SetKeyStoragePath(filesystem::path::directory { new_key_storage_path });
 				SaveKeyStoragePath(m_registry.get(), new_key_storage_path);
 
 				try
 				{
-					m_filesystem->remove_directory(previous_key_storage_path);
+					m_filesystem->remove_directory(previous_key_storage_path.to_wstring());
 				}
 				catch(const KAA::system_failure& error)
 				{

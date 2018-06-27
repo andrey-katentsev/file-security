@@ -44,11 +44,11 @@ namespace KAA
 {
 	namespace FileSecurity
 	{
-		AbsoluteSecurityCore::AbsoluteSecurityCore(filesystem::driver* filesystem, const std::wstring& key_storage_path) :
+		AbsoluteSecurityCore::AbsoluteSecurityCore(filesystem::driver* filesystem, const filesystem::path::directory& key_storage_path) :
 		m_filesystem(filesystem),
 		//m_wiper(new ordinary_file_remover(filesystem)),
 		m_cipher(CreateFileCipher(gamma_cipher, filesystem)),
-		m_key_storage(CreateKeyStorage(md5_based, key_storage_path)),
+		m_key_storage(CreateKeyStorage(md5_based, key_storage_path.to_wstring())),
 		cipher_progress(new CipherProgressDispatcher),
 		core_progress(nullptr)
 		{
@@ -65,14 +65,14 @@ namespace KAA
 		AbsoluteSecurityCore::~AbsoluteSecurityCore()
 		{}
 
-		std::wstring AbsoluteSecurityCore::IGetKeyStoragePath(void) const
+		filesystem::path::directory AbsoluteSecurityCore::IGetKeyStoragePath(void) const
 		{
-			return m_key_storage->GetPath().to_wstring();
+			return m_key_storage->GetPath();
 		}
 
-		void AbsoluteSecurityCore::ISetKeyStoragePath(const std::wstring& key_storage_path)
+		void AbsoluteSecurityCore::ISetKeyStoragePath(const filesystem::path::directory& path)
 		{
-			m_key_storage->SetPath(filesystem::path::directory { key_storage_path });
+			m_key_storage->SetPath(path);
 		}
 
 		void AbsoluteSecurityCore::IEncryptFile(const std::wstring& file_to_encrypt_path)

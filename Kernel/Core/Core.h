@@ -11,6 +11,8 @@
 
 #include <string>
 
+#include "KAA/include/filesystem/path.h"
+
 namespace KAA
 {
 	namespace FileSecurity
@@ -22,8 +24,8 @@ namespace KAA
 		public:
 			virtual ~Core();
 
-			std::wstring GetKeyStoragePath(void) const;
-			void SetKeyStoragePath(const std::wstring& directory_path);
+			filesystem::path::directory GetKeyStoragePath(void) const;
+			void SetKeyStoragePath(const filesystem::path::directory&);
 
 			void EncryptFile(const std::wstring& path);
 			void DecryptFile(const std::wstring& path);
@@ -33,8 +35,8 @@ namespace KAA
 			CoreProgressHandler* SetProgressHandler(CoreProgressHandler*);
 
 		private:
-			virtual std::wstring IGetKeyStoragePath(void) const = 0;
-			virtual void ISetKeyStoragePath(const std::wstring& directory_path) = 0;
+			virtual filesystem::path::directory IGetKeyStoragePath(void) const = 0;
+			virtual void ISetKeyStoragePath(const filesystem::path::directory&) = 0;
 
 			virtual void IEncryptFile(const std::wstring& path) = 0;
 			virtual void IDecryptFile(const std::wstring& path) = 0;

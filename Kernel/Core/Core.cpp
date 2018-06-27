@@ -16,14 +16,14 @@ namespace KAA
 		Core::~Core()
 		{}
 
-		std::wstring Core::GetKeyStoragePath(void) const
+		filesystem::path::directory Core::GetKeyStoragePath(void) const
 		{
 			return IGetKeyStoragePath();
 		}
 
-		void Core::SetKeyStoragePath(const std::wstring& directory_path)
+		void Core::SetKeyStoragePath(const filesystem::path::directory& path)
 		{
-			return ISetKeyStoragePath(directory_path);
+			return ISetKeyStoragePath(path);
 		}
 
 		void Core::EncryptFile(const std::wstring& path)
