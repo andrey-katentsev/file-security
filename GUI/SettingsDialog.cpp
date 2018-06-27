@@ -166,9 +166,8 @@ namespace
 					{
 						// DEFECT: KAA: user-provided data must be validated.
 						// KAA: check that path is valid.
-						const auto directory = KAA::filesystem::path::directory { get_control_text(dialog, IDC_SETTINGS_KEY_STORAGE_PATH_EDIT) };
-						const auto key_storage_path = directory.to_wstring();
-						if(!key_storage_path.empty())
+						const auto key_storage_path = KAA::filesystem::path::directory { get_control_text(dialog, IDC_SETTINGS_KEY_STORAGE_PATH_EDIT) };
+						if(!key_storage_path.to_wstring().empty())
 						{
 							try
 							{
@@ -293,7 +292,7 @@ namespace
 		}
 		try
 		{
-			set_control_text(dialog, IDC_SETTINGS_KEY_STORAGE_PATH_EDIT, GetCommunicator().GetKeyStoragePath());
+			set_control_text(dialog, IDC_SETTINGS_KEY_STORAGE_PATH_EDIT, GetCommunicator().GetKeyStoragePath().to_wstring());
 			::SendMessageW(::GetDlgItem(dialog, IDC_SETTINGS_KEY_STORAGE_PATH_EDIT), WM_KEYDOWN, VK_END, 0);
 		}
 		catch(const KAA::FileSecurity::UserReport& report)

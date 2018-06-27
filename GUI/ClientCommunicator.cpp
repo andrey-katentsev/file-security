@@ -96,7 +96,7 @@ namespace KAA
 			return m_communicator->SetWipeMethod(algorithm);
 		}
 
-		std::wstring ClientCommunicator::IGetKeyStoragePath(void) const
+		filesystem::path::directory ClientCommunicator::IGetKeyStoragePath(void) const
 		{
 			try
 			{
@@ -109,16 +109,16 @@ namespace KAA
 			}
 		}
 
-		void ClientCommunicator::ISetKeyStoragePath(const std::wstring& key_storage_path)
+		void ClientCommunicator::ISetKeyStoragePath(const filesystem::path::directory& path)
 		{
 			try
 			{
-				return m_communicator->SetKeyStoragePath(key_storage_path);
+				return m_communicator->SetKeyStoragePath(path);
 			}
 			catch(const failure& error)
 			{
 				const std::wstring message_format(CombineMessage(IDS_UNABLE_TO_CREATE_KEY_STORAGE_AT_FORMAT, error.get_system_message()));
-				const std::wstring message(KAA::format_string(message_format, key_storage_path.c_str()));
+				const auto message = KAA::format_string(message_format, path.to_wstring().c_str());
 				throw KAA::FileSecurity::UserReport(message, KAA::FileSecurity::UserReport::error);
 			}
 		}

@@ -61,14 +61,14 @@ namespace KAA
 			return ISetWipeMethod(algorithm);
 		}
 
-		std::wstring Communicator::GetKeyStoragePath(void) const
+		filesystem::path::directory Communicator::GetKeyStoragePath(void) const
 		{
 			return IGetKeyStoragePath();
 		}
 		
-		void Communicator::SetKeyStoragePath(const std::wstring& key_storage_path)
+		void Communicator::SetKeyStoragePath(const filesystem::path::directory& path)
 		{
-			return ISetKeyStoragePath(key_storage_path);
+			return ISetKeyStoragePath(path);
 		}
 
 		CommunicatorProgressHandler* Communicator::SetProgressHandler(CommunicatorProgressHandler* handler)

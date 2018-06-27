@@ -13,6 +13,8 @@
 #include <utility>
 #include <vector>
 
+#include "KAA/include/filesystem/path.h"
+
 #include "Features.h"
 
 namespace KAA
@@ -40,8 +42,8 @@ namespace KAA
 			wipe_method_id GetWipeMethod(void) const;
 			void SetWipeMethod(wipe_method_id);
 
-			std::wstring GetKeyStoragePath(void) const;
-			void SetKeyStoragePath(const std::wstring& key_storage_path);
+			filesystem::path::directory GetKeyStoragePath(void) const;
+			void SetKeyStoragePath(const filesystem::path::directory&);
 
 			CommunicatorProgressHandler* SetProgressHandler(CommunicatorProgressHandler*);
 
@@ -59,8 +61,8 @@ namespace KAA
 			virtual wipe_method_id IGetWipeMethod(void) const = 0;
 			virtual void ISetWipeMethod(wipe_method_id) = 0;
 
-			virtual std::wstring IGetKeyStoragePath(void) const = 0;
-			virtual void ISetKeyStoragePath(const std::wstring& key_storage_path) = 0;
+			virtual filesystem::path::directory IGetKeyStoragePath(void) const = 0;
+			virtual void ISetKeyStoragePath(const filesystem::path::directory&) = 0;
 
 			virtual CommunicatorProgressHandler* ISetProgressHandler(CommunicatorProgressHandler*) = 0;
 		};

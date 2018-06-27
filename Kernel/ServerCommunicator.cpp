@@ -348,22 +348,20 @@ namespace KAA
 			SaveWiperType(m_registry.get(), algorithm);
 		}
 
-		std::wstring ServerCommunicator::IGetKeyStoragePath(void) const
+		filesystem::path::directory ServerCommunicator::IGetKeyStoragePath(void) const
 		{
-			return m_core->GetKeyStoragePath().to_wstring();
+			return m_core->GetKeyStoragePath();
 		}
 
 		// FUTURE: KAA: consider use SetWorkingDirectory / _wchdir.
-		void ServerCommunicator::ISetKeyStoragePath(const std::wstring& new_key_storage_path)
+		void ServerCommunicator::ISetKeyStoragePath(const filesystem::path::directory& new_key_storage_path)
 		{
 			const auto previous_key_storage_path = m_core->GetKeyStoragePath();
-
-			// TODO: KAA: implement operator == / != for the filesystem::path::directory.
-			if(previous_key_storage_path.to_wstring() != new_key_storage_path)
+			if(previous_key_storage_path != new_key_storage_path)
 			{
 				try
 				{
-					m_filesystem->create_directory(new_key_storage_path);
+					m_filesystem->create_directory(new_key_storage_path.to_wstring());
 				}
 				catch(const KAA::system_failure& error)
 				{
@@ -371,8 +369,8 @@ namespace KAA
 						throw;
 				}
 
-				m_core->SetKeyStoragePath(filesystem::path::directory { new_key_storage_path });
-				SaveKeyStoragePath(m_registry.get(), new_key_storage_path);
+				m_core->SetKeyStoragePath(new_key_storage_path);
+				SaveKeyStoragePath(m_registry.get(), new_key_storage_path.to_wstring());
 
 				try
 				{
