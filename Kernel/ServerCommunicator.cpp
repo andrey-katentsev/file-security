@@ -170,33 +170,33 @@ namespace
 		return software_root->set_dword_value(registry_core_value_name, ToCoreID(engine));
 	}
 
-	std::wstring QueryKeyStoragePath(KAA::system::registry* const registry)
+	KAA::filesystem::path::directory QueryKeyStoragePath(KAA::system::registry* const registry)
 	{
 		try
 		{
 			const KAA::system::registry::key_access query_value = { false, false, false, false, true, false };
 			const std::auto_ptr<KAA::system::registry_key> software_root(registry->open_key(KAA::system::registry::current_user, registry_software_sub_key, query_value));
-			return software_root->query_string_value(registry_key_storage_path_value_name);
+			return KAA::filesystem::path::directory { software_root->query_string_value(registry_key_storage_path_value_name) };
 		}
 		catch(const KAA::windows_api_failure& error)
 		{
 			if(ERROR_FILE_NOT_FOUND == error)
 			{
-				const std::wstring default_key_storage_path(L".\\keys");
+				const KAA::filesystem::path::directory default_key_storage_path { LR"(.\keys)" };
 				const KAA::system::registry::key_access set_value = { false, false, false, false, false, true };
 				const std::auto_ptr<KAA::system::registry_key> software_root(registry->create_key(KAA::system::registry::current_user, registry_software_sub_key, KAA::system::registry::persistent, set_value));
-				software_root->set_string_value(registry_key_storage_path_value_name, default_key_storage_path);
+				software_root->set_string_value(registry_key_storage_path_value_name, default_key_storage_path.to_wstring());
 				return default_key_storage_path;
 			}
 			throw;
 		}
 	}
 
-	void SaveKeyStoragePath(KAA::system::registry* const registry, const std::wstring& key_storage_path)
+	void SaveKeyStoragePath(KAA::system::registry* const registry, const KAA::filesystem::path::directory& path)
 	{
 		const KAA::system::registry::key_access set_value = { false, false, false, false, false, true };
 		const std::auto_ptr<KAA::system::registry_key> software_root(registry->open_key(KAA::system::registry::current_user, registry_software_sub_key, set_value));
-		return software_root->set_string_value(registry_key_storage_path_value_name, key_storage_path);
+		return software_root->set_string_value(registry_key_storage_path_value_name, path.to_wstring());
 	}
 
 	std::auto_ptr<KAA::system::registry> QueryRegistry(const KAA::FileSecurity::registry_t interface_identifier)
@@ -253,7 +253,7 @@ namespace KAA
 		m_registry(QueryRegistry(windows_registry)),
 		m_filesystem(filesystem),
 		m_wiper(QueryWiper(QueryWiperType(m_registry.get()), m_filesystem.get())),
-		m_core(QueryCore(QueryCoreType(m_registry.get()), m_filesystem.get(), QueryKeyStoragePath(m_registry.get()))),
+		m_core(QueryCore(QueryCoreType(m_registry.get()), m_filesystem.get(), QueryKeyStoragePath(m_registry.get()).to_wstring())),
 		core_progress(new CoreProgressDispatcher),
 		wiper_progress(new WiperProgressDispatcher),
 		server_progress(nullptr)
@@ -370,7 +370,7 @@ namespace KAA
 				}
 
 				m_core->SetKeyStoragePath(new_key_storage_path);
-				SaveKeyStoragePath(m_registry.get(), new_key_storage_path.to_wstring());
+				SaveKeyStoragePath(m_registry.get(), new_key_storage_path);
 
 				try
 				{
