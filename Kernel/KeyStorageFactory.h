@@ -5,6 +5,14 @@
 
 namespace KAA
 {
+	namespace filesystem
+	{
+		namespace path
+		{
+			class directory;
+		}
+	}
+
 	namespace FileSecurity
 	{
 		class KeyStorage;
@@ -14,6 +22,6 @@ namespace KAA
 			md5_based
 		};
 
-		std::auto_ptr<KeyStorage> CreateKeyStorage(key_storage_t, const std::wstring& key_storage_path);
+		std::auto_ptr<KeyStorage> CreateKeyStorage(key_storage_t, const filesystem::path::directory& key_storage_path);
 	}
 }

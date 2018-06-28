@@ -21,6 +21,7 @@
   - безопасное удаление
 
 - зависимости проектов
+	- filesystem::path::directory - forward declaration
 - SDK: просмотреть все модули и добавить заголовки к файлам, классам, функциям (SAFE GUARANTEE).
 - масштабируемость : OpenMP
 
