@@ -226,14 +226,14 @@ namespace
 		}
 	}
 
-	std::auto_ptr<KAA::FileSecurity::Core> QueryCore(const KAA::FileSecurity::core_t interface_id, KAA::filesystem::driver* filesystem, const std::wstring& key_storage_path)
+	std::auto_ptr<KAA::FileSecurity::Core> QueryCore(const KAA::FileSecurity::core_t interface_id, KAA::filesystem::driver* filesystem, const KAA::filesystem::path::directory& key_storage_path)
 	{
 		switch(interface_id)
 		{
 		case KAA::FileSecurity::strong_security:
 			throw std::invalid_argument(__FUNCTION__);
 		case KAA::FileSecurity::absolute_security:
-			return std::auto_ptr<KAA::FileSecurity::Core>(new KAA::FileSecurity::AbsoluteSecurityCore(filesystem, KAA::filesystem::path::directory { key_storage_path }));
+			return std::auto_ptr<KAA::FileSecurity::Core>(new KAA::FileSecurity::AbsoluteSecurityCore(filesystem, key_storage_path));
 		default:
 			throw std::invalid_argument(__FUNCTION__);
 		}
@@ -253,7 +253,7 @@ namespace KAA
 		m_registry(QueryRegistry(windows_registry)),
 		m_filesystem(filesystem),
 		m_wiper(QueryWiper(QueryWiperType(m_registry.get()), m_filesystem.get())),
-		m_core(QueryCore(QueryCoreType(m_registry.get()), m_filesystem.get(), QueryKeyStoragePath(m_registry.get()).to_wstring())),
+		m_core(QueryCore(QueryCoreType(m_registry.get()), m_filesystem.get(), QueryKeyStoragePath(m_registry.get()))),
 		core_progress(new CoreProgressDispatcher),
 		wiper_progress(new WiperProgressDispatcher),
 		server_progress(nullptr)
@@ -324,7 +324,7 @@ namespace KAA
 		{
 			const core_t engine = ToCoreType(value);
 			const auto current_key_storage_path = m_core->GetKeyStoragePath();
-			m_core.reset(QueryCore(engine, m_filesystem.get(), current_key_storage_path.to_wstring()).release());
+			m_core.reset(QueryCore(engine, m_filesystem.get(), current_key_storage_path).release());
 			SaveCoreType(m_registry.get(), engine);
 		}
 
