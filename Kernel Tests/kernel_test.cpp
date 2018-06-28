@@ -1,5 +1,5 @@
 #include "gtest/gtest.h"
-#include "../../Kernel/Kernel.h"
+#include "../Kernel/Kernel.h"
 
 TEST(kernel, sample)
 {

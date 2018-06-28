@@ -64,16 +64,16 @@
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>gtest.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>gtest.lib;KAA.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(TargetFileName)</OutputFile>
-      <AdditionalLibraryDirectories>C:\Users\Андрей и Елена\OneDrive\Документы\Visual Studio 2015\Projects\Testing Framework\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SDK)\$(Configuration);C:\Users\Андрей и Елена\OneDrive\Документы\Visual Studio 2015\Projects\Testing Framework\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
       <Message>Run $(ProjectName) Unit Tests</Message>
-      <Command>"../../$(Configuration)/$(ProjectName).exe"</Command>
+      <Command>"../$(Configuration)/$(ProjectName).exe"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -89,9 +89,9 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>gtest.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>gtest.lib;KAA.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(TargetFileName)</OutputFile>
-      <AdditionalLibraryDirectories>C:\Users\Андрей и Елена\OneDrive\Документы\Visual Studio 2015\Projects\Testing Framework\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SDK)\$(Configuration);C:\Users\Андрей и Елена\OneDrive\Документы\Visual Studio 2015\Projects\Testing Framework\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
@@ -100,7 +100,7 @@
     </Link>
     <PostBuildEvent>
       <Message>Run $(ProjectName) Unit Tests</Message>
-      <Command>"../../$(Configuration)/$(ProjectName).exe"</Command>
+      <Command>"../$(Configuration)/$(ProjectName).exe"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -108,9 +108,8 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Kernel\Kernel.vcxproj">
+    <ProjectReference Include="..\Kernel\Kernel.vcxproj">
       <Project>{b35b959c-2026-4f88-8eb8-ddbbac93759f}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

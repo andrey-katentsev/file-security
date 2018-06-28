@@ -16,6 +16,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Kernel", "Kernel\Kernel.vcx
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Common", "Common\Common.vcxproj", "{077995E2-6AB9-494F-A3FF-F81D595D4D5C}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Kernel Unit Tests", "Kernel Tests\Kernel Tests.vcxproj", "{B91FB545-BF1D-4A82-93A0-12CA0ECB38C2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -34,6 +36,10 @@ Global
 		{077995E2-6AB9-494F-A3FF-F81D595D4D5C}.Debug|Win32.Build.0 = Debug|Win32
 		{077995E2-6AB9-494F-A3FF-F81D595D4D5C}.Release|Win32.ActiveCfg = Release|Win32
 		{077995E2-6AB9-494F-A3FF-F81D595D4D5C}.Release|Win32.Build.0 = Release|Win32
+		{B91FB545-BF1D-4A82-93A0-12CA0ECB38C2}.Debug|Win32.ActiveCfg = Debug|Win32
+		{B91FB545-BF1D-4A82-93A0-12CA0ECB38C2}.Debug|Win32.Build.0 = Debug|Win32
+		{B91FB545-BF1D-4A82-93A0-12CA0ECB38C2}.Release|Win32.ActiveCfg = Release|Win32
+		{B91FB545-BF1D-4A82-93A0-12CA0ECB38C2}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
