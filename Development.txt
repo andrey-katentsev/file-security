@@ -25,6 +25,7 @@
 - масштабируемость : OpenMP
 
 ТЕСТИРОВАНИЕ
+- добавить проект с тестами (разобраться с компоновкой)
 - для отладки Post-Build Event > Use In Build > No
 - создание файла для хранения ключей
 
@@ -33,7 +34,9 @@
 - переместить абстракции в KAA SDK
 - добавить в файлы заголовки // КАА, 2014
 - добавить C++11 код 
-  - FUTURE: C++11: = delete
+	- FUTURE: C++11: = delete
+	- заменить std::auto_ptr на std::unique_ptr
+- охватывающий try-catch для функций
 
 [Linker :: General :: Output]
 $(OutDir)\$(ProjectName).exe

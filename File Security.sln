@@ -10,13 +10,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documents", "Documents", "{
 		User Guide.txt = User Guide.txt
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TDD", "TDD", "{134A3052-D125-49A6-BB4C-80E1F42DD7A0}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GUI", "GUI\GUI.vcxproj", "{1FA0B3CB-1FB2-4983-9DD2-E6BD535EAA58}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Kernel", "Kernel\Kernel.vcxproj", "{B35B959C-2026-4F88-8EB8-DDBBAC93759F}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Kernel Unit Tests", "TDD\Kernel\Kernel.vcxproj", "{B91FB545-BF1D-4A82-93A0-12CA0ECB38C2}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Common", "Common\Common.vcxproj", "{077995E2-6AB9-494F-A3FF-F81D595D4D5C}"
 EndProject
@@ -34,10 +30,6 @@ Global
 		{B35B959C-2026-4F88-8EB8-DDBBAC93759F}.Debug|Win32.Build.0 = Debug|Win32
 		{B35B959C-2026-4F88-8EB8-DDBBAC93759F}.Release|Win32.ActiveCfg = Release|Win32
 		{B35B959C-2026-4F88-8EB8-DDBBAC93759F}.Release|Win32.Build.0 = Release|Win32
-		{B91FB545-BF1D-4A82-93A0-12CA0ECB38C2}.Debug|Win32.ActiveCfg = Debug|Win32
-		{B91FB545-BF1D-4A82-93A0-12CA0ECB38C2}.Debug|Win32.Build.0 = Debug|Win32
-		{B91FB545-BF1D-4A82-93A0-12CA0ECB38C2}.Release|Win32.ActiveCfg = Release|Win32
-		{B91FB545-BF1D-4A82-93A0-12CA0ECB38C2}.Release|Win32.Build.0 = Release|Win32
 		{077995E2-6AB9-494F-A3FF-F81D595D4D5C}.Debug|Win32.ActiveCfg = Debug|Win32
 		{077995E2-6AB9-494F-A3FF-F81D595D4D5C}.Debug|Win32.Build.0 = Debug|Win32
 		{077995E2-6AB9-494F-A3FF-F81D595D4D5C}.Release|Win32.ActiveCfg = Release|Win32
@@ -45,8 +37,5 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{B91FB545-BF1D-4A82-93A0-12CA0ECB38C2} = {134A3052-D125-49A6-BB4C-80E1F42DD7A0}
 	EndGlobalSection
 EndGlobal
