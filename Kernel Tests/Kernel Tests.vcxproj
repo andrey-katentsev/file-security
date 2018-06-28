@@ -106,9 +106,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="kernel_test.cpp" />
+    <ClCompile Include="key_storage_test.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Common\Common.vcxproj">
+      <Project>{077995e2-6ab9-494f-a3ff-f81d595d4d5c}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\Kernel\Kernel.vcxproj">
       <Project>{b35b959c-2026-4f88-8eb8-ddbbac93759f}</Project>
     </ProjectReference>
