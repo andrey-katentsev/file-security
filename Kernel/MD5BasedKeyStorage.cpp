@@ -7,23 +7,6 @@
 namespace
 {
 	const std::wstring key_file_extension(L".bin");
-
-	// DEFECT: KAA: DRY violation (see make_CRT_directory_path).
-	std::wstring AppendBackslash(std::wstring path)
-	{
-		const auto slash = L'\\';
-		const auto backslash = L'/';
-		const auto last_symbol = path.back();
-		if (slash == last_symbol || backslash == last_symbol)
-		{
-			return path;
-		}
-		else
-		{
-			path.push_back(slash);
-			return path;
-		}
-	}
 }
 
 namespace KAA
@@ -53,7 +36,7 @@ namespace KAA
 			const auto data = path.to_wstring();
 			const auto data_size = sizeof ( decltype(data)::value_type ) * data.length();
 			const auto hash = cryptography::calculate_md5(csp, data.c_str(), data_size);
-			return filesystem::path::file { AppendBackslash(key_storage_path.to_wstring()) + cryptography::to_wstring(hash) + key_file_extension }; // TODO: KAA: implement operator + for the filesystem::path::directory.
+			return key_storage_path + (cryptography::to_wstring(hash) + key_file_extension);
 		}
 	}
 }
