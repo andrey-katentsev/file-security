@@ -32,20 +32,6 @@ namespace
 		::SendMessageW(control, EM_SHOWBALLOONTIP, 0, reinterpret_cast<LPARAM>(&information));
 	}
 
-	// EXAMPLE: 'D:\Temp'
-	std::wstring MakeWinAPIDirectoryPath(const std::wstring& directory_path)
-	{
-		const bool remove_trailing_backslash = ( L'\\' == directory_path[directory_path.length() - 1] );
-		return remove_trailing_backslash ? std::wstring(directory_path.begin(), directory_path.end() - 1) : directory_path;
-	}
-
-	// EXAMPLE: 'D:\Temp\'
-	std::wstring MakeCRTDirectoryPath(const std::wstring& directory_path)
-	{
-		const bool add_trailing_backslash = ( L'\\' != directory_path[directory_path.length() - 1] );
-		return add_trailing_backslash ? directory_path + L'\\' : directory_path;
-	}
-
 	unsigned ToIndex(HWND combobox, const KAA::FileSecurity::wipe_method_id filter)
 	{
 		enum { not_used = 0 }; // FUTURE: KAA: move to SDK helper.
@@ -133,7 +119,7 @@ namespace
 
 						// DEFECT: KAA: may be empty control.
 						auto directory = KAA::filesystem::path::directory { get_control_text(dialog, IDC_SETTINGS_KEY_STORAGE_PATH_EDIT) };
-						const auto initial_directory = MakeWinAPIDirectoryPath(directory.to_wstring());
+						const auto initial_directory = KAA::filesystem::path::make_WinAPI_directory_path(directory.to_wstring());
 						setup.lParam = reinterpret_cast<LPARAM>(&initial_directory);
 
 						std::vector<wchar_t> buffer(MAX_PATH, L'\0');
@@ -150,7 +136,7 @@ namespace
 							}
 
 							directory = KAA::filesystem::path::directory { &buffer[0] };
-							const auto new_key_storage_path = MakeCRTDirectoryPath(directory.to_wstring());
+							const auto new_key_storage_path = KAA::filesystem::path::make_CRT_directory_path(directory.to_wstring());
 							set_control_text(dialog, IDC_SETTINGS_KEY_STORAGE_PATH_EDIT, new_key_storage_path);
 						}
 					} break;
