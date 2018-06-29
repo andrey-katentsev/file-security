@@ -1,8 +1,9 @@
 #pragma once
 
-//#include <memory>
+#include <memory>
 #include <string>
 
+// FUTURE: KAA: removed keywords.h
 #include "KAA/include/keywords.h"
 #include "KAA/include/progress_state.h"
 #include "KAA/include/stdtypes.h"
@@ -21,13 +22,13 @@ namespace KAA
 		class FileProgressHandler;
 
 		// FUTURE: KAA: std::shared_ptr.
-		// REMARKS: does not take ownership of provided filesystem::driver*.
+		// TODO: KAA: remove commented code.
 		class GammaFileCipher : public FileCipher
 		{
 		public:
 			//explicit GammaFileCipher(filesystem::driver*, progress_routine_t progress_notify, void* progress_context);
 			//GammaFileCipher(filesystem::driver*, const cipher_progress_callback*);
-			explicit GammaFileCipher(filesystem::driver*);
+			explicit GammaFileCipher(std::shared_ptr<filesystem::driver>);
 			~GammaFileCipher();
 
 			GammaFileCipher(const GammaFileCipher&) = delete;
@@ -36,8 +37,7 @@ namespace KAA
 			GammaFileCipher& operator = (GammaFileCipher&&) = delete;
 
 		private:
-			//std::auto_ptr<filesystem::driver> m_filesystem;
-			filesystem::driver* m_filesystem;
+			std::shared_ptr<filesystem::driver> m_filesystem;
 			FileProgressHandler* cipher_progress;
 
 			void IEncryptFile(const std::wstring&, const std::wstring&) override;

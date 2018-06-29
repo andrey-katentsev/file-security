@@ -32,11 +32,11 @@ namespace KAA
 		class ServerCommunicator : public Communicator
 		{
 		public:
-			ServerCommunicator(std::auto_ptr<filesystem::driver>);
+			explicit ServerCommunicator(std::shared_ptr<filesystem::driver>);
 
 		private:
 			std::auto_ptr<system::registry> m_registry;
-			std::auto_ptr<filesystem::driver> m_filesystem;
+			std::shared_ptr<filesystem::driver> m_filesystem;
 			std::auto_ptr<filesystem::wiper> m_wiper;
 			std::auto_ptr<Core> m_core;
 

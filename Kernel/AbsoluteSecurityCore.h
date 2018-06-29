@@ -24,12 +24,11 @@ namespace KAA
 		class CoreProgressHandler;
 		class CipherProgressDispatcher;
 
-		// REMARKS: does not take ownership of provided filesystem::driver*.
 		// NOTE: Vernam Cipher / One-Time Pad
 		class AbsoluteSecurityCore : public Core
 		{
 		public:
-			AbsoluteSecurityCore(filesystem::driver*, const filesystem::path::directory& key_storage_path);
+			AbsoluteSecurityCore(std::shared_ptr<filesystem::driver>, const filesystem::path::directory& key_storage_path);
 			~AbsoluteSecurityCore();
 
 			AbsoluteSecurityCore(const AbsoluteSecurityCore&) = delete;
@@ -38,7 +37,7 @@ namespace KAA
 			AbsoluteSecurityCore& operator = (AbsoluteSecurityCore&&) = delete;
 
 		private:
-			filesystem::driver* m_filesystem;
+			std::shared_ptr<filesystem::driver> m_filesystem;
 			std::auto_ptr<FileCipher> m_cipher;
 			std::auto_ptr<KeyStorage> m_key_storage;
 			std::auto_ptr<CipherProgressDispatcher> cipher_progress;

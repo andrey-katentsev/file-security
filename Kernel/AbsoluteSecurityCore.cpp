@@ -32,7 +32,7 @@ extern KAA::module_context core_dll;
 
 namespace
 {
-	void RemoveKey(KAA::filesystem::driver* filesystem, const std::wstring& key_file_path)
+	void RemoveKey(const std::shared_ptr<KAA::filesystem::driver> filesystem, const std::wstring& key_file_path)
 	{
 		KAA::filesystem::driver::permission write_only(true, false);
 		filesystem->set_file_permissions(key_file_path, write_only);
@@ -44,7 +44,7 @@ namespace KAA
 {
 	namespace FileSecurity
 	{
-		AbsoluteSecurityCore::AbsoluteSecurityCore(filesystem::driver* filesystem, const filesystem::path::directory& key_storage_path) :
+		AbsoluteSecurityCore::AbsoluteSecurityCore(const std::shared_ptr<filesystem::driver> filesystem, const filesystem::path::directory& key_storage_path) :
 		m_filesystem(filesystem),
 		//m_wiper(new ordinary_file_remover(filesystem)),
 		m_cipher(CreateFileCipher(gamma_cipher, filesystem)),

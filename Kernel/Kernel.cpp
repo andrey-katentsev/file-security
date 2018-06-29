@@ -19,7 +19,7 @@ namespace KAA
 	{
 		std::auto_ptr<Communicator> GetClassObject(void)
 		{
-			std::auto_ptr<filesystem::driver> filesystem(new filesystem::crt_file_system);
+			const auto filesystem = std::make_shared<filesystem::crt_file_system>();
 			return std::auto_ptr<Communicator>(new ServerCommunicator(filesystem));
 		}
 	}

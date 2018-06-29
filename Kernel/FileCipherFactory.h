@@ -21,6 +21,6 @@ namespace KAA
 		};
 
 		//std::auto_ptr<FileCipher> CreateFileCipher(cipher_t, filesystem::driver*, progress_routine_t, void*);
-		std::auto_ptr<FileCipher> CreateFileCipher(cipher_t, filesystem::driver*);
+		std::auto_ptr<FileCipher> CreateFileCipher(cipher_t, std::shared_ptr<filesystem::driver>);
 	}
 }

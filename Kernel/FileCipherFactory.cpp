@@ -15,7 +15,7 @@ namespace KAA
 
 	namespace FileSecurity
 	{
-		std::auto_ptr<FileCipher> CreateFileCipher(const cipher_t type, filesystem::driver* const filesystem)
+		std::auto_ptr<FileCipher> CreateFileCipher(const cipher_t type, const std::shared_ptr<filesystem::driver> filesystem)
 		{
 			switch(type)
 			{

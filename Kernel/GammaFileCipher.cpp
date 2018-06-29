@@ -1,6 +1,5 @@
 #include "GammaFileCipher.h"
 
-#include <memory>
 #include <stdexcept>
 #include <string>
 #include <vector>
@@ -85,7 +84,7 @@ namespace KAA
 		//GammaFileCipher::GammaFileCipher(filesystem::driver* filesystem, const cipher_progress_callback* handler) :
 		//FileCipher(progress_notify, progress_context),
 		//FileCipher(handler),
-		GammaFileCipher::GammaFileCipher(filesystem::driver* filesystem) :
+		GammaFileCipher::GammaFileCipher(const std::shared_ptr<filesystem::driver> filesystem) :
 		m_filesystem(filesystem),
 		cipher_progress(nullptr)
 		{
