@@ -20,7 +20,8 @@ namespace KAA
 	{
 		class FileProgressHandler;
 
-		// REMARKS: do not takes ownership on provided filesystem::driver*.
+		// FUTURE: KAA: std::shared_ptr.
+		// REMARKS: does not take ownership of provided filesystem::driver*.
 		class GammaFileCipher : public FileCipher
 		{
 		public:
@@ -28,6 +29,11 @@ namespace KAA
 			//GammaFileCipher(filesystem::driver*, const cipher_progress_callback*);
 			explicit GammaFileCipher(filesystem::driver*);
 			~GammaFileCipher();
+
+			GammaFileCipher(const GammaFileCipher&) = delete;
+			GammaFileCipher(GammaFileCipher&&) = delete;
+			GammaFileCipher& operator = (const GammaFileCipher&) = delete;
+			GammaFileCipher& operator = (GammaFileCipher&&) = delete;
 
 		private:
 			//std::auto_ptr<filesystem::driver> m_filesystem;
@@ -40,10 +46,6 @@ namespace KAA
 			FileProgressHandler* ISetProgressCallback(FileProgressHandler*) override;
 
 			progress_state ChunkProcessed(uint64_t total_bytes_processed, uint64_t total_file_size);
-
-			// FUTURE: C++11: move semantics, = delete.
-			GammaFileCipher(const GammaFileCipher&);
-			GammaFileCipher& operator = (const GammaFileCipher&);
 		};
 	}
 }

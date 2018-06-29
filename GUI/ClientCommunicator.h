@@ -18,6 +18,11 @@ namespace KAA
 		public:
 			ClientCommunicator();
 
+			ClientCommunicator(const ClientCommunicator&) = delete;
+			ClientCommunicator(ClientCommunicator&&) = delete;
+			ClientCommunicator& operator = (const ClientCommunicator&) = delete;
+			ClientCommunicator& operator = (ClientCommunicator&&) = delete;
+
 		private:
 			std::auto_ptr<Communicator> m_communicator;
 
@@ -38,10 +43,6 @@ namespace KAA
 			void ISetKeyStoragePath(const filesystem::path::directory&) override;
 
 			CommunicatorProgressHandler* ISetProgressHandler(CommunicatorProgressHandler*) override;
-
-			// FUTURE: C++11: move semantics, = delete.
-			ClientCommunicator(const ClientCommunicator&);
-			ClientCommunicator& operator = (const ClientCommunicator&);
 		};
 
 		Communicator& GetCommunicator(void);
