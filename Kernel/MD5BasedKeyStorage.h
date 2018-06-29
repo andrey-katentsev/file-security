@@ -23,7 +23,7 @@ namespace KAA
 			void ISetPath(const filesystem::path::directory&);
 			filesystem::path::directory IGetPath(void) const;
 
-			std::wstring IGetKeyPathForSpecifiedPath(const std::wstring&) const;
+			filesystem::path::file IGetKeyPathForSpecifiedPath(const filesystem::path::file&) const;
 		};
 	}
 }

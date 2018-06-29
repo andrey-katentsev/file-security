@@ -17,7 +17,7 @@ namespace KAA
 			return IGetPath();
 		}
 
-		std::wstring KeyStorage::GetKeyPathForSpecifiedPath(const std::wstring& path) const
+		filesystem::path::file KeyStorage::GetKeyPathForSpecifiedPath(const filesystem::path::file& path) const
 		{
 			return IGetKeyPathForSpecifiedPath(path);
 		};
