@@ -36,7 +36,8 @@ namespace KAA
 			const auto data = path.to_wstring();
 			const auto data_size = sizeof ( decltype(data)::value_type ) * data.length();
 			const auto hash = cryptography::calculate_md5(csp, data.c_str(), data_size);
-			return key_storage_path + (cryptography::to_wstring(hash) + key_file_extension);
+			const auto filename = cryptography::to_wstring(hash) + key_file_extension;
+			return key_storage_path + filename;
 		}
 	}
 }
