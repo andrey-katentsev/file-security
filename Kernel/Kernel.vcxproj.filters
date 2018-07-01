@@ -25,6 +25,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
     </Filter>
+    <Filter Include="Header Files\Ciphers">
+      <UniqueIdentifier>{a7a4a2c0-65a3-4acb-b225-f50df97f435d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Ciphers">
+      <UniqueIdentifier>{9d608a48-f2c8-4881-b00d-119b27893f22}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AbsoluteSecurityCore.cpp">
@@ -34,15 +40,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="DllMain.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="FileCipher.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="FileCipherFactory.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GammaFileCipher.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Kernel.cpp">
@@ -81,18 +78,24 @@
     <ClCompile Include="WiperProgressDispatcher.cpp">
       <Filter>Source Files\Handlers</Filter>
     </ClCompile>
+    <ClCompile Include="UserSessionKeyFileCipher.cpp">
+      <Filter>Source Files\Ciphers</Filter>
+    </ClCompile>
+    <ClCompile Include="GammaFileCipher.cpp">
+      <Filter>Source Files\Ciphers</Filter>
+    </ClCompile>
+    <ClCompile Include="FileCipher.cpp">
+      <Filter>Source Files\Ciphers</Filter>
+    </ClCompile>
+    <ClCompile Include="FileCipherFactory.cpp">
+      <Filter>Source Files\Ciphers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AbsoluteSecurityCore.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CoreFactory.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="FileCipher.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="FileCipherFactory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GammaFileCipher.h">
@@ -105,9 +108,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="KeyStorageFactory.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="MD5BasedKeyStorage.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="RegistryFactory.h">
@@ -142,6 +142,18 @@
     </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>Resource Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FileCipher.h">
+      <Filter>Header Files\Ciphers</Filter>
+    </ClInclude>
+    <ClInclude Include="MD5BasedKeyStorage.h">
+      <Filter>Header Files\Ciphers</Filter>
+    </ClInclude>
+    <ClInclude Include="UserSessionKeyFileCipher.h">
+      <Filter>Header Files\Ciphers</Filter>
+    </ClInclude>
+    <ClInclude Include="FileCipherFactory.h">
+      <Filter>Header Files\Ciphers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

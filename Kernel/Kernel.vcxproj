@@ -127,6 +127,7 @@
     <ClCompile Include="CipherProgressDispatcher.cpp" />
     <ClCompile Include="CoreProgressDispatcher.cpp" />
     <ClCompile Include="FileProgressHandler.cpp" />
+    <ClCompile Include="UserSessionKeyFileCipher.cpp" />
     <ClCompile Include="WiperProgressDispatcher.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -142,6 +143,7 @@
     <ClInclude Include="RegistryFactory.h" />
     <ClInclude Include="ServerCommunicator.h" />
     <ClInclude Include="StrongSecurityCore.h" />
+    <ClInclude Include="UserSessionKeyFileCipher.h" />
     <ClInclude Include="WiperFactory.h" />
     <ClInclude Include="Core\Core.h" />
     <ClInclude Include="Core\CoreProgressHandler.h" />
