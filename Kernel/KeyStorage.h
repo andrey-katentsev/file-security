@@ -9,7 +9,7 @@ namespace KAA
 		class KeyStorage
 		{
 		public:
-			virtual ~KeyStorage();
+			virtual ~KeyStorage() = default;
 
 			void SetPath(const filesystem::path::directory&);
 			filesystem::path::directory GetPath(void) const;

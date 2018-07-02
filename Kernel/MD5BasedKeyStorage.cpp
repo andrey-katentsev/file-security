@@ -17,9 +17,6 @@ namespace KAA
 		key_storage_path(key_storage_path)
 		{}
 
-		MD5BasedKeyStorage::~MD5BasedKeyStorage()
-		{}
-
 		void MD5BasedKeyStorage::ISetPath(const filesystem::path::directory& path)
 		{
 			key_storage_path = path;
