@@ -20,7 +20,7 @@ namespace KAA
 		class FileCipher
 		{
 		public:
-			virtual ~FileCipher();
+			virtual ~FileCipher() = default;
 
 			void EncryptFile(const filesystem::path::file& path, const filesystem::path::file& key);
 			void DecryptFile(const filesystem::path::file& path, const filesystem::path::file& key);

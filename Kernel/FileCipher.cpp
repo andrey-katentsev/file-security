@@ -4,9 +4,6 @@ namespace KAA
 {
 	namespace FileSecurity
 	{
-		FileCipher::~FileCipher()
-		{}
-
 		void FileCipher::EncryptFile(const filesystem::path::file& path, const filesystem::path::file& key)
 		{
 			return IEncryptFile(path, key);

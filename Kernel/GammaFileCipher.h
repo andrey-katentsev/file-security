@@ -29,10 +29,11 @@ namespace KAA
 			//explicit GammaFileCipher(filesystem::driver*, progress_routine_t progress_notify, void* progress_context);
 			//GammaFileCipher(filesystem::driver*, const cipher_progress_callback*);
 			explicit GammaFileCipher(std::shared_ptr<filesystem::driver>);
-			~GammaFileCipher();
 
 			GammaFileCipher(const GammaFileCipher&) = delete;
 			GammaFileCipher(GammaFileCipher&&) = delete;
+			~GammaFileCipher() = default;
+
 			GammaFileCipher& operator = (const GammaFileCipher&) = delete;
 			GammaFileCipher& operator = (GammaFileCipher&&) = delete;
 

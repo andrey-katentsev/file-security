@@ -99,9 +99,6 @@ namespace KAA
 			}
 		}
 
-		GammaFileCipher::~GammaFileCipher()
-		{}
-
 		void GammaFileCipher::IEncryptFile(const filesystem::path::file& path, const filesystem::path::file& key_path)
 		{
 			const filesystem::driver::mode random_read_write(true, true, true, true);

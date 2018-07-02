@@ -24,10 +24,12 @@ namespace KAA
 		public:
 			explicit UserSessionKeyFileCipher(std::shared_ptr<filesystem::driver>);
 
-			/*UserSessionKeyFileCipher(const UserSessionKeyFileCipher&) = delete;
+			UserSessionKeyFileCipher(const UserSessionKeyFileCipher&) = delete;
 			UserSessionKeyFileCipher(UserSessionKeyFileCipher&&) = delete;
+			~UserSessionKeyFileCipher() = default;
+
 			UserSessionKeyFileCipher& operator = (const UserSessionKeyFileCipher&) = delete;
-			UserSessionKeyFileCipher& operator = (UserSessionKeyFileCipher&&) = delete;*/
+			UserSessionKeyFileCipher& operator = (UserSessionKeyFileCipher&&) = delete;
 
 		private:
 			std::shared_ptr<filesystem::driver> filesystem;
