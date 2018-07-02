@@ -33,8 +33,8 @@ namespace KAA
 			std::shared_ptr<filesystem::driver> filesystem;
 			FileProgressHandler* cipher_progress;
 
-			void IEncryptFile(const std::wstring&, const std::wstring&) override;
-			void IDecryptFile(const std::wstring&, const std::wstring&) override;
+			void IEncryptFile(const filesystem::path::file&, const filesystem::path::file&) override;
+			void IDecryptFile(const filesystem::path::file&, const filesystem::path::file&) override;
 
 			FileProgressHandler* ISetProgressCallback(FileProgressHandler*) override;
 

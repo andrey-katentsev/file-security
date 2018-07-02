@@ -77,8 +77,10 @@ namespace KAA
 
 		void AbsoluteSecurityCore::IEncryptFile(const std::wstring& file_to_encrypt_path)
 		{
+			const auto path = filesystem::path::file { file_to_encrypt_path };
+
 			OperationStarted(resources::load_string(IDS_RETRIEVING_KEY_PATH, core_dll.get_module_handle()));
-			const auto key_file_path = m_key_storage->GetKeyPathForSpecifiedPath(filesystem::path::file { file_to_encrypt_path });
+			const auto key_path = m_key_storage->GetKeyPathForSpecifiedPath(path);
 
 			const _fsize_t file_to_encrypt_size = get_file_size(*m_filesystem, file_to_encrypt_path);
 			const size_t overall_size = 2*file_to_encrypt_size;
@@ -87,14 +89,14 @@ namespace KAA
 			{
 				OperationStarted(resources::load_string(IDS_GENERATING_KEY, core_dll.get_module_handle()));
 				const std::auto_ptr< std::vector<uint8_t> > key_data(GenerateKey(file_to_encrypt_size));
-				CreateKeyFile(key_file_path.to_wstring(), *key_data);
+				CreateKeyFile(key_path.to_wstring(), *key_data);
 				total_processed += file_to_encrypt_size;
 				OverallProgress(total_processed, overall_size);
 			}
 
 			{
 				OperationStarted(resources::load_string(IDS_ENCRYPTING_FILE, core_dll.get_module_handle()));
-				m_cipher->EncryptFile(file_to_encrypt_path, key_file_path.to_wstring());
+				m_cipher->EncryptFile(path, key_path);
 				total_processed += file_to_encrypt_size;
 				OverallProgress(total_processed, overall_size);
 			}
@@ -102,8 +104,10 @@ namespace KAA
 
 		void AbsoluteSecurityCore::IDecryptFile(const std::wstring& file_to_decrypt_path)
 		{
+			const auto path = filesystem::path::file { file_to_decrypt_path };
+
 			OperationStarted(resources::load_string(IDS_RETRIEVING_KEY_PATH, core_dll.get_module_handle()));
-			const auto key_file_path = m_key_storage->GetKeyPathForSpecifiedPath(filesystem::path::file { file_to_decrypt_path });
+			const auto key_path = m_key_storage->GetKeyPathForSpecifiedPath(path);
 
 			const _fsize_t file_to_decrypt_size = get_file_size(*m_filesystem, file_to_decrypt_path);
 			const size_t overall_size = 2*file_to_decrypt_size;
@@ -111,13 +115,13 @@ namespace KAA
 
 			{
 				OperationStarted(resources::load_string(IDS_DECRYPTING_FILE, core_dll.get_module_handle()));
-				m_cipher->DecryptFile(file_to_decrypt_path, key_file_path.to_wstring());
+				m_cipher->DecryptFile(path, key_path);
 				total_processed += file_to_decrypt_size;
 				OverallProgress(total_processed, overall_size);
 			}
 
 			OperationStarted(resources::load_string(IDS_REMOVING_KEY, core_dll.get_module_handle()));
-			RemoveKey(m_filesystem, key_file_path.to_wstring());
+			RemoveKey(m_filesystem, key_path.to_wstring());
 			total_processed += file_to_decrypt_size;
 			OverallProgress(total_processed, overall_size);
 		}

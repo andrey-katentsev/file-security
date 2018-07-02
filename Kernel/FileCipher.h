@@ -4,6 +4,14 @@
 
 namespace KAA
 {
+	namespace filesystem
+	{
+		namespace path
+		{
+			class file;
+		}
+	}
+
 	namespace FileSecurity
 	{
 		class FileProgressHandler;
@@ -14,14 +22,14 @@ namespace KAA
 		public:
 			virtual ~FileCipher();
 
-			void EncryptFile(const std::wstring& file_to_encrypt_path, const std::wstring& key_file_path);
-			void DecryptFile(const std::wstring& file_to_decrypt_path, const std::wstring& key_file_path);
+			void EncryptFile(const filesystem::path::file& path, const filesystem::path::file& key);
+			void DecryptFile(const filesystem::path::file& path, const filesystem::path::file& key);
 
 			FileProgressHandler* SetProgressCallback(FileProgressHandler*);
 
 		private:
-			virtual void IEncryptFile(const std::wstring&, const std::wstring&) = 0;
-			virtual void IDecryptFile(const std::wstring&, const std::wstring&) = 0;
+			virtual void IEncryptFile(const filesystem::path::file&, const filesystem::path::file&) = 0;
+			virtual void IDecryptFile(const filesystem::path::file&, const filesystem::path::file&) = 0;
 
 			virtual FileProgressHandler* ISetProgressCallback(FileProgressHandler*) = 0;
 		};

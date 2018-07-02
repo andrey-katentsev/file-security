@@ -15,6 +15,7 @@
 #include "KAA/include/stdtypes.h"
 //#include "C:/SDK/KAA/include/exception/system_failure.h"
 #include "KAA/include/filesystem/driver.h"
+#include "KAA/include/filesystem/path.h"
 //#include "C:/SDK/KAA/include/filesystem/split_path.h"
 //#include "C:/SDK/KAA/include/RAII/invalid_parameter_handler.h"
 #include "KAA/include/exception/operation_failure.h"
@@ -101,16 +102,16 @@ namespace KAA
 		GammaFileCipher::~GammaFileCipher()
 		{}
 
-		void GammaFileCipher::IEncryptFile(const std::wstring& file_to_encrypt_path, const std::wstring& key_file_path)
+		void GammaFileCipher::IEncryptFile(const filesystem::path::file& path, const filesystem::path::file& key_path)
 		{
 			const filesystem::driver::mode random_read_write(true, true, true, true);
 			const filesystem::driver::share exclusive_access(false, false);
 
-			const std::auto_ptr<filesystem::file> master(m_filesystem->open_file(file_to_encrypt_path, random_read_write, exclusive_access));
+			const std::auto_ptr<filesystem::file> master(m_filesystem->open_file(path.to_wstring(), random_read_write, exclusive_access));
 
 			const filesystem::driver::mode sequential_read_only(false);
 
-			const std::auto_ptr<filesystem::file> key(m_filesystem->open_file(key_file_path, sequential_read_only, exclusive_access));
+			const std::auto_ptr<filesystem::file> key(m_filesystem->open_file(key_path.to_wstring(), sequential_read_only, exclusive_access));
 
 			const _fsize_t master_data_size = master->get_size();
 
@@ -168,9 +169,9 @@ namespace KAA
 			//process_chunk(master.get(), key.get(), /*&master_buffer[0], &key_buffer[0], */last_chunk_size);
 		}
 
-		void GammaFileCipher::IDecryptFile(const std::wstring& file_to_decrypt_path, const std::wstring& key_file_path)
+		void GammaFileCipher::IDecryptFile(const filesystem::path::file& path, const filesystem::path::file& key)
 		{
-			return EncryptFile(file_to_decrypt_path, key_file_path);
+			return EncryptFile(path, key);
 		}
 
 		FileProgressHandler* GammaFileCipher::ISetProgressCallback(FileProgressHandler* handler)

@@ -22,12 +22,12 @@ namespace KAA
 			}
 		}
 
-		void UserSessionKeyFileCipher::IEncryptFile(const std::wstring& file_to_encrypt_path, const std::wstring& key_file_path)
+		void UserSessionKeyFileCipher::IEncryptFile(const filesystem::path::file& path, const filesystem::path::file& key_path)
 		{
 			throw operation_failure(__FUNCTIONW__, L"cannot encrypt file", operation_failure::R_NOT_IMPLEMENTED, operation_failure::S_ERROR);
 		}
 
-		void UserSessionKeyFileCipher::IDecryptFile(const std::wstring& file_to_decrypt_path, const std::wstring& key_file_path)
+		void UserSessionKeyFileCipher::IDecryptFile(const filesystem::path::file& path, const filesystem::path::file& key_path)
 		{
 			throw operation_failure(__FUNCTIONW__, L"cannot decrypt file", operation_failure::R_NOT_IMPLEMENTED, operation_failure::S_ERROR);
 		}
