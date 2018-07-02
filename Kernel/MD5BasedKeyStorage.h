@@ -10,7 +10,6 @@ namespace KAA
 		{
 		public:
 			explicit MD5BasedKeyStorage(const filesystem::path::directory& key_storage_path);
-
 			MD5BasedKeyStorage(const MD5BasedKeyStorage&) = delete;
 			MD5BasedKeyStorage(MD5BasedKeyStorage&&) = delete;
 			~MD5BasedKeyStorage() = default;
@@ -21,10 +20,10 @@ namespace KAA
 		private:
 			filesystem::path::directory key_storage_path;
 
-			void ISetPath(const filesystem::path::directory&);
-			filesystem::path::directory IGetPath(void) const;
+			void ISetPath(const filesystem::path::directory&) override;
+			filesystem::path::directory IGetPath(void) const override;
 
-			filesystem::path::file IGetKeyPathForSpecifiedPath(const filesystem::path::file&) const;
+			filesystem::path::file IGetKeyPathForSpecifiedPath(const filesystem::path::file&) const override;
 		};
 	}
 }
