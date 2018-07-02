@@ -22,7 +22,7 @@ namespace KAA
 		class Core
 		{
 		public:
-			virtual ~Core();
+			virtual ~Core() = default;
 
 			filesystem::path::directory GetKeyStoragePath(void) const;
 			void SetKeyStoragePath(const filesystem::path::directory&);

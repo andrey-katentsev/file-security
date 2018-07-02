@@ -62,9 +62,6 @@ namespace KAA
 			}
 		}
 
-		AbsoluteSecurityCore::~AbsoluteSecurityCore()
-		{}
-
 		filesystem::path::directory AbsoluteSecurityCore::IGetKeyStoragePath(void) const
 		{
 			return m_key_storage->GetPath();

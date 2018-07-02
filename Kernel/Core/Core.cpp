@@ -13,9 +13,6 @@ namespace KAA
 {
 	namespace FileSecurity
 	{
-		Core::~Core()
-		{}
-
 		filesystem::path::directory Core::GetKeyStoragePath(void) const
 		{
 			return IGetKeyStoragePath();

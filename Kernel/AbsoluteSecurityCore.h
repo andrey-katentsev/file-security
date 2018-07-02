@@ -29,10 +29,11 @@ namespace KAA
 		{
 		public:
 			AbsoluteSecurityCore(std::shared_ptr<filesystem::driver>, const filesystem::path::directory& key_storage_path);
-			~AbsoluteSecurityCore();
 
 			AbsoluteSecurityCore(const AbsoluteSecurityCore&) = delete;
 			AbsoluteSecurityCore(AbsoluteSecurityCore&&) = delete;
+			~AbsoluteSecurityCore() = default;
+
 			AbsoluteSecurityCore& operator = (const AbsoluteSecurityCore&) = delete;
 			AbsoluteSecurityCore& operator = (AbsoluteSecurityCore&&) = delete;
 
