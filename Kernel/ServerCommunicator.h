@@ -33,6 +33,12 @@ namespace KAA
 		{
 		public:
 			explicit ServerCommunicator(std::shared_ptr<filesystem::driver>);
+			ServerCommunicator(const ServerCommunicator&) = delete;
+			ServerCommunicator(ServerCommunicator&&) = delete;
+			~ServerCommunicator() = default;
+
+			ServerCommunicator& operator = (const ServerCommunicator&) = delete;
+			ServerCommunicator& operator = (ServerCommunicator&&) = delete;
 
 		private:
 			std::auto_ptr<system::registry> m_registry;

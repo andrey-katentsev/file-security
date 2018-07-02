@@ -17,9 +17,10 @@ namespace KAA
 		{
 		public:
 			ClientCommunicator();
-
 			ClientCommunicator(const ClientCommunicator&) = delete;
 			ClientCommunicator(ClientCommunicator&&) = delete;
+			~ClientCommunicator() = default;
+
 			ClientCommunicator& operator = (const ClientCommunicator&) = delete;
 			ClientCommunicator& operator = (ClientCommunicator&&) = delete;
 

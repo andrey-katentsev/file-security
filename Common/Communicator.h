@@ -27,7 +27,7 @@ namespace KAA
 		class Communicator
 		{
 		public:
-			virtual ~Communicator();
+			virtual ~Communicator() = default;
 
 			void EncryptFile(const std::wstring& file_to_encrypt_path);
 			void DecryptFile(const std::wstring& file_to_decrypt_path);

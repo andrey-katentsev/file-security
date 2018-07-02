@@ -13,9 +13,6 @@ namespace KAA
 {
 	namespace FileSecurity
 	{
-		Communicator::~Communicator()
-		{}
-		
 		void Communicator::EncryptFile(const std::wstring& file_to_encrypt_path)
 		{
 			return IEncryptFile(file_to_encrypt_path);
