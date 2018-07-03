@@ -13,19 +13,19 @@ namespace KAA
 {
 	namespace FileSecurity
 	{
-		void Communicator::EncryptFile(const std::wstring& file_to_encrypt_path)
+		void Communicator::EncryptFile(const filesystem::path::file& path)
 		{
-			return IEncryptFile(file_to_encrypt_path);
+			return IEncryptFile(path);
 		}
 
-		void Communicator::DecryptFile(const std::wstring& file_to_decrypt_path)
+		void Communicator::DecryptFile(const filesystem::path::file& path)
 		{
-			return IDecryptFile(file_to_decrypt_path);
+			return IDecryptFile(path);
 		}
 
-		bool Communicator::IsFileEncrypted(const std::wstring& file_path) const
+		bool Communicator::IsFileEncrypted(const filesystem::path::file& path) const
 		{
-			return IIsFileEncrypted(file_path);
+			return IIsFileEncrypted(path);
 		}
 
 		std::vector< std::pair<std::wstring, core_id> > Communicator::GetAvailableCiphers(void) const

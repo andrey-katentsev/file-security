@@ -274,39 +274,39 @@ namespace KAA
 			}
 		}
 
-		void ServerCommunicator::IEncryptFile(const std::wstring& file_to_encrypt_path)
+		void ServerCommunicator::IEncryptFile(const filesystem::path::file& path)
 		{
-			const size_t file_size = get_file_size(*m_filesystem.get(), file_to_encrypt_path);
+			const auto file_size = get_file_size(*m_filesystem.get(), path.to_wstring());
 			const size_t overall_size = 3*file_size;
 
 			OperationStarted(resources::load_string(IDS_CREATING_BACKUP, core_dll.get_module_handle()));
-			const std::wstring backup_file_path(CreateFileBackup(file_to_encrypt_path));
+			const auto backup_file_path = CreateFileBackup(path.to_wstring());
 
 			OperationStarted(resources::load_string(IDS_ENCRYPTING_FILE, core_dll.get_module_handle()));
-			m_core->EncryptFile(file_to_encrypt_path);
+			m_core->EncryptFile(path.to_wstring());
 
 			OperationStarted(resources::load_string(IDS_WIPING_FILE, core_dll.get_module_handle()));
 			m_wiper->wipe_file(backup_file_path);
 		}
 
-		void ServerCommunicator::IDecryptFile(const std::wstring& file_to_decrypt_path)
+		void ServerCommunicator::IDecryptFile(const filesystem::path::file& path)
 		{
-			const size_t file_size = get_file_size(*m_filesystem.get(), file_to_decrypt_path);
+			const auto file_size = get_file_size(*m_filesystem.get(), path.to_wstring());
 			const size_t overall_size = 3*file_size;
 
 			OperationStarted(resources::load_string(IDS_CREATING_BACKUP, core_dll.get_module_handle()));
-			const std::wstring backup_file_path(CreateFileBackup(file_to_decrypt_path));
+			const auto backup_file_path = CreateFileBackup(path.to_wstring());
 
 			OperationStarted(resources::load_string(IDS_DECRYPTING_FILE, core_dll.get_module_handle()));
-			m_core->DecryptFile(file_to_decrypt_path);
+			m_core->DecryptFile(path.to_wstring());
 
 			OperationStarted(resources::load_string(IDS_REMOVING_BACKUP, core_dll.get_module_handle()));
 			m_filesystem->remove_file(backup_file_path);
 		}
 
-		bool ServerCommunicator::IIsFileEncrypted(const std::wstring& path) const
+		bool ServerCommunicator::IIsFileEncrypted(const filesystem::path::file& path) const
 		{
-			return m_core->IsFileEncrypted(path);
+			return m_core->IsFileEncrypted(path.to_wstring());
 		}
 
 		// FIX: KAA: implement communicator.

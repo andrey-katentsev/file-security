@@ -29,10 +29,10 @@ namespace KAA
 		public:
 			virtual ~Communicator() = default;
 
-			void EncryptFile(const std::wstring& file_to_encrypt_path);
-			void DecryptFile(const std::wstring& file_to_decrypt_path);
+			void EncryptFile(const filesystem::path::file& path);
+			void DecryptFile(const filesystem::path::file& path);
 
-			bool IsFileEncrypted(const std::wstring& file_path) const;
+			bool IsFileEncrypted(const filesystem::path::file& path) const;
 
 			std::vector< std::pair<std::wstring, core_id> > GetAvailableCiphers(void) const;
 			core_id GetCipher(void) const;
@@ -48,10 +48,10 @@ namespace KAA
 			CommunicatorProgressHandler* SetProgressHandler(CommunicatorProgressHandler*);
 
 		private:
-			virtual void IEncryptFile(const std::wstring& file_to_encrypt_path) = 0;
-			virtual void IDecryptFile(const std::wstring& file_to_decrypt_path) = 0;
+			virtual void IEncryptFile(const filesystem::path::file&) = 0;
+			virtual void IDecryptFile(const filesystem::path::file&) = 0;
 
-			virtual bool IIsFileEncrypted(const std::wstring& file_path) const = 0;
+			virtual bool IIsFileEncrypted(const filesystem::path::file&) const = 0;
 
 			virtual std::vector< std::pair<std::wstring, core_id> > IGetAvailableCiphers(void) const = 0;
 			virtual core_id IGetCipher(void) const = 0;

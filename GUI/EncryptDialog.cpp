@@ -4,6 +4,7 @@
 #include "KAA/include/registry_key.h"
 #include "KAA/include/windows_registry.h"
 #include "KAA/include/exception/windows_api_failure.h"
+#include "KAA/include/filesystem/path.h"
 #include "KAA/include/UI/controls.h"
 #undef EncryptFile
 #undef DecryptFile
@@ -97,7 +98,8 @@ namespace
 	{
 		const HWND encrypt_button = ::GetDlgItem(dialog, IDC_MAIN_ENCRYPT_SPECIFIED_FILE_BUTTON);
 		const HWND decrypt_button = ::GetDlgItem(dialog, IDC_MAIN_DECRYPT_SPECIFIED_FILE_BUTTON);
-		const bool file_encrypted = GetCommunicator().IsFileEncrypted(get_control_text(dialog, IDC_MAIN_FILE_TO_ENCRYPT_PATH_EDIT));
+		const auto path = KAA::filesystem::path::file { get_control_text(dialog, IDC_MAIN_FILE_TO_ENCRYPT_PATH_EDIT) };
+		const bool file_encrypted = GetCommunicator().IsFileEncrypted(path);
 		::EnableWindow(encrypt_button, !file_encrypted);
 		::EnableWindow(decrypt_button, file_encrypted);
 	}
@@ -105,13 +107,13 @@ namespace
 	void EncryptFileTask(void* context)
 	{
 		const std::wstring* path = reinterpret_cast<const std::wstring*>(context);
-		GetCommunicator().EncryptFile(*path);
+		GetCommunicator().EncryptFile(KAA::filesystem::path::file { *path });
 	}
 
 	void DecryptFileTask(void* context)
 	{
 		const std::wstring* path = reinterpret_cast<const std::wstring*>(context);
-		GetCommunicator().DecryptFile(*path);
+		GetCommunicator().DecryptFile(KAA::filesystem::path::file { *path });
 	}
 
 	BOOL ProcessControlMessage(const HWND dialog, const HWND control, const int control_identifier, const int notification_code)

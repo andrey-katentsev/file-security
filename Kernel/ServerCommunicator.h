@@ -51,10 +51,10 @@ namespace KAA
 
 			CommunicatorProgressHandler* server_progress;
 
-			void IEncryptFile(const std::wstring& file_to_encrypt_path) override;
-			void IDecryptFile(const std::wstring& file_to_decrypt_path) override;
+			void IEncryptFile(const filesystem::path::file& path) override;
+			void IDecryptFile(const filesystem::path::file& path) override;
 
-			bool IIsFileEncrypted(const std::wstring& file_path) const override;
+			bool IIsFileEncrypted(const filesystem::path::file& path) const override;
 
 			std::vector< std::pair<std::wstring, core_id> > IGetAvailableCiphers(void) const override;
 			core_id IGetCipher(void) const override;

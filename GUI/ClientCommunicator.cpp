@@ -27,11 +27,11 @@ namespace KAA
 		m_communicator(KAA::FileSecurity::GetClassObject())
 		{}
 
-		void ClientCommunicator::IEncryptFile(const std::wstring& file_to_encrypt_path)
+		void ClientCommunicator::IEncryptFile(const filesystem::path::file& path)
 		{
 			try
 			{
-				return m_communicator->EncryptFile(file_to_encrypt_path);
+				return m_communicator->EncryptFile(path);
 			}
 			catch(const failure& error)
 			{
@@ -40,11 +40,11 @@ namespace KAA
 			}
 		}
 
-		void ClientCommunicator::IDecryptFile(const std::wstring& file_to_decrypt_path)
+		void ClientCommunicator::IDecryptFile(const filesystem::path::file& path)
 		{
 			try
 			{
-				return m_communicator->DecryptFile(file_to_decrypt_path);
+				return m_communicator->DecryptFile(path);
 			}
 			catch(const failure& error)
 			{
@@ -53,7 +53,7 @@ namespace KAA
 			}
 		}
 
-		bool ClientCommunicator::IIsFileEncrypted(const std::wstring& path) const
+		bool ClientCommunicator::IIsFileEncrypted(const filesystem::path::file& path) const
 		{
 			try
 			{
