@@ -32,11 +32,11 @@ extern KAA::module_context core_dll;
 
 namespace
 {
-	void RemoveKey(const std::shared_ptr<KAA::filesystem::driver> filesystem, const std::wstring& key_file_path)
+	void RemoveKeyFile(const std::shared_ptr<KAA::filesystem::driver> filesystem, const KAA::filesystem::path::file& path)
 	{
 		KAA::filesystem::driver::permission write_only(true, false);
-		filesystem->set_file_permissions(key_file_path, write_only);
-		filesystem->remove_file(key_file_path);
+		filesystem->set_file_permissions(path.to_wstring(), write_only);
+		filesystem->remove_file(path.to_wstring());
 	}
 }
 
@@ -84,7 +84,7 @@ namespace KAA
 			{
 				OperationStarted(resources::load_string(IDS_GENERATING_KEY, core_dll.get_module_handle()));
 				const std::auto_ptr< std::vector<uint8_t> > key_data(GenerateKey(file_to_encrypt_size));
-				CreateKeyFile(key_path.to_wstring(), *key_data);
+				CreateKeyFile(key_path, *key_data);
 				total_processed += file_to_encrypt_size;
 				OverallProgress(total_processed, overall_size);
 			}
@@ -114,7 +114,7 @@ namespace KAA
 			}
 
 			OperationStarted(resources::load_string(IDS_REMOVING_KEY, core_dll.get_module_handle()));
-			RemoveKey(m_filesystem, key_path.to_wstring());
+			RemoveKeyFile(m_filesystem, key_path);
 			total_processed += file_to_decrypt_size;
 			OverallProgress(total_processed, overall_size);
 		}
@@ -169,18 +169,18 @@ namespace KAA
 			return buffer;
 		}
 
-		void AbsoluteSecurityCore::CreateKeyFile(const std::wstring& path, const std::vector<uint8_t>& data)
+		void AbsoluteSecurityCore::CreateKeyFile(const filesystem::path::file& path, const std::vector<uint8_t>& data)
 		{
 			const KAA::filesystem::driver::create_mode persistent_not_exist(true, false, false);
 			const KAA::filesystem::driver::mode sequential_write_only(true, false);
 			const KAA::filesystem::driver::share exclusive_access(false, false);
 			const KAA::filesystem::driver::permission read_only_attribute(false, true);
-			std::auto_ptr<KAA::filesystem::file> key(m_filesystem->create_file(path, persistent_not_exist, sequential_write_only, exclusive_access, read_only_attribute));
+			std::auto_ptr<KAA::filesystem::file> key(m_filesystem->create_file(path.to_wstring(), persistent_not_exist, sequential_write_only, exclusive_access, read_only_attribute));
 			const size_t bytes_written = key->write(&data[0], data.size());
 			if(bytes_written != data.size())
 			{
 				key.reset();
-				m_filesystem->remove_file(path);
+				m_filesystem->remove_file(path.to_wstring());
 				throw std::runtime_error(__FUNCTION__); // FUTURE: KAA: remove incomplete file : whose responsibility?
 			}
 		}

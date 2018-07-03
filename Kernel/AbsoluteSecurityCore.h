@@ -55,7 +55,7 @@ namespace KAA
 			CoreProgressHandler* ISetProgressHandler(CoreProgressHandler*) override;
 
 			std::auto_ptr< std::vector<uint8_t> > GenerateKey(size_t bytes_to_generate);
-			void CreateKeyFile(const std::wstring& path, const std::vector<uint8_t>& data);
+			void CreateKeyFile(const filesystem::path::file& path, const std::vector<uint8_t>& data);
 
 			progress_state OperationStarted(const std::wstring& name);
 			progress_state ChunkProcessed(uint64_t total_bytes_processed, uint64_t total_file_size);
