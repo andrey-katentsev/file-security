@@ -274,13 +274,13 @@ namespace KAA
 			const size_t overall_size = 3*file_size;
 
 			OperationStarted(resources::load_string(IDS_CREATING_BACKUP, core_dll.get_module_handle()));
-			const auto backup_file_path = CreateFileBackup(path.to_wstring());
+			const auto backup = BackupFile(path);
 
 			OperationStarted(resources::load_string(IDS_ENCRYPTING_FILE, core_dll.get_module_handle()));
 			m_core->EncryptFile(path);
 
 			OperationStarted(resources::load_string(IDS_WIPING_FILE, core_dll.get_module_handle()));
-			m_wiper->wipe_file(backup_file_path);
+			m_wiper->wipe_file(backup.to_wstring());
 		}
 
 		void ServerCommunicator::IDecryptFile(const filesystem::path::file& path)
@@ -289,13 +289,13 @@ namespace KAA
 			const size_t overall_size = 3*file_size;
 
 			OperationStarted(resources::load_string(IDS_CREATING_BACKUP, core_dll.get_module_handle()));
-			const auto backup_file_path = CreateFileBackup(path.to_wstring());
+			const auto backup = BackupFile(path);
 
 			OperationStarted(resources::load_string(IDS_DECRYPTING_FILE, core_dll.get_module_handle()));
 			m_core->DecryptFile(path);
 
 			OperationStarted(resources::load_string(IDS_REMOVING_BACKUP, core_dll.get_module_handle()));
-			m_filesystem->remove_file(backup_file_path);
+			m_filesystem->remove_file(backup.to_wstring());
 		}
 
 		bool ServerCommunicator::IIsFileEncrypted(const filesystem::path::file& path) const
@@ -396,24 +396,24 @@ namespace KAA
 			return previous;
 		}
 
-		std::wstring ServerCommunicator::CreateFileBackup(const std::wstring& path)
+		filesystem::path::file ServerCommunicator::BackupFile(const filesystem::path::file& path)
 		{
-			const std::wstring working_directory(KAA::filesystem::split_directory(path));
-			const std::wstring backup_file_path(working_directory + m_filesystem->get_temp_filename());
+			const filesystem::path::directory working_directory { KAA::filesystem::split_directory(path.to_wstring()) };
+			const auto backup_file_path = working_directory + m_filesystem->get_temp_filename();
 			CopyFile(path, backup_file_path); // FUTURE: KAA: remove incomplete file.
 			return backup_file_path;
 		}
 
-		void ServerCommunicator::CopyFile(const std::wstring& source_path, const std::wstring& destination_path)
+		void ServerCommunicator::CopyFile(const filesystem::path::file& source_path, const filesystem::path::file& destination_path)
 		{
 			const KAA::filesystem::driver::mode sequential_read_only(false, true);
 			const KAA::filesystem::driver::share exclusive_access(false, false);
-			const std::auto_ptr<KAA::filesystem::file> source(m_filesystem->open_file(source_path, sequential_read_only, exclusive_access));
+			const std::auto_ptr<KAA::filesystem::file> source(m_filesystem->open_file(source_path.to_wstring(), sequential_read_only, exclusive_access));
 
 			const KAA::filesystem::driver::create_mode persistent_not_exists;
 			const KAA::filesystem::driver::mode sequential_write_only(true, false);
 			const KAA::filesystem::driver::permission allow_read_write;
-			const std::auto_ptr<KAA::filesystem::file> destination(m_filesystem->create_file(destination_path, persistent_not_exists, sequential_write_only, exclusive_access, allow_read_write));
+			const std::auto_ptr<KAA::filesystem::file> destination(m_filesystem->create_file(destination_path.to_wstring(), persistent_not_exists, sequential_write_only, exclusive_access, allow_read_write));
 
 			{
 				const size_t chunk_size = (64 * 1024) - 1;

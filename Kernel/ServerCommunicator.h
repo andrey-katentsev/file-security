@@ -69,8 +69,8 @@ namespace KAA
 
 			CommunicatorProgressHandler* ISetProgressHandler(CommunicatorProgressHandler*) override;
 
-			std::wstring CreateFileBackup(const std::wstring& path);
-			void CopyFile(const std::wstring& source_path, const std::wstring& destination_path);
+			filesystem::path::file BackupFile(const filesystem::path::file& path);
+			void CopyFile(const filesystem::path::file& source, const filesystem::path::file& destination);
 
 			progress_state OperationStarted(const std::wstring& name);
 			progress_state PortionProcessed(uint64_t total_processed, uint64_t total_size);
