@@ -23,17 +23,17 @@ namespace KAA
 			return ISetKeyStoragePath(path);
 		}
 
-		void Core::EncryptFile(const std::wstring& path)
+		void Core::EncryptFile(const filesystem::path::file& path)
 		{
 			return IEncryptFile(path);
 		}
 
-		void Core::DecryptFile(const std::wstring& path)
+		void Core::DecryptFile(const filesystem::path::file& path)
 		{
 			return IDecryptFile(path);
 		}
 
-		bool Core::IsFileEncrypted(const std::wstring& path) const
+		bool Core::IsFileEncrypted(const filesystem::path::file& path) const
 		{
 			return IIsFileEncrypted(path);
 		}

@@ -47,10 +47,10 @@ namespace KAA
 			filesystem::path::directory IGetKeyStoragePath(void) const override;
 			void ISetKeyStoragePath(const filesystem::path::directory&) override;
 
-			void IEncryptFile(const std::wstring&) override;
-			void IDecryptFile(const std::wstring&) override;
+			void IEncryptFile(const filesystem::path::file&) override;
+			void IDecryptFile(const filesystem::path::file&) override;
 
-			bool IIsFileEncrypted(const std::wstring& path) const override;
+			bool IIsFileEncrypted(const filesystem::path::file&) const override;
 
 			CoreProgressHandler* ISetProgressHandler(CoreProgressHandler*) override;
 

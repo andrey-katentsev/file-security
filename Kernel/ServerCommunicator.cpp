@@ -283,7 +283,7 @@ namespace KAA
 			const auto backup_file_path = CreateFileBackup(path.to_wstring());
 
 			OperationStarted(resources::load_string(IDS_ENCRYPTING_FILE, core_dll.get_module_handle()));
-			m_core->EncryptFile(path.to_wstring());
+			m_core->EncryptFile(path);
 
 			OperationStarted(resources::load_string(IDS_WIPING_FILE, core_dll.get_module_handle()));
 			m_wiper->wipe_file(backup_file_path);
@@ -298,7 +298,7 @@ namespace KAA
 			const auto backup_file_path = CreateFileBackup(path.to_wstring());
 
 			OperationStarted(resources::load_string(IDS_DECRYPTING_FILE, core_dll.get_module_handle()));
-			m_core->DecryptFile(path.to_wstring());
+			m_core->DecryptFile(path);
 
 			OperationStarted(resources::load_string(IDS_REMOVING_BACKUP, core_dll.get_module_handle()));
 			m_filesystem->remove_file(backup_file_path);
@@ -306,7 +306,7 @@ namespace KAA
 
 		bool ServerCommunicator::IIsFileEncrypted(const filesystem::path::file& path) const
 		{
-			return m_core->IsFileEncrypted(path.to_wstring());
+			return m_core->IsFileEncrypted(path);
 		}
 
 		// FIX: KAA: implement communicator.

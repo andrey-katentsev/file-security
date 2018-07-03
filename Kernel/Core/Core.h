@@ -9,8 +9,6 @@
 
 #pragma once
 
-#include <string>
-
 #include "KAA/include/filesystem/path.h"
 
 namespace KAA
@@ -27,10 +25,10 @@ namespace KAA
 			filesystem::path::directory GetKeyStoragePath(void) const;
 			void SetKeyStoragePath(const filesystem::path::directory&);
 
-			void EncryptFile(const std::wstring& path);
-			void DecryptFile(const std::wstring& path);
+			void EncryptFile(const filesystem::path::file& path);
+			void DecryptFile(const filesystem::path::file& path);
 
-			bool IsFileEncrypted(const std::wstring& path) const;
+			bool IsFileEncrypted(const filesystem::path::file& path) const;
 
 			CoreProgressHandler* SetProgressHandler(CoreProgressHandler*);
 
@@ -38,10 +36,10 @@ namespace KAA
 			virtual filesystem::path::directory IGetKeyStoragePath(void) const = 0;
 			virtual void ISetKeyStoragePath(const filesystem::path::directory&) = 0;
 
-			virtual void IEncryptFile(const std::wstring& path) = 0;
-			virtual void IDecryptFile(const std::wstring& path) = 0;
+			virtual void IEncryptFile(const filesystem::path::file&) = 0;
+			virtual void IDecryptFile(const filesystem::path::file&) = 0;
 
-			virtual bool IIsFileEncrypted(const std::wstring& path) const = 0;
+			virtual bool IIsFileEncrypted(const filesystem::path::file&) const = 0;
 
 			virtual CoreProgressHandler* ISetProgressHandler(CoreProgressHandler*) = 0;
 		};

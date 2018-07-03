@@ -72,14 +72,12 @@ namespace KAA
 			m_key_storage->SetPath(path);
 		}
 
-		void AbsoluteSecurityCore::IEncryptFile(const std::wstring& file_to_encrypt_path)
+		void AbsoluteSecurityCore::IEncryptFile(const filesystem::path::file& path)
 		{
-			const auto path = filesystem::path::file { file_to_encrypt_path };
-
 			OperationStarted(resources::load_string(IDS_RETRIEVING_KEY_PATH, core_dll.get_module_handle()));
 			const auto key_path = m_key_storage->GetKeyPathForSpecifiedPath(path);
 
-			const _fsize_t file_to_encrypt_size = get_file_size(*m_filesystem, file_to_encrypt_path);
+			const auto file_to_encrypt_size = get_file_size(*m_filesystem, path.to_wstring());
 			const size_t overall_size = 2*file_to_encrypt_size;
 			size_t total_processed = 0;
 
@@ -99,14 +97,12 @@ namespace KAA
 			}
 		}
 
-		void AbsoluteSecurityCore::IDecryptFile(const std::wstring& file_to_decrypt_path)
+		void AbsoluteSecurityCore::IDecryptFile(const filesystem::path::file& path)
 		{
-			const auto path = filesystem::path::file { file_to_decrypt_path };
-
 			OperationStarted(resources::load_string(IDS_RETRIEVING_KEY_PATH, core_dll.get_module_handle()));
 			const auto key_path = m_key_storage->GetKeyPathForSpecifiedPath(path);
 
-			const _fsize_t file_to_decrypt_size = get_file_size(*m_filesystem, file_to_decrypt_path);
+			const auto file_to_decrypt_size = get_file_size(*m_filesystem, path.to_wstring());
 			const size_t overall_size = 2*file_to_decrypt_size;
 			size_t total_processed = 0;
 
@@ -123,9 +119,9 @@ namespace KAA
 			OverallProgress(total_processed, overall_size);
 		}
 
-		bool AbsoluteSecurityCore::IIsFileEncrypted(const std::wstring& path) const
+		bool AbsoluteSecurityCore::IIsFileEncrypted(const filesystem::path::file& path) const
 		{
-			const auto key_file_path = m_key_storage->GetKeyPathForSpecifiedPath(filesystem::path::file { path });
+			const auto key_file_path = m_key_storage->GetKeyPathForSpecifiedPath(path);
 			try
 			{
 				m_filesystem->get_file_permissions(key_file_path.to_wstring());
