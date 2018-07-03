@@ -28,42 +28,36 @@ namespace KAA
 		{}
 
 		void ClientCommunicator::IEncryptFile(const filesystem::path::file& path)
+		try
 		{
-			try
-			{
-				return m_communicator->EncryptFile(path);
-			}
-			catch(const failure& error)
-			{
-				const std::wstring message(CombineMessage(IDS_UNABLE_TO_COMPLETE_ENCRYPT_FILE_OPERATION, error.get_system_message()));
-				throw KAA::FileSecurity::UserReport(message, KAA::FileSecurity::UserReport::warning);
-			}
+			return m_communicator->EncryptFile(path);
+		}
+		catch(const failure& error)
+		{
+			const std::wstring message(CombineMessage(IDS_UNABLE_TO_COMPLETE_ENCRYPT_FILE_OPERATION, error.get_system_message()));
+			throw KAA::FileSecurity::UserReport(message, KAA::FileSecurity::UserReport::warning);
 		}
 
 		void ClientCommunicator::IDecryptFile(const filesystem::path::file& path)
+		try
 		{
-			try
-			{
-				return m_communicator->DecryptFile(path);
-			}
-			catch(const failure& error)
-			{
-				const std::wstring message(CombineMessage(IDS_UNABLE_TO_COMPLETE_DECRYPT_FILE_OPERATION, error.get_system_message()));
-				throw KAA::FileSecurity::UserReport(message, KAA::FileSecurity::UserReport::warning);
-			}
+			return m_communicator->DecryptFile(path);
+		}
+		catch(const failure& error)
+		{
+			const std::wstring message(CombineMessage(IDS_UNABLE_TO_COMPLETE_DECRYPT_FILE_OPERATION, error.get_system_message()));
+			throw KAA::FileSecurity::UserReport(message, KAA::FileSecurity::UserReport::warning);
 		}
 
 		bool ClientCommunicator::IIsFileEncrypted(const filesystem::path::file& path) const
+		try
 		{
-			try
-			{
-				return m_communicator->IsFileEncrypted(path);
-			}
-			catch(const failure& error)
-			{
-				const std::wstring message(CombineMessage(IDS_UNABLE_TO_DETERMINE_FILE_STATE, error.get_system_message()));
-				throw KAA::FileSecurity::UserReport(message, KAA::FileSecurity::UserReport::warning);
-			}
+			return m_communicator->IsFileEncrypted(path);
+		}
+		catch(const failure& error)
+		{
+			const std::wstring message(CombineMessage(IDS_UNABLE_TO_DETERMINE_FILE_STATE, error.get_system_message()));
+			throw KAA::FileSecurity::UserReport(message, KAA::FileSecurity::UserReport::warning);
 		}
 
 		std::vector< std::pair<std::wstring, core_id> > ClientCommunicator::IGetAvailableCiphers(void) const
@@ -97,57 +91,49 @@ namespace KAA
 		}
 
 		filesystem::path::directory ClientCommunicator::IGetKeyStoragePath(void) const
+		try
 		{
-			try
-			{
-				return m_communicator->GetKeyStoragePath();
-			}
-			catch(const failure& error)
-			{
-				const std::wstring message(CombineMessage(IDS_UNABLE_TO_RETRIEVE_KEY_STORAGE_PATH, error.get_system_message()));
-				throw KAA::FileSecurity::UserReport(message, KAA::FileSecurity::UserReport::error);
-			}
+			return m_communicator->GetKeyStoragePath();
+		}
+		catch(const failure& error)
+		{
+			const std::wstring message(CombineMessage(IDS_UNABLE_TO_RETRIEVE_KEY_STORAGE_PATH, error.get_system_message()));
+			throw KAA::FileSecurity::UserReport(message, KAA::FileSecurity::UserReport::error);
 		}
 
 		void ClientCommunicator::ISetKeyStoragePath(const filesystem::path::directory& path)
+		try
 		{
-			try
-			{
-				return m_communicator->SetKeyStoragePath(path);
-			}
-			catch(const failure& error)
-			{
-				const std::wstring message_format(CombineMessage(IDS_UNABLE_TO_CREATE_KEY_STORAGE_AT_FORMAT, error.get_system_message()));
-				const auto message = KAA::format_string(message_format, path.to_wstring().c_str());
-				throw KAA::FileSecurity::UserReport(message, KAA::FileSecurity::UserReport::error);
-			}
+			return m_communicator->SetKeyStoragePath(path);
+		}
+		catch(const failure& error)
+		{
+			const std::wstring message_format(CombineMessage(IDS_UNABLE_TO_CREATE_KEY_STORAGE_AT_FORMAT, error.get_system_message()));
+			const auto message = KAA::format_string(message_format, path.to_wstring().c_str());
+			throw KAA::FileSecurity::UserReport(message, KAA::FileSecurity::UserReport::error);
 		}
 
 		CommunicatorProgressHandler* ClientCommunicator::ISetProgressHandler(CommunicatorProgressHandler* handler)
+		try
 		{
-			try
-			{
-				return m_communicator->SetProgressHandler(handler);
-			}
-			catch(const failure& error)
-			{
-				const std::wstring message(CombineMessage(IDS_UNABLE_TO_SETUP_PROGRESS_HANDLER, error.get_system_message()));
-				throw KAA::FileSecurity::UserReport(message, KAA::FileSecurity::UserReport::error);
-			}
+			return m_communicator->SetProgressHandler(handler);
+		}
+		catch(const failure& error)
+		{
+			const std::wstring message(CombineMessage(IDS_UNABLE_TO_SETUP_PROGRESS_HANDLER, error.get_system_message()));
+			throw KAA::FileSecurity::UserReport(message, KAA::FileSecurity::UserReport::error);
 		}
 
 		Communicator& GetCommunicator(void)
+		try
 		{
-			try
-			{
-				static ClientCommunicator dll_api;
-				return dll_api;
-			}
-			catch(const failure& error)
-			{
-				const std::wstring message(CombineMessage(IDS_UNABLE_TO_CREATE_COMMUNICATOR, error.get_system_message()));
-				throw KAA::FileSecurity::UserReport(message, KAA::FileSecurity::UserReport::error);
-			}
+			static ClientCommunicator dll_api;
+			return dll_api;
+		}
+		catch(const failure& error)
+		{
+			const std::wstring message(CombineMessage(IDS_UNABLE_TO_CREATE_COMMUNICATOR, error.get_system_message()));
+			throw KAA::FileSecurity::UserReport(message, KAA::FileSecurity::UserReport::error);
 		}
 	}
 }

@@ -3,6 +3,7 @@
 - ...
 
 РАЗРАБОТКА:
+- progress : 0-100%
 - шифрование на основе CryptProtectData
 - перенос ключей, при смене папки хранилища
 - перейти на KAA::filesystem::path
@@ -35,7 +36,7 @@
 - добавить C++11 код 
 	- FUTURE: C++11: = delete
 	- заменить std::auto_ptr на std::unique_ptr
-- охватывающий try-catch для функций
+	- заменить throw() на noexcept
 
 [Linker :: General :: Output]
 $(OutDir)\$(ProjectName).exe
