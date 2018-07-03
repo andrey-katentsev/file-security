@@ -6,7 +6,7 @@ namespace KAA
 {
 	namespace FileSecurity
 	{
-		class MD5BasedKeyStorage : public KeyStorage
+		class MD5BasedKeyStorage final : public KeyStorage
 		{
 		public:
 			explicit MD5BasedKeyStorage(const filesystem::path::directory& key_storage_path);

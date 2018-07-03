@@ -13,7 +13,7 @@ namespace KAA
 		// THROWS: UserReport
 		// SAFE GUARANTEE: basic
 		// SIDE EFFECTS: -
-		class ClientCommunicator : public Communicator
+		class ClientCommunicator final : public Communicator
 		{
 		public:
 			ClientCommunicator();

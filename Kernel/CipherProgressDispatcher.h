@@ -10,7 +10,7 @@ namespace KAA
 	{
 		class CoreProgressHandler;
 
-		class CipherProgressDispatcher : public FileProgressHandler
+		class CipherProgressDispatcher final : public FileProgressHandler
 		{
 		public:
 			CipherProgressDispatcher();

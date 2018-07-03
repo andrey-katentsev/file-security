@@ -30,7 +30,7 @@ namespace
 		return static_cast<unsigned short>(complete * 100);
 	}
 
-	class ProgressDialogHandler : public KAA::FileSecurity::CommunicatorProgressHandler
+	class ProgressDialogHandler final : public KAA::FileSecurity::CommunicatorProgressHandler
 	{
 	public:
 		ProgressDialogHandler(const HWND dialog) :

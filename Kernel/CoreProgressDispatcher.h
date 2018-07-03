@@ -10,7 +10,7 @@ namespace KAA
 	{
 		class CommunicatorProgressHandler;
 
-		class CoreProgressDispatcher : public CoreProgressHandler
+		class CoreProgressDispatcher final : public CoreProgressHandler
 		{
 		public:
 			CoreProgressDispatcher();

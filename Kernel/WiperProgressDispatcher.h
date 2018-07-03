@@ -9,7 +9,7 @@ namespace KAA
 	{
 		class CommunicatorProgressHandler;
 
-		class WiperProgressDispatcher : public filesystem::file_progress_handler
+		class WiperProgressDispatcher final : public filesystem::file_progress_handler
 		{
 		public:
 			WiperProgressDispatcher();

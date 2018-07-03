@@ -29,7 +29,7 @@ namespace KAA
 		class CoreProgressDispatcher;
 		class WiperProgressDispatcher;
 
-		class ServerCommunicator : public Communicator
+		class ServerCommunicator final : public Communicator
 		{
 		public:
 			explicit ServerCommunicator(std::shared_ptr<filesystem::driver>);
