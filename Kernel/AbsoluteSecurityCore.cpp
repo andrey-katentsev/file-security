@@ -180,7 +180,7 @@ namespace KAA
 			if(bytes_written != data.size())
 			{
 				key.reset();
-				m_filesystem->remove_file(path.to_wstring());
+				RemoveKeyFile(m_filesystem, path);
 				throw std::runtime_error(__FUNCTION__); // FUTURE: KAA: remove incomplete file : whose responsibility?
 			}
 		}
