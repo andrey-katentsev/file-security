@@ -106,13 +106,13 @@ namespace
 
 	void EncryptFileTask(void* context)
 	{
-		const std::wstring* path = reinterpret_cast<const std::wstring*>(context);
+		const auto path = reinterpret_cast<const std::wstring*>(context);
 		GetCommunicator().EncryptFile(KAA::filesystem::path::file { *path });
 	}
 
 	void DecryptFileTask(void* context)
 	{
-		const std::wstring* path = reinterpret_cast<const std::wstring*>(context);
+		const auto path = reinterpret_cast<const std::wstring*>(context);
 		GetCommunicator().DecryptFile(KAA::filesystem::path::file { *path });
 	}
 
@@ -149,9 +149,9 @@ namespace
 								const DWORD code = ::CommDlgExtendedError();
 								if(0 != code) // 0 == user closed or canceled the dialog box
 								{
-									const std::wstring message_format(KAA::resources::load_string(IDS_GET_OPEN_FILE_NAME_DIALOG_FAILED_FORMAT));
-									const std::wstring message_box_title(KAA::resources::load_string(IDS_GET_OPEN_FILE_NAME_DIALOG_FAILED_TITLE));
-									const std::wstring message(KAA::format_string(message_format, code));
+									const auto message_format = KAA::resources::load_string(IDS_GET_OPEN_FILE_NAME_DIALOG_FAILED_FORMAT);
+									const auto message_box_title = KAA::resources::load_string(IDS_GET_OPEN_FILE_NAME_DIALOG_FAILED_TITLE);
+									const auto message = KAA::format_string(message_format, code);
 									::MessageBoxW(dialog, message.c_str(), message_box_title.c_str(), MB_OK | MB_ICONEXCLAMATION);
 								}
 							}
@@ -184,13 +184,13 @@ namespace
 						}
 						catch(const KAA::FileSecurity::UserReport& report)
 						{
-							const std::wstring message_box_title(KAA::resources::load_string(IDS_FILE_ENCRYPTING));
+							const auto message_box_title = KAA::resources::load_string(IDS_FILE_ENCRYPTING);
 							::MessageBoxW(dialog, report.format_message().c_str(), message_box_title.c_str(), MB_OK | ToIconID(report.severity()));
 						}
 						catch(const KAA::windows_api_failure& error)
 						{
-							const std::wstring message_box_title(KAA::resources::load_string(IDS_FILE_ENCRYPTING));
-							const std::wstring message(KAA::resources::load_string(IDS_UNABLE_TO_ACCESS_SYSTEM_REGISTRY));
+							const auto message_box_title = KAA::resources::load_string(IDS_FILE_ENCRYPTING);
+							const auto message = KAA::resources::load_string(IDS_UNABLE_TO_ACCESS_SYSTEM_REGISTRY);
 							// FUTURE: KAA: combine message.
 							::MessageBoxW(dialog, (message + L'\n' + error.get_system_message()).c_str(), message_box_title.c_str(), MB_OK | MB_ICONEXCLAMATION);
 						}
@@ -217,7 +217,7 @@ namespace
 						}
 						catch(const KAA::FileSecurity::UserReport& report)
 						{
-							const std::wstring message_box_title(KAA::resources::load_string(IDS_FILE_DECRYPTING));
+							const auto message_box_title = KAA::resources::load_string(IDS_FILE_DECRYPTING);
 							::MessageBoxW(dialog, report.format_message().c_str(), message_box_title.c_str(), MB_OK | ToIconID(report.severity()));
 						}
 					} break;
@@ -237,7 +237,7 @@ namespace
 						}
 						catch(const KAA::FileSecurity::UserReport& report)
 						{
-							const std::wstring message_box_title(KAA::resources::load_string(IDS_FILE_STATE_REQUEST));
+							const auto message_box_title = KAA::resources::load_string(IDS_FILE_STATE_REQUEST);
 							::MessageBoxW(dialog, report.format_message().c_str(), message_box_title.c_str(), MB_OK | ToIconID(report.severity()));
 						}
 					} break;

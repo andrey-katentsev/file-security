@@ -82,7 +82,7 @@ namespace
 		{
 		case BFFM_INITIALIZED:
 			{
-				const std::wstring* initial_directory = reinterpret_cast<const std::wstring*>(user_data);
+				const auto initial_directory = reinterpret_cast<const std::wstring*>(user_data);
 				enum { use_a_string = TRUE, use_a_PIDL = FALSE };
 				::SendMessageW(dialog, BFFM_SETEXPANDED, use_a_string, reinterpret_cast<LPARAM>(initial_directory->c_str()));
 				::SendMessageW(dialog, BFFM_SETSELECTION, use_a_string, reinterpret_cast<LPARAM>(initial_directory->c_str()));
@@ -109,7 +109,7 @@ namespace
 				{
 				case BN_CLICKED:
 					{
-						const std::wstring browse_for_key_storage_path_dialog_title(KAA::resources::load_string(IDS_BROWSE_FOR_KEY_STORAGE_PATH_DIALOG_TITLE));
+						const auto browse_for_key_storage_path_dialog_title = KAA::resources::load_string(IDS_BROWSE_FOR_KEY_STORAGE_PATH_DIALOG_TITLE);
 
 						BROWSEINFOW setup = { 0 };
 						setup.hwndOwner = dialog;
@@ -165,15 +165,16 @@ namespace
 							}
 							catch(const KAA::FileSecurity::UserReport& report)
 							{
-								const std::wstring message_box_title(KAA::resources::load_string(IDS_SETTINGS));
+								const auto message_box_title = KAA::resources::load_string(IDS_SETTINGS);
 								::MessageBoxW(dialog, report.format_message().c_str(), message_box_title.c_str(), MB_OK | ToIconID(report.severity()));
 							}
 						}
 						else
 						{
-							const std::wstring key_storage_path_edit_ballon_tip_title(KAA::resources::load_string(IDS_KEY_STORAGE));
-							const std::wstring key_storage_path_edit_ballon_tip_text(KAA::resources::load_string(IDS_EMPTY_KEY_STORAGE_PATH_PROMPT));
+							const auto key_storage_path_edit_ballon_tip_title = KAA::resources::load_string(IDS_KEY_STORAGE);
+							const auto key_storage_path_edit_ballon_tip_text = KAA::resources::load_string(IDS_EMPTY_KEY_STORAGE_PATH_PROMPT);
 
+							// FUTURE: KAA: encapsulate to the ShowBallonTip.
 							EDITBALLOONTIP information = { 0 };
 							information.cbStruct = sizeof(EDITBALLOONTIP);
 							information.pszTitle = key_storage_path_edit_ballon_tip_title.c_str();
@@ -272,7 +273,8 @@ namespace
 			}
 			catch(const KAA::FileSecurity::UserReport& report)
 			{
-				const std::wstring message_box_title(KAA::resources::load_string(IDS_WIPE_METHODS_COMBO_BOX_INITIALIZING));
+				// DEFECT: KAA: DRY violation : handle user report.
+				const auto message_box_title = KAA::resources::load_string(IDS_WIPE_METHODS_COMBO_BOX_INITIALIZING);
 				::MessageBoxW(dialog, report.format_message().c_str(), message_box_title.c_str(), MB_OK | ToIconID(report.severity()));
 			}
 		}
@@ -283,7 +285,7 @@ namespace
 		}
 		catch(const KAA::FileSecurity::UserReport& report)
 		{
-			const std::wstring message_box_title(KAA::resources::load_string(IDS_KEY_STORAGE_PATH_EDIT_INITIALIZING));
+			const auto message_box_title = KAA::resources::load_string(IDS_KEY_STORAGE_PATH_EDIT_INITIALIZING);
 			::MessageBoxW(dialog, report.format_message().c_str(), message_box_title.c_str(), MB_OK | ToIconID(report.severity()));
 		}
 		{

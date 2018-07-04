@@ -34,7 +34,8 @@ namespace KAA
 		}
 		catch(const failure& error)
 		{
-			const std::wstring message(CombineMessage(IDS_UNABLE_TO_COMPLETE_ENCRYPT_FILE_OPERATION, error.get_system_message()));
+			// DEFECT: KAA: DRY violation : re-throw.
+			const auto message = CombineMessage(IDS_UNABLE_TO_COMPLETE_ENCRYPT_FILE_OPERATION, error.get_system_message());
 			throw KAA::FileSecurity::UserReport(message, KAA::FileSecurity::UserReport::warning);
 		}
 
@@ -45,7 +46,7 @@ namespace KAA
 		}
 		catch(const failure& error)
 		{
-			const std::wstring message(CombineMessage(IDS_UNABLE_TO_COMPLETE_DECRYPT_FILE_OPERATION, error.get_system_message()));
+			const auto message = CombineMessage(IDS_UNABLE_TO_COMPLETE_DECRYPT_FILE_OPERATION, error.get_system_message());
 			throw KAA::FileSecurity::UserReport(message, KAA::FileSecurity::UserReport::warning);
 		}
 
@@ -56,7 +57,7 @@ namespace KAA
 		}
 		catch(const failure& error)
 		{
-			const std::wstring message(CombineMessage(IDS_UNABLE_TO_DETERMINE_FILE_STATE, error.get_system_message()));
+			const auto message = CombineMessage(IDS_UNABLE_TO_DETERMINE_FILE_STATE, error.get_system_message());
 			throw KAA::FileSecurity::UserReport(message, KAA::FileSecurity::UserReport::warning);
 		}
 
@@ -97,7 +98,7 @@ namespace KAA
 		}
 		catch(const failure& error)
 		{
-			const std::wstring message(CombineMessage(IDS_UNABLE_TO_RETRIEVE_KEY_STORAGE_PATH, error.get_system_message()));
+			const auto message = CombineMessage(IDS_UNABLE_TO_RETRIEVE_KEY_STORAGE_PATH, error.get_system_message());
 			throw KAA::FileSecurity::UserReport(message, KAA::FileSecurity::UserReport::error);
 		}
 
@@ -108,7 +109,7 @@ namespace KAA
 		}
 		catch(const failure& error)
 		{
-			const std::wstring message_format(CombineMessage(IDS_UNABLE_TO_CREATE_KEY_STORAGE_AT_FORMAT, error.get_system_message()));
+			const auto message_format = CombineMessage(IDS_UNABLE_TO_CREATE_KEY_STORAGE_AT_FORMAT, error.get_system_message());
 			const auto message = KAA::format_string(message_format, path.to_wstring().c_str());
 			throw KAA::FileSecurity::UserReport(message, KAA::FileSecurity::UserReport::error);
 		}
@@ -120,7 +121,7 @@ namespace KAA
 		}
 		catch(const failure& error)
 		{
-			const std::wstring message(CombineMessage(IDS_UNABLE_TO_SETUP_PROGRESS_HANDLER, error.get_system_message()));
+			const auto message = CombineMessage(IDS_UNABLE_TO_SETUP_PROGRESS_HANDLER, error.get_system_message());
 			throw KAA::FileSecurity::UserReport(message, KAA::FileSecurity::UserReport::error);
 		}
 
@@ -132,7 +133,7 @@ namespace KAA
 		}
 		catch(const failure& error)
 		{
-			const std::wstring message(CombineMessage(IDS_UNABLE_TO_CREATE_COMMUNICATOR, error.get_system_message()));
+			const auto message = CombineMessage(IDS_UNABLE_TO_CREATE_COMMUNICATOR, error.get_system_message());
 			throw KAA::FileSecurity::UserReport(message, KAA::FileSecurity::UserReport::error);
 		}
 	}

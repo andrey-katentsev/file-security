@@ -91,11 +91,11 @@ namespace
 			}
 			// DEFECT: KAA: DRY violation.
 			{
-				const std::wstring message(KAA::resources::load_string(task->success_message_id));
+				const auto message = KAA::resources::load_string(task->success_message_id);
 				::SetDlgItemTextW(dialog, IDC_PROGRESS_CURRENT_OPERATION_STATIC, message.c_str());
 			}
 			{
-				const std::wstring text(KAA::resources::load_string(IDS_FINISH_BUTTON_TITLE));
+				const auto text = KAA::resources::load_string(IDS_FINISH_BUTTON_TITLE);
 				::SetDlgItemTextW(dialog, IDC_PROGRESS_STOP_BUTTON, text.c_str());
 			}
 		}
@@ -104,15 +104,15 @@ namespace
 			//result = IDABORT;
 			g_result = IDCANCEL;
 
-			const std::wstring title(KAA::resources::load_string(task->operation_name_id));
+			const auto title = KAA::resources::load_string(task->operation_name_id);
 			::MessageBoxW(dialog, report.format_message().c_str(), title.c_str(), MB_OK | ToIconID(report.severity()));
 
 			{
-				const std::wstring message(KAA::resources::load_string(task->failure_message_id));
+				const auto message = KAA::resources::load_string(task->failure_message_id);
 				::SetDlgItemTextW(dialog, IDC_PROGRESS_CURRENT_OPERATION_STATIC, message.c_str());
 			}
 			{
-				const std::wstring text(KAA::resources::load_string(IDS_CLOSE_BUTTON_TITLE));
+				const auto text = KAA::resources::load_string(IDS_CLOSE_BUTTON_TITLE);
 				::SetDlgItemTextW(dialog, IDC_PROGRESS_STOP_BUTTON, text.c_str());
 			}
 		}
