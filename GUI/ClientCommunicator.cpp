@@ -17,6 +17,12 @@ namespace
 	{
 		return KAA::resources::load_string(requested_string_index) + L'\n' + system_message;
 	}
+
+	__declspec(noreturn) void ThrowUserReport(const KAA::failure& error, const KAA::FileSecurity::UserReport::severity_t severity, const UINT text_id)
+	{
+		const auto message = CombineMessage(text_id, error.get_system_message());
+		throw KAA::FileSecurity::UserReport(message, severity);
+	}
 }
 
 namespace KAA
@@ -34,9 +40,7 @@ namespace KAA
 		}
 		catch(const failure& error)
 		{
-			// DEFECT: KAA: DRY violation : re-throw.
-			const auto message = CombineMessage(IDS_UNABLE_TO_COMPLETE_ENCRYPT_FILE_OPERATION, error.get_system_message());
-			throw KAA::FileSecurity::UserReport(message, KAA::FileSecurity::UserReport::warning);
+			ThrowUserReport(error, UserReport::warning, IDS_UNABLE_TO_COMPLETE_ENCRYPT_FILE_OPERATION);
 		}
 
 		void ClientCommunicator::IDecryptFile(const filesystem::path::file& path)
@@ -46,8 +50,7 @@ namespace KAA
 		}
 		catch(const failure& error)
 		{
-			const auto message = CombineMessage(IDS_UNABLE_TO_COMPLETE_DECRYPT_FILE_OPERATION, error.get_system_message());
-			throw KAA::FileSecurity::UserReport(message, KAA::FileSecurity::UserReport::warning);
+			ThrowUserReport(error, UserReport::warning, IDS_UNABLE_TO_COMPLETE_DECRYPT_FILE_OPERATION);
 		}
 
 		bool ClientCommunicator::IIsFileEncrypted(const filesystem::path::file& path) const
@@ -57,8 +60,7 @@ namespace KAA
 		}
 		catch(const failure& error)
 		{
-			const auto message = CombineMessage(IDS_UNABLE_TO_DETERMINE_FILE_STATE, error.get_system_message());
-			throw KAA::FileSecurity::UserReport(message, KAA::FileSecurity::UserReport::warning);
+			ThrowUserReport(error, UserReport::warning, IDS_UNABLE_TO_DETERMINE_FILE_STATE);
 		}
 
 		std::vector< std::pair<std::wstring, core_id> > ClientCommunicator::IGetAvailableCiphers(void) const
@@ -98,8 +100,7 @@ namespace KAA
 		}
 		catch(const failure& error)
 		{
-			const auto message = CombineMessage(IDS_UNABLE_TO_RETRIEVE_KEY_STORAGE_PATH, error.get_system_message());
-			throw KAA::FileSecurity::UserReport(message, KAA::FileSecurity::UserReport::error);
+			ThrowUserReport(error, UserReport::error, IDS_UNABLE_TO_RETRIEVE_KEY_STORAGE_PATH);
 		}
 
 		void ClientCommunicator::ISetKeyStoragePath(const filesystem::path::directory& path)
@@ -121,8 +122,7 @@ namespace KAA
 		}
 		catch(const failure& error)
 		{
-			const auto message = CombineMessage(IDS_UNABLE_TO_SETUP_PROGRESS_HANDLER, error.get_system_message());
-			throw KAA::FileSecurity::UserReport(message, KAA::FileSecurity::UserReport::error);
+			ThrowUserReport(error, UserReport::error, IDS_UNABLE_TO_SETUP_PROGRESS_HANDLER);
 		}
 
 		Communicator& GetCommunicator(void)
@@ -133,8 +133,7 @@ namespace KAA
 		}
 		catch(const failure& error)
 		{
-			const auto message = CombineMessage(IDS_UNABLE_TO_CREATE_COMMUNICATOR, error.get_system_message());
-			throw KAA::FileSecurity::UserReport(message, KAA::FileSecurity::UserReport::error);
+			ThrowUserReport(error, UserReport::error, IDS_UNABLE_TO_CREATE_COMMUNICATOR);
 		}
 	}
 }
