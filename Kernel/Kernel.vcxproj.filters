@@ -31,33 +31,21 @@
     <Filter Include="Source Files\Ciphers">
       <UniqueIdentifier>{9d608a48-f2c8-4881-b00d-119b27893f22}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Storages">
+      <UniqueIdentifier>{273fb518-f965-46a7-b9e9-5970e2cc97a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Storages">
+      <UniqueIdentifier>{6b4ce6b9-9404-4d23-b494-78e79cfbc22c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="AbsoluteSecurityCore.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="CoreFactory.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="DllMain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Kernel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="KeyStorage.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="KeyStorageFactory.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="MD5BasedKeyStorage.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="ServerCommunicator.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="StrongSecurityCore.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Core\Core.cpp">
@@ -90,33 +78,33 @@
     <ClCompile Include="FileCipherFactory.cpp">
       <Filter>Source Files\Ciphers</Filter>
     </ClCompile>
+    <ClCompile Include="AbsoluteSecurityCore.cpp">
+      <Filter>Source Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="CoreFactory.cpp">
+      <Filter>Source Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="StrongSecurityCore.cpp">
+      <Filter>Source Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="KeyStorage.cpp">
+      <Filter>Source Files\Storages</Filter>
+    </ClCompile>
+    <ClCompile Include="KeyStorageFactory.cpp">
+      <Filter>Source Files\Storages</Filter>
+    </ClCompile>
+    <ClCompile Include="MD5BasedKeyStorage.cpp">
+      <Filter>Source Files\Storages</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AbsoluteSecurityCore.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CoreFactory.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GammaFileCipher.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Kernel.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="KeyStorage.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="KeyStorageFactory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="RegistryFactory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ServerCommunicator.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="StrongSecurityCore.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="WiperFactory.h">
@@ -146,14 +134,32 @@
     <ClInclude Include="FileCipher.h">
       <Filter>Header Files\Ciphers</Filter>
     </ClInclude>
-    <ClInclude Include="MD5BasedKeyStorage.h">
-      <Filter>Header Files\Ciphers</Filter>
-    </ClInclude>
     <ClInclude Include="UserSessionKeyFileCipher.h">
       <Filter>Header Files\Ciphers</Filter>
     </ClInclude>
     <ClInclude Include="FileCipherFactory.h">
       <Filter>Header Files\Ciphers</Filter>
+    </ClInclude>
+    <ClInclude Include="StrongSecurityCore.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="CoreFactory.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="AbsoluteSecurityCore.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="GammaFileCipher.h">
+      <Filter>Header Files\Ciphers</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyStorage.h">
+      <Filter>Header Files\Storages</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyStorageFactory.h">
+      <Filter>Header Files\Storages</Filter>
+    </ClInclude>
+    <ClInclude Include="MD5BasedKeyStorage.h">
+      <Filter>Header Files\Storages</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

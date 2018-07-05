@@ -16,28 +16,37 @@
     <Filter Include="Resource Files\Icon">
       <UniqueIdentifier>{ece022e0-8e49-4e1d-95fb-f9384f2faf16}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Tools">
+      <UniqueIdentifier>{e6916f51-ba96-46b3-8469-39980c24eef5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Tools">
+      <UniqueIdentifier>{8d5c1c1c-6558-40b9-b45b-e7aa13e988a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Dialogs">
+      <UniqueIdentifier>{7de0266e-929b-442d-a2c6-d8a4092cb3d9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="AboutDialog.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="ClientCommunicator.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="EncryptDialog.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ProgressDialog.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SettingsDialog.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="wWinMain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CWDRestorer.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="AboutDialog.cpp">
+      <Filter>Source Files\Dialogs</Filter>
+    </ClCompile>
+    <ClCompile Include="EncryptDialog.cpp">
+      <Filter>Source Files\Dialogs</Filter>
+    </ClCompile>
+    <ClCompile Include="ProgressDialog.cpp">
+      <Filter>Source Files\Dialogs</Filter>
+    </ClCompile>
+    <ClCompile Include="SettingsDialog.cpp">
+      <Filter>Source Files\Dialogs</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -48,7 +57,7 @@
       <Filter>Resource Files</Filter>
     </ClInclude>
     <ClInclude Include="CWDRestorer.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Tools</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
