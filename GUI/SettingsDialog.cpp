@@ -32,6 +32,23 @@ namespace
 		::SendMessageW(control, EM_SHOWBALLOONTIP, 0, reinterpret_cast<LPARAM>(&information));
 	}
 
+	void ShowBallonTip(HWND control, const std::wstring title, const std::wstring text, const INT icon_id)
+	{
+		EDITBALLOONTIP information = { 0 };
+		information.cbStruct = sizeof(EDITBALLOONTIP);
+		information.pszTitle = title.c_str();
+		information.pszText = text.c_str();
+		information.ttiIcon = icon_id;
+		ShowBallonTip(control, information);
+	}
+
+	void ShowBallonTip(HWND control, const UINT title_id, const UINT text_id, const INT icon_id)
+	{
+		const auto title = KAA::resources::load_string(title_id);
+		const auto text = KAA::resources::load_string(text_id);
+		ShowBallonTip(control, title, text, icon_id);
+	}
+
 	unsigned ToIndex(HWND combobox, const KAA::FileSecurity::wipe_method_id filter)
 	{
 		enum { not_used = 0 }; // FUTURE: KAA: move to SDK helper.
@@ -171,17 +188,9 @@ namespace
 						}
 						else
 						{
-							const auto key_storage_path_edit_ballon_tip_title = KAA::resources::load_string(IDS_KEY_STORAGE);
-							const auto key_storage_path_edit_ballon_tip_text = KAA::resources::load_string(IDS_EMPTY_KEY_STORAGE_PATH_PROMPT);
-
-							// FUTURE: KAA: encapsulate to the ShowBallonTip.
-							EDITBALLOONTIP information = { 0 };
-							information.cbStruct = sizeof(EDITBALLOONTIP);
-							information.pszTitle = key_storage_path_edit_ballon_tip_title.c_str();
-							information.pszText = key_storage_path_edit_ballon_tip_text.c_str();
-							information.ttiIcon = TTI_NONE;
-
-							ShowBallonTip(::GetDlgItem(dialog, IDC_SETTINGS_KEY_STORAGE_PATH_EDIT), information);
+							auto control = ::GetDlgItem(dialog, IDC_SETTINGS_KEY_STORAGE_PATH_EDIT);
+							// TODO: KAA: move to the SDK.
+							ShowBallonTip(control, IDS_KEY_STORAGE, IDS_EMPTY_KEY_STORAGE_PATH_PROMPT, TTI_NONE);
 						}
 					} break;
 				default:
