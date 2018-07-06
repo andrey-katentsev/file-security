@@ -22,12 +22,9 @@ namespace KAA
 		class FileProgressHandler;
 
 		// FUTURE: KAA: std::shared_ptr.
-		// TODO: KAA: remove commented code.
 		class GammaFileCipher final : public FileCipher
 		{
 		public:
-			//explicit GammaFileCipher(filesystem::driver*, progress_routine_t progress_notify, void* progress_context);
-			//GammaFileCipher(filesystem::driver*, const cipher_progress_callback*);
 			explicit GammaFileCipher(std::shared_ptr<filesystem::driver>);
 			GammaFileCipher(const GammaFileCipher&) = delete;
 			GammaFileCipher(GammaFileCipher&&) = delete;
