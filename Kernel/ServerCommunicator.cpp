@@ -235,7 +235,7 @@ namespace
 
 	void RemoveFileBackup(KAA::filesystem::driver* const filesystem, const std::wstring& path)
 	{
-		filesystem->remove_file(path);
+		filesystem->remove_file(KAA::filesystem::path::file { path });
 	}
 }
 
@@ -254,7 +254,7 @@ namespace KAA
 		{
 			try
 			{
-				m_filesystem->create_directory(m_core->GetKeyStoragePath().to_wstring());
+				m_filesystem->create_directory(m_core->GetKeyStoragePath());
 			}
 			catch(const KAA::system_failure& error)
 			{
@@ -270,7 +270,7 @@ namespace KAA
 
 		void ServerCommunicator::IEncryptFile(const filesystem::path::file& path)
 		{
-			const auto file_size = get_file_size(*m_filesystem.get(), path.to_wstring());
+			const auto file_size = get_file_size(*m_filesystem.get(), path);
 			const size_t overall_size = 3*file_size;
 
 			OperationStarted(resources::load_string(IDS_CREATING_BACKUP, core_dll.get_module_handle()));
@@ -285,7 +285,7 @@ namespace KAA
 
 		void ServerCommunicator::IDecryptFile(const filesystem::path::file& path)
 		{
-			const auto file_size = get_file_size(*m_filesystem.get(), path.to_wstring());
+			const auto file_size = get_file_size(*m_filesystem.get(), path);
 			const size_t overall_size = 3*file_size;
 
 			OperationStarted(resources::load_string(IDS_CREATING_BACKUP, core_dll.get_module_handle()));
@@ -295,7 +295,7 @@ namespace KAA
 			m_core->DecryptFile(path);
 
 			OperationStarted(resources::load_string(IDS_REMOVING_BACKUP, core_dll.get_module_handle()));
-			m_filesystem->remove_file(backup.to_wstring());
+			m_filesystem->remove_file(backup);
 		}
 
 		bool ServerCommunicator::IIsFileEncrypted(const filesystem::path::file& path) const
@@ -355,7 +355,7 @@ namespace KAA
 			{
 				try
 				{
-					m_filesystem->create_directory(new_key_storage_path.to_wstring());
+					m_filesystem->create_directory(new_key_storage_path);
 				}
 				catch(const KAA::system_failure& error)
 				{
@@ -368,7 +368,7 @@ namespace KAA
 
 				try
 				{
-					m_filesystem->remove_directory(previous_key_storage_path.to_wstring());
+					m_filesystem->remove_directory(previous_key_storage_path);
 				}
 				catch(const KAA::system_failure& error)
 				{
@@ -408,12 +408,12 @@ namespace KAA
 		{
 			const KAA::filesystem::driver::mode sequential_read_only(false, true);
 			const KAA::filesystem::driver::share exclusive_access(false, false);
-			const std::auto_ptr<KAA::filesystem::file> source(m_filesystem->open_file(source_path.to_wstring(), sequential_read_only, exclusive_access));
+			const auto source = m_filesystem->open_file(source_path, sequential_read_only, exclusive_access);
 
 			const KAA::filesystem::driver::create_mode persistent_not_exists;
 			const KAA::filesystem::driver::mode sequential_write_only(true, false);
 			const KAA::filesystem::driver::permission allow_read_write;
-			const std::auto_ptr<KAA::filesystem::file> destination(m_filesystem->create_file(destination_path.to_wstring(), persistent_not_exists, sequential_write_only, exclusive_access, allow_read_write));
+			const auto destination = m_filesystem->create_file(destination_path, persistent_not_exists, sequential_write_only, exclusive_access, allow_read_write);
 
 			{
 				const size_t chunk_size = (64 * 1024) - 1;

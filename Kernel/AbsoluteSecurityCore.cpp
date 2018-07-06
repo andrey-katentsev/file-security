@@ -35,8 +35,8 @@ namespace
 	void RemoveKeyFile(const std::shared_ptr<KAA::filesystem::driver> filesystem, const KAA::filesystem::path::file& path)
 	{
 		KAA::filesystem::driver::permission write_only(true, false);
-		filesystem->set_file_permissions(path.to_wstring(), write_only);
-		filesystem->remove_file(path.to_wstring());
+		filesystem->set_file_permissions(path, write_only);
+		filesystem->remove_file(path);
 	}
 }
 
@@ -77,7 +77,7 @@ namespace KAA
 			OperationStarted(resources::load_string(IDS_RETRIEVING_KEY_PATH, core_dll.get_module_handle()));
 			const auto key_path = m_key_storage->GetKeyPathForSpecifiedPath(path);
 
-			const auto file_to_encrypt_size = get_file_size(*m_filesystem, path.to_wstring());
+			const auto file_to_encrypt_size = get_file_size(*m_filesystem, path);
 			const size_t overall_size = 2*file_to_encrypt_size;
 			size_t total_processed = 0;
 
@@ -102,7 +102,7 @@ namespace KAA
 			OperationStarted(resources::load_string(IDS_RETRIEVING_KEY_PATH, core_dll.get_module_handle()));
 			const auto key_path = m_key_storage->GetKeyPathForSpecifiedPath(path);
 
-			const auto file_to_decrypt_size = get_file_size(*m_filesystem, path.to_wstring());
+			const auto file_to_decrypt_size = get_file_size(*m_filesystem, path);
 			const size_t overall_size = 2*file_to_decrypt_size;
 			size_t total_processed = 0;
 
@@ -124,7 +124,7 @@ namespace KAA
 			const auto key_file_path = m_key_storage->GetKeyPathForSpecifiedPath(path);
 			try
 			{
-				m_filesystem->get_file_permissions(key_file_path.to_wstring());
+				m_filesystem->get_file_permissions(key_file_path);
 				return true;
 			}
 			catch(const system_failure& error) // DEFECT: KAA: provide filesystem::driver with own exception class type.
@@ -175,7 +175,7 @@ namespace KAA
 			const KAA::filesystem::driver::mode sequential_write_only(true, false);
 			const KAA::filesystem::driver::share exclusive_access(false, false);
 			const KAA::filesystem::driver::permission read_only_attribute(false, true);
-			std::auto_ptr<KAA::filesystem::file> key(m_filesystem->create_file(path.to_wstring(), persistent_not_exist, sequential_write_only, exclusive_access, read_only_attribute));
+			auto key = m_filesystem->create_file(path, persistent_not_exist, sequential_write_only, exclusive_access, read_only_attribute);
 			const size_t bytes_written = key->write(&data[0], data.size());
 			if(bytes_written != data.size())
 			{

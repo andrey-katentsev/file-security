@@ -104,11 +104,11 @@ namespace KAA
 			const filesystem::driver::mode random_read_write(true, true, true, true);
 			const filesystem::driver::share exclusive_access(false, false);
 
-			const std::auto_ptr<filesystem::file> master(m_filesystem->open_file(path.to_wstring(), random_read_write, exclusive_access));
+			const auto master = m_filesystem->open_file(path, random_read_write, exclusive_access);
 
 			const filesystem::driver::mode sequential_read_only(false);
 
-			const std::auto_ptr<filesystem::file> key(m_filesystem->open_file(key_path.to_wstring(), sequential_read_only, exclusive_access));
+			const auto key = m_filesystem->open_file(key_path, sequential_read_only, exclusive_access);
 
 			const _fsize_t master_data_size = master->get_size();
 
