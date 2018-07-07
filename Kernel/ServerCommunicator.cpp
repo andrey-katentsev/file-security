@@ -280,7 +280,7 @@ namespace KAA
 			m_core->EncryptFile(path);
 
 			OperationStarted(resources::load_string(IDS_WIPING_FILE, core_dll.get_module_handle()));
-			m_wiper->wipe_file(backup.to_wstring());
+			m_wiper->wipe_file(backup);
 		}
 
 		void ServerCommunicator::IDecryptFile(const filesystem::path::file& path)
