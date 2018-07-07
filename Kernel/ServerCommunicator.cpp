@@ -26,7 +26,6 @@
 #include "KAA/include/filesystem/filesystem.h"
 #include "KAA/include/filesystem/ordinary_file_remover.h"
 #include "KAA/include/filesystem/simple_overwrite_wiper.h"
-#include "KAA/include/filesystem/split_path.h"
 #include "KAA/include/filesystem/wiper.h"
 
 #include "./Core/Core.h"
@@ -398,7 +397,7 @@ namespace KAA
 
 		filesystem::path::file ServerCommunicator::BackupFile(const filesystem::path::file& path)
 		{
-			const filesystem::path::directory working_directory { KAA::filesystem::split_directory(path.to_wstring()) };
+			const auto working_directory = path.get_directory();
 			const auto backup_file_path = working_directory + m_filesystem->get_temp_filename();
 			CopyFile(path, backup_file_path); // FUTURE: KAA: remove incomplete file.
 			return backup_file_path;
