@@ -1,5 +1,7 @@
 #pragma once
 
+#include <memory>
+
 #include "KAA/include/keywords.h"
 
 #include "FileProgressHandler.h"
@@ -14,12 +16,12 @@ namespace KAA
 		{
 		public:
 			CipherProgressDispatcher();
-			explicit CipherProgressDispatcher(CoreProgressHandler*);
+			explicit CipherProgressDispatcher(std::shared_ptr<CoreProgressHandler>);
 
-			CoreProgressHandler* SetProgressHandler(CoreProgressHandler*);
+			std::shared_ptr<CoreProgressHandler> SetProgressHandler(std::shared_ptr<CoreProgressHandler>);
 
 		private:
-			CoreProgressHandler* core_progress;
+			std::shared_ptr<CoreProgressHandler> core_progress;
 
 			progress_state IChunkProcessed(uint64_t total_bytes_processed, uint64_t total_file_size) override;
 		};

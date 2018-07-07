@@ -38,7 +38,7 @@ namespace KAA
 			return IIsFileEncrypted(path);
 		}
 
-		CoreProgressHandler* Core::SetProgressHandler(CoreProgressHandler* handler)
+		std::shared_ptr<CoreProgressHandler> Core::SetProgressHandler(std::shared_ptr<CoreProgressHandler> handler)
 		{
 			return ISetProgressHandler(handler);
 		}

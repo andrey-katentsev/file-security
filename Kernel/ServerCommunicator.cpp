@@ -390,7 +390,7 @@ namespace KAA
 			core_progress->SetProgressHandler(server_progress);
 			wiper_progress->SetProgressHandler(server_progress);
 
-			m_core->SetProgressHandler(core_progress.get());
+			m_core->SetProgressHandler(core_progress);
 			m_wiper->set_progress_handler(wiper_progress.get());
 
 			return previous;

@@ -135,12 +135,12 @@ namespace KAA
 			}
 		}
 
-		CoreProgressHandler* AbsoluteSecurityCore::ISetProgressHandler(CoreProgressHandler* core_progress)
+		std::shared_ptr<CoreProgressHandler> AbsoluteSecurityCore::ISetProgressHandler(std::shared_ptr<CoreProgressHandler> core_progress)
 		{
-			CoreProgressHandler* previous = this->core_progress;
+			const auto previous = this->core_progress;
 			this->core_progress = core_progress;
 			cipher_progress->SetProgressHandler(core_progress);
-			m_cipher->SetProgressCallback(cipher_progress.get());
+			m_cipher->SetProgressCallback(cipher_progress);
 			return previous;
 		}
 

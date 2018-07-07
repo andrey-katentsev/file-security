@@ -1,6 +1,5 @@
 #pragma once
 
-#include <memory>
 #include <vector> // private
 
 #include "KAA/include/keywords.h"
@@ -40,9 +39,9 @@ namespace KAA
 			std::shared_ptr<filesystem::driver> m_filesystem;
 			std::auto_ptr<FileCipher> m_cipher;
 			std::auto_ptr<KeyStorage> m_key_storage;
-			std::auto_ptr<CipherProgressDispatcher> cipher_progress;
+			std::shared_ptr<CipherProgressDispatcher> cipher_progress;
 
-			CoreProgressHandler* core_progress;
+			std::shared_ptr<CoreProgressHandler> core_progress;
 
 			filesystem::path::directory IGetKeyStoragePath(void) const override;
 			void ISetKeyStoragePath(const filesystem::path::directory&) override;
@@ -52,7 +51,7 @@ namespace KAA
 
 			bool IIsFileEncrypted(const filesystem::path::file&) const override;
 
-			CoreProgressHandler* ISetProgressHandler(CoreProgressHandler*) override;
+			std::shared_ptr<CoreProgressHandler> ISetProgressHandler(std::shared_ptr<CoreProgressHandler>) override;
 
 			std::auto_ptr< std::vector<uint8_t> > GenerateKey(size_t bytes_to_generate);
 			void CreateKeyFile(const filesystem::path::file& path, const std::vector<uint8_t>& data);
