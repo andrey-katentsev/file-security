@@ -85,9 +85,9 @@ namespace KAA
 			return EncryptFile(path, key);
 		}
 
-		FileProgressHandler* GammaFileCipher::ISetProgressCallback(FileProgressHandler* handler)
+		std::shared_ptr<FileProgressHandler> GammaFileCipher::ISetProgressCallback(std::shared_ptr<FileProgressHandler> handler)
 		{
-			FileProgressHandler* previous = cipher_progress;
+			const auto previous = cipher_progress;
 			cipher_progress = handler;
 			return previous;
 		}

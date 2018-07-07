@@ -1,6 +1,6 @@
 #pragma once
 
-#include <string>
+#include <memory>
 
 namespace KAA
 {
@@ -25,13 +25,13 @@ namespace KAA
 			void EncryptFile(const filesystem::path::file& path, const filesystem::path::file& key);
 			void DecryptFile(const filesystem::path::file& path, const filesystem::path::file& key);
 
-			FileProgressHandler* SetProgressCallback(FileProgressHandler*);
+			std::shared_ptr<FileProgressHandler> SetProgressCallback(std::shared_ptr<FileProgressHandler>);
 
 		private:
 			virtual void IEncryptFile(const filesystem::path::file&, const filesystem::path::file&) = 0;
 			virtual void IDecryptFile(const filesystem::path::file&, const filesystem::path::file&) = 0;
 
-			virtual FileProgressHandler* ISetProgressCallback(FileProgressHandler*) = 0;
+			virtual std::shared_ptr<FileProgressHandler> ISetProgressCallback(std::shared_ptr<FileProgressHandler>) = 0;
 		};
 	}
 }

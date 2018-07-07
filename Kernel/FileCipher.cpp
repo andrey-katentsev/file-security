@@ -14,7 +14,7 @@ namespace KAA
 			return IDecryptFile(path, key);
 		}
 
-		FileProgressHandler* FileCipher::SetProgressCallback(FileProgressHandler* handler)
+		std::shared_ptr<FileProgressHandler> FileCipher::SetProgressCallback(std::shared_ptr<FileProgressHandler> handler)
 		{
 			return ISetProgressCallback(handler);
 		}

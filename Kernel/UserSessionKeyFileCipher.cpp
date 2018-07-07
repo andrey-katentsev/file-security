@@ -32,7 +32,7 @@ namespace KAA
 			throw operation_failure(__FUNCTIONW__, L"cannot decrypt file", operation_failure::R_NOT_IMPLEMENTED, operation_failure::S_ERROR);
 		}
 
-		FileProgressHandler* UserSessionKeyFileCipher::ISetProgressCallback(FileProgressHandler* handler)
+		std::shared_ptr<FileProgressHandler> UserSessionKeyFileCipher::ISetProgressCallback(std::shared_ptr<FileProgressHandler> handler)
 		{
 			const auto previous = cipher_progress;
 			cipher_progress = handler;
