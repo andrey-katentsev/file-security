@@ -46,7 +46,7 @@ namespace KAA
 			std::auto_ptr<Core> m_core;
 
 			std::shared_ptr<CoreProgressDispatcher> core_progress;
-			std::auto_ptr<WiperProgressDispatcher> wiper_progress;
+			std::shared_ptr<WiperProgressDispatcher> wiper_progress;
 
 			std::shared_ptr<CommunicatorProgressHandler> server_progress;
 
