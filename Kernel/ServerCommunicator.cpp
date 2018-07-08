@@ -202,7 +202,7 @@ namespace
 		}
 	}
 
-	std::auto_ptr<KAA::filesystem::wiper> QueryWiper(const KAA::FileSecurity::wiper_t interface_identifier, KAA::filesystem::driver* const filesystem)
+	std::auto_ptr<KAA::filesystem::wiper> QueryWiper(const KAA::FileSecurity::wiper_t interface_identifier, const std::shared_ptr<KAA::filesystem::driver> filesystem)
 	{
 		switch(interface_identifier)
 		{
@@ -244,7 +244,7 @@ namespace KAA
 		ServerCommunicator::ServerCommunicator(const std::shared_ptr<filesystem::driver> filesystem) :
 		m_registry(QueryRegistry(windows_registry)),
 		m_filesystem(filesystem),
-		m_wiper(QueryWiper(QueryWiperType(m_registry.get()), m_filesystem.get())),
+		m_wiper(QueryWiper(QueryWiperType(m_registry.get()), m_filesystem)),
 		m_core(QueryCore(QueryCoreType(m_registry.get()), m_filesystem, QueryKeyStoragePath(m_registry.get()))),
 		core_progress(new CoreProgressDispatcher),
 		wiper_progress(new WiperProgressDispatcher),
@@ -336,7 +336,7 @@ namespace KAA
 		void ServerCommunicator::ISetWipeMethod(const wipe_method_id value)
 		{
 			const wiper_t algorithm = ToWiperType(value);
-			m_wiper.reset(QueryWiper(algorithm, m_filesystem.get()).release());
+			m_wiper.reset(QueryWiper(algorithm, m_filesystem).release());
 			SaveWiperType(m_registry.get(), algorithm);
 		}
 
