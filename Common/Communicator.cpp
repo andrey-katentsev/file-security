@@ -68,7 +68,7 @@ namespace KAA
 			return ISetKeyStoragePath(path);
 		}
 
-		CommunicatorProgressHandler* Communicator::SetProgressHandler(CommunicatorProgressHandler* handler)
+		std::shared_ptr<CommunicatorProgressHandler> Communicator::SetProgressHandler(std::shared_ptr<CommunicatorProgressHandler> handler)
 		{
 			return ISetProgressHandler(handler);
 		}

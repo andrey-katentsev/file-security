@@ -78,8 +78,8 @@ namespace
 		//INT_PTR result = IDOK;
 		g_result = IDOK;
 
-		ProgressDialogHandler progress_handler(dialog);
-		KAA::FileSecurity::CommunicatorProgressHandler* previous = KAA::FileSecurity::GetCommunicator().SetProgressHandler(&progress_handler); // FIX: KAA: provide RAII.
+		auto progress_handler = std::make_shared<ProgressDialogHandler>(dialog);
+		const auto previous = KAA::FileSecurity::GetCommunicator().SetProgressHandler(progress_handler);
 
 		try
 		{

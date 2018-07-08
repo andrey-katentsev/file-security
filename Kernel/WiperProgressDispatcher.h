@@ -1,5 +1,7 @@
 #pragma once
 
+#include <memory>
+
 #include "KAA/include/keywords.h"
 #include "KAA/include/filesystem/file_progress_handler.h"
 
@@ -13,12 +15,12 @@ namespace KAA
 		{
 		public:
 			WiperProgressDispatcher();
-			explicit WiperProgressDispatcher(CommunicatorProgressHandler*);
+			explicit WiperProgressDispatcher(std::shared_ptr<CommunicatorProgressHandler>);
 
-			CommunicatorProgressHandler* SetProgressHandler(CommunicatorProgressHandler*);
+			std::shared_ptr<CommunicatorProgressHandler> SetProgressHandler(std::shared_ptr<CommunicatorProgressHandler>);
 
 		private:
-			CommunicatorProgressHandler* communicator_progress;
+			std::shared_ptr<CommunicatorProgressHandler> communicator_progress;
 
 			progress_state ichunk_processed(_fsize_t total_processed, _fsize_t total_size) override;
 		};

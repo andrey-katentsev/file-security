@@ -9,6 +9,7 @@
 
 #pragma once
 
+#include <memory>
 #include <string>
 #include <utility>
 #include <vector>
@@ -45,7 +46,7 @@ namespace KAA
 			filesystem::path::directory GetKeyStoragePath(void) const;
 			void SetKeyStoragePath(const filesystem::path::directory&);
 
-			CommunicatorProgressHandler* SetProgressHandler(CommunicatorProgressHandler*);
+			std::shared_ptr<CommunicatorProgressHandler> SetProgressHandler(std::shared_ptr<CommunicatorProgressHandler>);
 
 		private:
 			virtual void IEncryptFile(const filesystem::path::file&) = 0;
@@ -64,7 +65,7 @@ namespace KAA
 			virtual filesystem::path::directory IGetKeyStoragePath(void) const = 0;
 			virtual void ISetKeyStoragePath(const filesystem::path::directory&) = 0;
 
-			virtual CommunicatorProgressHandler* ISetProgressHandler(CommunicatorProgressHandler*) = 0;
+			virtual std::shared_ptr<CommunicatorProgressHandler> ISetProgressHandler(std::shared_ptr<CommunicatorProgressHandler>) = 0;
 		};
 	}
 }

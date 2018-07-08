@@ -43,7 +43,7 @@ namespace KAA
 			filesystem::path::directory IGetKeyStoragePath(void) const override;
 			void ISetKeyStoragePath(const filesystem::path::directory&) override;
 
-			CommunicatorProgressHandler* ISetProgressHandler(CommunicatorProgressHandler*) override;
+			std::shared_ptr<CommunicatorProgressHandler> ISetProgressHandler(std::shared_ptr<CommunicatorProgressHandler>) override;
 		};
 
 		Communicator& GetCommunicator(void);

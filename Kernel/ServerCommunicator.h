@@ -49,7 +49,7 @@ namespace KAA
 			std::shared_ptr<CoreProgressDispatcher> core_progress;
 			std::auto_ptr<WiperProgressDispatcher> wiper_progress;
 
-			CommunicatorProgressHandler* server_progress;
+			std::shared_ptr<CommunicatorProgressHandler> server_progress;
 
 			void IEncryptFile(const filesystem::path::file& path) override;
 			void IDecryptFile(const filesystem::path::file& path) override;
@@ -67,7 +67,7 @@ namespace KAA
 			filesystem::path::directory IGetKeyStoragePath(void) const override;
 			void ISetKeyStoragePath(const filesystem::path::directory&) override;
 
-			CommunicatorProgressHandler* ISetProgressHandler(CommunicatorProgressHandler*) override;
+			std::shared_ptr<CommunicatorProgressHandler> ISetProgressHandler(std::shared_ptr<CommunicatorProgressHandler>) override;
 
 			filesystem::path::file BackupFile(const filesystem::path::file& path);
 			void CopyFile(const filesystem::path::file& source, const filesystem::path::file& destination);

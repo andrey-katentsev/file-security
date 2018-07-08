@@ -1,5 +1,7 @@
 #pragma once
 
+#include <memory>
+
 #include "KAA/include/keywords.h"
 
 #include "./Core/CoreProgressHandler.h"
@@ -14,12 +16,12 @@ namespace KAA
 		{
 		public:
 			CoreProgressDispatcher();
-			explicit CoreProgressDispatcher(CommunicatorProgressHandler*);
+			explicit CoreProgressDispatcher(std::shared_ptr<CommunicatorProgressHandler>);
 
-			CommunicatorProgressHandler* SetProgressHandler(CommunicatorProgressHandler*);
+			std::shared_ptr<CommunicatorProgressHandler> SetProgressHandler(std::shared_ptr<CommunicatorProgressHandler>);
 
 		private:
-			CommunicatorProgressHandler* communicator_progress;
+			std::shared_ptr<CommunicatorProgressHandler> communicator_progress;
 
 			progress_state IOperationStarted(const std::wstring& name) override;
 			progress_state IChunkProcessed(uint64_t total_processed, uint64_t total_size) override;

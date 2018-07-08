@@ -115,7 +115,7 @@ namespace KAA
 			throw KAA::FileSecurity::UserReport(message, KAA::FileSecurity::UserReport::error);
 		}
 
-		CommunicatorProgressHandler* ClientCommunicator::ISetProgressHandler(CommunicatorProgressHandler* handler)
+		std::shared_ptr<CommunicatorProgressHandler> ClientCommunicator::ISetProgressHandler(std::shared_ptr<CommunicatorProgressHandler> handler)
 		try
 		{
 			return m_communicator->SetProgressHandler(handler);
