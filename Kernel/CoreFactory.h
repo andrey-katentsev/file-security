@@ -1,9 +1,6 @@
 #pragma once
 
 //#include <memory>
-
-//#include "C:/SDK/KAA/include/keywords.h"
-
 //#include <unknwn.h>
 
 namespace KAA

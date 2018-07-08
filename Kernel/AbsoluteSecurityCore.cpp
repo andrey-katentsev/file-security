@@ -9,7 +9,6 @@
 #undef EncryptFile
 #undef DecryptFile
 
-#include "KAA/include/keywords.h"
 #include "KAA/include/load_string.h"
 #include "KAA/include/module_context.h"
 #include "KAA/include/stdtypes.h"

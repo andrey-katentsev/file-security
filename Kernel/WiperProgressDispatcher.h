@@ -2,7 +2,6 @@
 
 #include <memory>
 
-#include "KAA/include/keywords.h"
 #include "KAA/include/filesystem/file_progress_handler.h"
 
 namespace KAA

@@ -2,8 +2,6 @@
 
 #include <memory>
 
-#include "KAA/include/keywords.h"
-
 #include "./Core/CoreProgressHandler.h"
 
 namespace KAA

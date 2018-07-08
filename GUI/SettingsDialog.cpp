@@ -1,7 +1,6 @@
 #include <stdexcept>
 #include <vector>
 
-#include "KAA/include/keywords.h"
 #include "KAA/include/load_string.h"
 #include "KAA/include/exception/com_failure.h"
 #include "KAA/include/exception/operation_failure.h"

@@ -2,8 +2,6 @@
 
 #include <memory>
 
-#include "KAA/include/keywords.h"
-
 #include "../Common/Communicator.h"
 
 namespace KAA

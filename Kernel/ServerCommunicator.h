@@ -4,7 +4,6 @@
 
 #include <memory>
 
-#include "KAA/include/keywords.h"
 #include "KAA/include/progress_state.h"
 #include "KAA/include/stdtypes.h"
 

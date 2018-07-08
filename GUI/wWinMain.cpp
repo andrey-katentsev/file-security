@@ -2,7 +2,6 @@
 
 #include "KAA/include/convert.h"
 #include "KAA/include/format_string.h"
-#include "KAA/include/keywords.h"
 #include "KAA/include/load_string.h"
 #include "KAA/include/exception/failure.h"
 

@@ -1,5 +1,3 @@
-#include "KAA/include/keywords.h"
-
 #include <windows.h>
 #include "resource.h"
 
