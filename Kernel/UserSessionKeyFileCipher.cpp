@@ -1,6 +1,13 @@
 #include "UserSessionKeyFileCipher.h"
 
+#include <vector>
+
+#include "KAA/include/cryptography.h"
+#undef EncryptFile
+#undef DecryptFile
+
 #include "KAA/include/exception/operation_failure.h"
+#include "KAA/include/filesystem/driver.h"
 
 #include "FileProgressHandler.h"
 
@@ -22,14 +29,40 @@ namespace KAA
 			}
 		}
 
-		void UserSessionKeyFileCipher::IEncryptFile(const filesystem::path::file& path, const filesystem::path::file& key_path)
+		void UserSessionKeyFileCipher::IEncryptFile(const filesystem::path::file& path, const filesystem::path::file&)
 		{
-			throw operation_failure(__FUNCTIONW__, L"cannot encrypt file", operation_failure::R_NOT_IMPLEMENTED, operation_failure::S_ERROR);
+			const filesystem::driver::mode serial_read_write { true, true, true, false };
+			const filesystem::driver::share exclusive_access { false, false };
+			const auto master = filesystem->open_file(path, serial_read_write, exclusive_access);
+
+			const auto data_size = master->get_size();
+			std::vector<uint8_t> master_buffer(data_size);
+
+			const auto bytes_read = master->read(data_size, &master_buffer[0]);
+			master_buffer = cryptography::protect_data(&master_buffer[0], bytes_read);
+			master->seek(0, filesystem::file::set);
+			const auto bytes_written = master->write(&master_buffer[0], bytes_read);
+
+			if (0 != bytes_read)
+				ChunkProcessed(bytes_written, data_size);
 		}
 
-		void UserSessionKeyFileCipher::IDecryptFile(const filesystem::path::file& path, const filesystem::path::file& key_path)
+		void UserSessionKeyFileCipher::IDecryptFile(const filesystem::path::file& path, const filesystem::path::file&)
 		{
-			throw operation_failure(__FUNCTIONW__, L"cannot decrypt file", operation_failure::R_NOT_IMPLEMENTED, operation_failure::S_ERROR);
+			const filesystem::driver::mode serial_read_write { true, true, true, false };
+			const filesystem::driver::share exclusive_access { false, false };
+			const auto master = filesystem->open_file(path, serial_read_write, exclusive_access);
+
+			const auto data_size = master->get_size();
+			std::vector<uint8_t> master_buffer(data_size);
+
+			const auto bytes_read = master->read(data_size, &master_buffer[0]);
+			master_buffer = cryptography::unprotect_data(&master_buffer[0], bytes_read);
+			master->seek(0, filesystem::file::set);
+			const auto bytes_written = master->write(&master_buffer[0], bytes_read);
+
+			if (0 != bytes_read)
+				ChunkProcessed(bytes_written, data_size);
 		}
 
 		std::shared_ptr<FileProgressHandler> UserSessionKeyFileCipher::ISetProgressCallback(std::shared_ptr<FileProgressHandler> handler)
