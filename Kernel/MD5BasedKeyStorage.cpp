@@ -1,6 +1,5 @@
 #include "MD5BasedKeyStorage.h"
 
-#include "KAA/include/cryptography.h"
 #include "KAA/include/md5.h"
 
 namespace
@@ -28,10 +27,9 @@ namespace KAA
 
 		filesystem::path::file MD5BasedKeyStorage::IGetKeyPathForSpecifiedPath(const filesystem::path::file& path) const
 		{
-			const cryptography::provider csp { nullptr, MS_DEF_PROV, PROV_RSA_FULL, CRYPT_VERIFYCONTEXT };
 			const auto data = path.to_wstring();
 			const auto data_size = sizeof ( decltype(data)::value_type ) * data.length();
-			const auto hash = cryptography::calculate_md5(csp, data.c_str(), data_size);
+			const auto hash = cryptography::calculate_md5(data.c_str(), data_size);
 			const auto filename = cryptography::to_wstring(hash) + key_file_extension;
 			return key_storage_path + filename;
 		}
