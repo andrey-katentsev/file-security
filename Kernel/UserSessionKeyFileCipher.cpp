@@ -3,9 +3,6 @@
 #include <vector>
 
 #include "KAA/include/cryptography.h"
-#undef EncryptFile
-#undef DecryptFile
-
 #include "KAA/include/exception/operation_failure.h"
 #include "KAA/include/filesystem/driver.h"
 

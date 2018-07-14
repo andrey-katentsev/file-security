@@ -5,12 +5,10 @@
 
 #include <cerrno>
 
-#include "KAA/include/cryptography.h" // FUTURE: KAA: remove <windows.h>
-#undef EncryptFile
-#undef DecryptFile
-
+#include "KAA/include/cryptography.h"
 #include "KAA/include/load_string.h"
 #include "KAA/include/module_context.h"
+#include "KAA/include/random.h"
 #include "KAA/include/stdtypes.h"
 #include "KAA/include/exception/operation_failure.h"
 #include "KAA/include/exception/system_failure.h"
@@ -19,6 +17,10 @@
 
 #include "./Core/CoreProgressHandler.h"
 #include "CipherProgressDispatcher.h"
+
+// FUTURE: KAA: remove <windows.h>
+#undef EncryptFile
+#undef DecryptFile
 
 #include "FileCipher.h"
 #include "FileCipherFactory.h"

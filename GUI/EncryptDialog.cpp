@@ -14,10 +14,6 @@
 #include "OperationContext.h"
 #include "../Common/UserReport.h"
 
-#include <windows.h>
-#undef EncryptFile
-#undef DecryptFile
-
 #include "resource.h"
 
 using KAA::FileSecurity::GetCommunicator;

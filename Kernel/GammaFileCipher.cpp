@@ -6,9 +6,6 @@
 
 #include "KAA/include/convert.h"
 #include "KAA/include/cryptography.h"
-#undef EncryptFile
-#undef DecryptFile
-
 #include "KAA/include/stdtypes.h"
 #include "KAA/include/filesystem/driver.h"
 #include "KAA/include/filesystem/path.h"
