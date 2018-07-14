@@ -27,17 +27,12 @@ namespace
 {
 	unsigned ToIndex(HWND combobox, const KAA::FileSecurity::wipe_method_id filter)
 	{
-		enum { not_used = 0 }; // FUTURE: KAA: move to SDK helper.
-		const LRESULT number_of_items = ::SendMessageW(combobox, CB_GETCOUNT, not_used, not_used);
-		if(CB_ERR == number_of_items)
-		{
-			const DWORD error = ::GetLastError();
-			throw KAA::windows_api_failure(__FUNCTIONW__, L"Unable to determine count of items in combobox.", error); // DEFECT: KAA: correct?
-		}
-
+		enum { not_used = 0 };
+		const auto number_of_items = KAA::user_interface::get_items_count(combobox);
 		for(unsigned item_index = 0; item_index < number_of_items; ++item_index)
 		{
 			// DEFECT: KAA: DRY violation.
+			// FUTURE: KAA: move to the SDK.
 			const LRESULT assotiated_value = ::SendMessageW(combobox, CB_GETITEMDATA, item_index, not_used);
 			if(CB_ERR == assotiated_value)
 			{
