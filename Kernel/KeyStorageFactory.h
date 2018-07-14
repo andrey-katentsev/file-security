@@ -22,6 +22,6 @@ namespace KAA
 			md5_based
 		};
 
-		std::auto_ptr<KeyStorage> CreateKeyStorage(key_storage_t, const filesystem::path::directory& key_storage_path);
+		std::auto_ptr<KeyStorage> CreateKeyStorage(key_storage_t, const filesystem::path::directory&);
 	}
 }

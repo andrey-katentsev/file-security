@@ -30,10 +30,10 @@ namespace KAA
 		public:
 			virtual ~Communicator() = default;
 
-			void EncryptFile(const filesystem::path::file& path);
-			void DecryptFile(const filesystem::path::file& path);
+			void EncryptFile(const filesystem::path::file&);
+			void DecryptFile(const filesystem::path::file&);
 
-			bool IsFileEncrypted(const filesystem::path::file& path) const;
+			bool IsFileEncrypted(const filesystem::path::file&) const;
 
 			std::vector< std::pair<std::wstring, core_id> > GetAvailableCiphers(void) const;
 			core_id GetCipher(void) const;

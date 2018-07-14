@@ -19,7 +19,6 @@ namespace KAA
 		{
 		public:
 			explicit UserSessionKeyFileCipher(std::shared_ptr<filesystem::driver>);
-
 			UserSessionKeyFileCipher(const UserSessionKeyFileCipher&) = delete;
 			UserSessionKeyFileCipher(UserSessionKeyFileCipher&&) = delete;
 			~UserSessionKeyFileCipher() = default;

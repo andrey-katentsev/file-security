@@ -27,10 +27,10 @@ namespace KAA
 			filesystem::path::directory GetKeyStoragePath(void) const;
 			void SetKeyStoragePath(const filesystem::path::directory&);
 
-			void EncryptFile(const filesystem::path::file& path);
-			void DecryptFile(const filesystem::path::file& path);
+			void EncryptFile(const filesystem::path::file&);
+			void DecryptFile(const filesystem::path::file&);
 
-			bool IsFileEncrypted(const filesystem::path::file& path) const;
+			bool IsFileEncrypted(const filesystem::path::file&) const;
 
 			std::shared_ptr<CoreProgressHandler> SetProgressHandler(std::shared_ptr<CoreProgressHandler>);
 

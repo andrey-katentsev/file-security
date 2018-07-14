@@ -25,10 +25,10 @@ namespace KAA
 		private:
 			std::auto_ptr<Communicator> m_communicator;
 
-			void IEncryptFile(const filesystem::path::file& path) override;
-			void IDecryptFile(const filesystem::path::file& path) override;
+			void IEncryptFile(const filesystem::path::file&) override;
+			void IDecryptFile(const filesystem::path::file&) override;
 
-			bool IIsFileEncrypted(const filesystem::path::file& path) const override;
+			bool IIsFileEncrypted(const filesystem::path::file&) const override;
 
 			std::vector< std::pair<std::wstring, core_id> > IGetAvailableCiphers(void) const override;
 			core_id IGetCipher(void) const override;

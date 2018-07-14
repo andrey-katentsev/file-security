@@ -50,10 +50,10 @@ namespace KAA
 
 			std::shared_ptr<CommunicatorProgressHandler> server_progress;
 
-			void IEncryptFile(const filesystem::path::file& path) override;
-			void IDecryptFile(const filesystem::path::file& path) override;
+			void IEncryptFile(const filesystem::path::file&) override;
+			void IDecryptFile(const filesystem::path::file&) override;
 
-			bool IIsFileEncrypted(const filesystem::path::file& path) const override;
+			bool IIsFileEncrypted(const filesystem::path::file&) const override;
 
 			std::vector< std::pair<std::wstring, core_id> > IGetAvailableCiphers(void) const override;
 			core_id IGetCipher(void) const override;
@@ -68,8 +68,8 @@ namespace KAA
 
 			std::shared_ptr<CommunicatorProgressHandler> ISetProgressHandler(std::shared_ptr<CommunicatorProgressHandler>) override;
 
-			filesystem::path::file BackupFile(const filesystem::path::file& path);
-			void CopyFile(const filesystem::path::file& source, const filesystem::path::file& destination);
+			filesystem::path::file BackupFile(const filesystem::path::file&);
+			void CopyFile(const filesystem::path::file& from, const filesystem::path::file& to);
 
 			progress_state OperationStarted(const std::wstring& name);
 			progress_state PortionProcessed(uint64_t total_processed, uint64_t total_size);
