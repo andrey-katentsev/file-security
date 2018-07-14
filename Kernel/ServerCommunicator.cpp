@@ -81,11 +81,11 @@ namespace
 
 	// DEFECT: KAA: DRY violation.
 	// DEFECT: KAA: SRP violation.
-	KAA::FileSecurity::wiper_t QueryWiperType(KAA::system::registry* registry)
+	KAA::FileSecurity::wiper_t QueryWiperType(KAA::system::registry& registry)
 	try
 	{
 		const KAA::system::registry::key_access query_value = { false, false, false, false, true, false };
-		const std::auto_ptr<KAA::system::registry_key> software_root(registry->open_key(KAA::system::registry::current_user, registry_software_sub_key, query_value));
+		const auto software_root = registry.open_key(KAA::system::registry::current_user, registry_software_sub_key, query_value);
 		const DWORD value = software_root->query_dword_value(registry_wipe_algorithm_value_name);
 		return ToWiperType(static_cast<KAA::FileSecurity::wipe_method_id>(value));
 	}
@@ -95,7 +95,7 @@ namespace
 		{
 			const KAA::FileSecurity::wiper_t default_wipe_algorithm = KAA::FileSecurity::ordinary_remove;
 			const KAA::system::registry::key_access set_value = { false, false, false, false, false, true };
-			const std::auto_ptr<KAA::system::registry_key> software_root(registry->create_key(KAA::system::registry::current_user, registry_software_sub_key, KAA::system::registry::persistent, set_value));
+			const auto software_root = registry.create_key(KAA::system::registry::current_user, registry_software_sub_key, KAA::system::registry::persistent, set_value);
 			software_root->set_dword_value(registry_wipe_algorithm_value_name, ToWipeMethodID(default_wipe_algorithm));
 			return default_wipe_algorithm;
 		}
@@ -103,10 +103,10 @@ namespace
 	}
 
 	// FUTURE: KAA: DRY violation.
-	void SaveWiperType(KAA::system::registry* registry, const KAA::FileSecurity::wiper_t wipe_algorithm)
+	void SaveWiperType(KAA::system::registry& registry, const KAA::FileSecurity::wiper_t wipe_algorithm)
 	{
 		const KAA::system::registry::key_access set_value = { false, false, false, false, false, true };
-		const std::auto_ptr<KAA::system::registry_key> software_root(registry->open_key(KAA::system::registry::current_user, registry_software_sub_key, set_value));
+		const auto software_root = registry.open_key(KAA::system::registry::current_user, registry_software_sub_key, set_value);
 		software_root->set_dword_value(registry_wipe_algorithm_value_name, ToWipeMethodID(wipe_algorithm));
 	}
 
@@ -136,11 +136,11 @@ namespace
 		}
 	}
 
-	KAA::FileSecurity::core_t QueryCoreType(KAA::system::registry* const registry)
+	KAA::FileSecurity::core_t QueryCoreType(KAA::system::registry& registry)
 	try
 	{
 		const KAA::system::registry::key_access query_value = { false, false, false, false, true, false };
-		const std::auto_ptr<KAA::system::registry_key> software_root(registry->open_key(KAA::system::registry::current_user, registry_software_sub_key, query_value));
+		const auto software_root = registry.open_key(KAA::system::registry::current_user, registry_software_sub_key, query_value);
 		const DWORD value = software_root->query_dword_value(registry_core_value_name);
 		return ToCoreType(static_cast<KAA::FileSecurity::core_id>(value));
 	}
@@ -150,25 +150,25 @@ namespace
 		{
 			const KAA::FileSecurity::core_t default_core = KAA::FileSecurity::absolute_security; // FUTURE: KAA: introduce and change to strong security.
 			const KAA::system::registry::key_access set_value = { false, false, false, false, false, true };
-			const std::auto_ptr<KAA::system::registry_key> software_root(registry->create_key(KAA::system::registry::current_user, registry_software_sub_key, KAA::system::registry::persistent, set_value));
+			const auto software_root = registry.create_key(KAA::system::registry::current_user, registry_software_sub_key, KAA::system::registry::persistent, set_value);
 			software_root->set_dword_value(registry_core_value_name, ToCoreID(default_core));
 			return default_core;
 		}
 		throw;
 	}
 
-	void SaveCoreType(KAA::system::registry* const registry, const KAA::FileSecurity::core_t engine)
+	void SaveCoreType(KAA::system::registry& registry, const KAA::FileSecurity::core_t engine)
 	{
 		const KAA::system::registry::key_access set_value = { false, false, false, false, false, true };
-		const std::auto_ptr<KAA::system::registry_key> software_root(registry->open_key(KAA::system::registry::current_user, registry_software_sub_key, set_value));
+		const auto software_root = registry.open_key(KAA::system::registry::current_user, registry_software_sub_key, set_value);
 		return software_root->set_dword_value(registry_core_value_name, ToCoreID(engine));
 	}
 
-	KAA::filesystem::path::directory QueryKeyStoragePath(KAA::system::registry* const registry)
+	KAA::filesystem::path::directory QueryKeyStoragePath(KAA::system::registry& registry)
 	try
 	{
 		const KAA::system::registry::key_access query_value = { false, false, false, false, true, false };
-		const std::auto_ptr<KAA::system::registry_key> software_root(registry->open_key(KAA::system::registry::current_user, registry_software_sub_key, query_value));
+		const auto software_root = registry.open_key(KAA::system::registry::current_user, registry_software_sub_key, query_value);
 		return KAA::filesystem::path::directory { software_root->query_string_value(registry_key_storage_path_value_name) };
 	}
 	catch(const KAA::windows_api_failure& error)
@@ -177,17 +177,17 @@ namespace
 		{
 			const KAA::filesystem::path::directory default_key_storage_path { LR"(.\keys)" };
 			const KAA::system::registry::key_access set_value = { false, false, false, false, false, true };
-			const std::auto_ptr<KAA::system::registry_key> software_root(registry->create_key(KAA::system::registry::current_user, registry_software_sub_key, KAA::system::registry::persistent, set_value));
+			const auto software_root = registry.create_key(KAA::system::registry::current_user, registry_software_sub_key, KAA::system::registry::persistent, set_value);
 			software_root->set_string_value(registry_key_storage_path_value_name, default_key_storage_path.to_wstring());
 			return default_key_storage_path;
 		}
 		throw;
 	}
 
-	void SaveKeyStoragePath(KAA::system::registry* const registry, const KAA::filesystem::path::directory& path)
+	void SaveKeyStoragePath(KAA::system::registry& registry, const KAA::filesystem::path::directory& path)
 	{
 		const KAA::system::registry::key_access set_value = { false, false, false, false, false, true };
-		const std::auto_ptr<KAA::system::registry_key> software_root(registry->open_key(KAA::system::registry::current_user, registry_software_sub_key, set_value));
+		const auto software_root = registry.open_key(KAA::system::registry::current_user, registry_software_sub_key, set_value);
 		return software_root->set_string_value(registry_key_storage_path_value_name, path.to_wstring());
 	}
 
@@ -244,8 +244,8 @@ namespace KAA
 		ServerCommunicator::ServerCommunicator(const std::shared_ptr<filesystem::driver> filesystem) :
 		m_registry(QueryRegistry(windows_registry)),
 		m_filesystem(filesystem),
-		m_wiper(QueryWiper(QueryWiperType(m_registry.get()), m_filesystem)),
-		m_core(QueryCore(QueryCoreType(m_registry.get()), m_filesystem, QueryKeyStoragePath(m_registry.get()))),
+		m_wiper(QueryWiper(QueryWiperType(*m_registry), m_filesystem)),
+		m_core(QueryCore(QueryCoreType(*m_registry), m_filesystem, QueryKeyStoragePath(*m_registry))),
 		core_progress(new CoreProgressDispatcher),
 		wiper_progress(new WiperProgressDispatcher),
 		server_progress(nullptr)
@@ -309,7 +309,7 @@ namespace KAA
 
 		core_id ServerCommunicator::IGetCipher(void) const
 		{
-			return ToCoreID(QueryCoreType(m_registry.get()));
+			return ToCoreID(QueryCoreType(*m_registry));
 		}
 
 		void ServerCommunicator::ISetCipher(const core_id value)
@@ -317,7 +317,7 @@ namespace KAA
 			const core_t engine = ToCoreType(value);
 			const auto current_key_storage_path = m_core->GetKeyStoragePath();
 			m_core.reset(QueryCore(engine, m_filesystem, current_key_storage_path).release());
-			SaveCoreType(m_registry.get(), engine);
+			SaveCoreType(*m_registry, engine);
 		}
 
 		std::vector< std::pair<std::wstring, wipe_method_id> > ServerCommunicator::IGetAvailableWipeMethods(void) const
@@ -330,14 +330,14 @@ namespace KAA
 
 		wipe_method_id ServerCommunicator::IGetWipeMethod(void) const
 		{
-			return ToWipeMethodID(QueryWiperType(m_registry.get()));
+			return ToWipeMethodID(QueryWiperType(*m_registry));
 		}
 
 		void ServerCommunicator::ISetWipeMethod(const wipe_method_id value)
 		{
 			const wiper_t algorithm = ToWiperType(value);
 			m_wiper.reset(QueryWiper(algorithm, m_filesystem).release());
-			SaveWiperType(m_registry.get(), algorithm);
+			SaveWiperType(*m_registry, algorithm);
 		}
 
 		filesystem::path::directory ServerCommunicator::IGetKeyStoragePath(void) const
@@ -362,7 +362,7 @@ namespace KAA
 				}
 
 				m_core->SetKeyStoragePath(new_key_storage_path);
-				SaveKeyStoragePath(m_registry.get(), new_key_storage_path);
+				SaveKeyStoragePath(*m_registry, new_key_storage_path);
 
 				try
 				{
