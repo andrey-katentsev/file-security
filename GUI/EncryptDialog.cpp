@@ -68,30 +68,30 @@ namespace
 		HCURSOR m_previous;
 	};*/
 
-	std::wstring QueryLastUsedPath(const KAA::system::registry_key* const key)
+	std::wstring QueryLastUsedPath(const KAA::system::registry_key& key)
 	{
-		return key->query_string_value(registry_last_used_path_value_name);
+		return key.query_string_value(registry_last_used_path_value_name);
 	}
 
-	void SaveLastUsedPath(KAA::system::registry_key* const key, const std::wstring& last_used_path)
+	void SaveLastUsedPath(KAA::system::registry_key& key, const std::wstring& last_used_path)
 	{
-		return key->set_string_value(registry_last_used_path_value_name, last_used_path);
+		return key.set_string_value(registry_last_used_path_value_name, last_used_path);
 	}
 
-	POINT QueryWindowPosition(const KAA::system::registry_key* const key)
+	POINT QueryWindowPosition(const KAA::system::registry_key& key)
 	{
 		const POINT coordinates =
 		{
-			key->query_dword_value(registry_window_horizontal_position_value_name),
-			key->query_dword_value(registry_window_vertical_position_value_name)
+			key.query_dword_value(registry_window_horizontal_position_value_name),
+			key.query_dword_value(registry_window_vertical_position_value_name)
 		};
 		return coordinates;
 	}
 
-	void SetRegWindowPosition(KAA::system::registry_key* const key, const POINT& coordinates)
+	void SetRegWindowPosition(KAA::system::registry_key& key, const POINT& coordinates)
 	{
-		key->set_dword_value(registry_window_horizontal_position_value_name, coordinates.x);
-		key->set_dword_value(registry_window_vertical_position_value_name, coordinates.y);
+		key.set_dword_value(registry_window_horizontal_position_value_name, coordinates.x);
+		key.set_dword_value(registry_window_vertical_position_value_name, coordinates.y);
 	}
 
 	void UpdateButtonsState(const HWND dialog)
@@ -178,7 +178,7 @@ namespace
 								UpdateButtonsState(dialog);
 								{
 									KAA::system::windows_registry registry;
-									SaveLastUsedPath(GetRegistrySoftwareRootWrite(&registry).get(), file_to_encrypt_path);
+									SaveLastUsedPath(*GetRegistrySoftwareRootWrite(&registry), file_to_encrypt_path);
 								}
 							}
 						}
@@ -292,7 +292,7 @@ namespace
 				const POINT coordinates = { window_attributes.rcWindow.left, window_attributes.rcWindow.top };
 				{
 					KAA::system::windows_registry registry;
-					SetRegWindowPosition(GetRegistrySoftwareRootWrite(&registry).get(), coordinates);
+					SetRegWindowPosition(*GetRegistrySoftwareRootWrite(&registry), coordinates);
 				}
 			}
 		}
@@ -338,7 +338,7 @@ namespace
 		{
 			// FUTURE: KAA: relative coordinates (offset, percent) to screen resolution.
 			KAA::system::windows_registry registry;
-			const POINT coordinates(QueryWindowPosition(GetRegistrySoftwareRootRead(&registry).get()));
+			const POINT coordinates(QueryWindowPosition(*GetRegistrySoftwareRootRead(&registry)));
 			::SetWindowPos(dialog, HWND_TOP, coordinates.x, coordinates.y, 0, 0, SWP_NOZORDER | SWP_NOSIZE);
 		}
 		catch(const KAA::windows_api_failure& error)
@@ -369,7 +369,7 @@ namespace
 			try
 			{
 				KAA::system::windows_registry registry;
-				set_control_text(dialog, IDC_MAIN_FILE_TO_ENCRYPT_PATH_EDIT, QueryLastUsedPath(GetRegistrySoftwareRootRead(&registry).get()));
+				set_control_text(dialog, IDC_MAIN_FILE_TO_ENCRYPT_PATH_EDIT, QueryLastUsedPath(*GetRegistrySoftwareRootRead(&registry)));
 				::SendMessageW(::GetDlgItem(dialog, IDC_MAIN_FILE_TO_ENCRYPT_PATH_EDIT), WM_KEYDOWN, VK_END, 0);
 			}
 			catch(const KAA::windows_api_failure& error)
