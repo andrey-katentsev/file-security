@@ -49,25 +49,6 @@ namespace
 		return registry.open_key(KAA::system::registry::current_user, registry_software_sub_key, set_only);
 	}
 
-	/*class WaitCursor
-	{
-	public:
-		WaitCursor()
-		{
-			m_handle = ::LoadCursorW(::GetModuleHandleW(nullptr), IDC_WAIT);
-			m_previous = ::SetCursor(m_handle);
-		}
-
-		~WaitCursor()
-		{
-			::SetCursor(m_previous);
-		}
-
-	private:
-		HCURSOR m_handle;
-		HCURSOR m_previous;
-	};*/
-
 	std::wstring QueryLastUsedPath(const KAA::system::registry_key& key)
 	{
 		return key.query_string_value(registry_last_used_path_value_name);
