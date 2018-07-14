@@ -27,23 +27,12 @@ namespace
 {
 	unsigned ToIndex(HWND combobox, const KAA::FileSecurity::wipe_method_id filter)
 	{
-		enum { not_used = 0 };
 		const auto number_of_items = KAA::user_interface::get_items_count(combobox);
 		for(unsigned item_index = 0; item_index < number_of_items; ++item_index)
 		{
-			// DEFECT: KAA: DRY violation.
-			// FUTURE: KAA: move to the SDK.
-			const LRESULT assotiated_value = ::SendMessageW(combobox, CB_GETITEMDATA, item_index, not_used);
-			if(CB_ERR == assotiated_value)
-			{
-				const DWORD error = ::GetLastError();
-				throw KAA::windows_api_failure(__FUNCTIONW__, L"Unable to retrieve data associated with combobox item.", error); // DEFECT: KAA: correct?
-			}
-
+			const auto assotiated_value = KAA::user_interface::get_item_data(combobox, item_index);
 			if(filter == assotiated_value)
-			{
 				return item_index;
-			}
 		}
 
 		throw KAA::operation_failure(__FUNCTIONW__, L"Unable to convert a wipe method id to a combobox item index. There is no combobox item associated with specified value.", KAA::operation_failure::R_NOT_FOUND, KAA::operation_failure::S_ERROR);
@@ -52,16 +41,14 @@ namespace
 	KAA::FileSecurity::wipe_method_id GetWipeMethod(const HWND combobox)
 	{
 		enum { not_used = 0 };
+		// FUTURE: KAA: move to the SDK.
+		// if no item is selected, it is CB_ERR
 		const LRESULT item_index = ::SendMessageW(combobox, CB_GETCURSEL, not_used, not_used);
 		if(CB_ERR != item_index)
-		{
-			const LRESULT assotiated_value = ::SendMessageW(combobox, CB_GETITEMDATA, item_index, not_used);
-			if(CB_ERR != assotiated_value)
-				return assotiated_value;
-		}
+			return KAA::user_interface::get_item_data(combobox, item_index);
 
 		const DWORD error = ::GetLastError();
-		throw KAA::windows_api_failure(__FUNCTIONW__, L"Unable to retrieve data associated with combobox item.", error); // DEFECT: KAA: correct?
+		throw KAA::windows_api_failure(__FUNCTIONW__, L"failed to retrieve the index of the currently selected item", error);
 	}
 
 	int CALLBACK BrowseForFolderCallback(HWND dialog, UINT message, LPARAM context, LPARAM user_data)
