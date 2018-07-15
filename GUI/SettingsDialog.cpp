@@ -232,7 +232,7 @@ namespace
 				{
 					// FUTURE: KAA: potential CB_ERR or CB_ERRSPACE
 					const LRESULT index = ::SendMessageW(wipe_method_combo, CB_ADDSTRING, 0, reinterpret_cast<LPARAM>(wipe_method.first.c_str()));
-					::SendMessageW(wipe_method_combo, CB_SETITEMDATA , index, wipe_method.second);
+					KAA::user_interface::set_item_data(wipe_method_combo, index, wipe_method.second);
 				}
 				unsigned current_method = ToIndex(wipe_method_combo, GetCommunicator().GetWipeMethod());
 				::SendMessageW(wipe_method_combo, CB_SETCURSEL, current_method, 0);
