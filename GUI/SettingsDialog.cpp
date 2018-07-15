@@ -40,15 +40,8 @@ namespace
 
 	KAA::FileSecurity::wipe_method_id GetWipeMethod(const HWND combobox)
 	{
-		enum { not_used = 0 };
-		// FUTURE: KAA: move to the SDK.
-		// if no item is selected, it is CB_ERR
-		const LRESULT item_index = ::SendMessageW(combobox, CB_GETCURSEL, not_used, not_used);
-		if(CB_ERR != item_index)
-			return KAA::user_interface::get_item_data(combobox, item_index);
-
-		const DWORD error = ::GetLastError();
-		throw KAA::windows_api_failure(__FUNCTIONW__, L"failed to retrieve the index of the currently selected item", error);
+		const auto item_index = KAA::user_interface::get_selected_item(combobox);
+		return KAA::user_interface::get_item_data(combobox, item_index);
 	}
 
 	int CALLBACK BrowseForFolderCallback(HWND dialog, UINT message, LPARAM context, LPARAM user_data)
@@ -231,6 +224,7 @@ namespace
 				for (const auto& wipe_method : available_wipe_methods)
 				{
 					// FUTURE: KAA: potential CB_ERR or CB_ERRSPACE
+					// FUTURE: KAA: move to the SDK.
 					const LRESULT index = ::SendMessageW(wipe_method_combo, CB_ADDSTRING, 0, reinterpret_cast<LPARAM>(wipe_method.first.c_str()));
 					KAA::user_interface::set_item_data(wipe_method_combo, index, wipe_method.second);
 				}
