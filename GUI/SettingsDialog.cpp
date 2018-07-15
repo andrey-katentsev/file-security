@@ -229,7 +229,7 @@ namespace
 					KAA::user_interface::set_item_data(wipe_method_combo, index, wipe_method.second);
 				}
 				unsigned current_method = ToIndex(wipe_method_combo, GetCommunicator().GetWipeMethod());
-				::SendMessageW(wipe_method_combo, CB_SETCURSEL, current_method, 0);
+				KAA::user_interface::set_selected_item(wipe_method_combo, current_method);
 			}
 			catch(const KAA::FileSecurity::UserReport& report)
 			{
