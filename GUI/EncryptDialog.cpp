@@ -3,6 +3,7 @@
 #include "KAA/include/registry.h"
 #include "KAA/include/registry_key.h"
 #include "KAA/include/windows_registry.h"
+#include "KAA/include/dll/get_module_handle.h"
 #include "KAA/include/exception/windows_api_failure.h"
 #include "KAA/include/filesystem/path.h"
 #include "KAA/include/UI/controls.h"
@@ -149,7 +150,8 @@ namespace
 						{
 							// FUTURE: KAA: DRY violation.
 							const KAA::FileSecurity::OperationContext context = { EncryptFileTask, const_cast<std::wstring*>(&file_to_encrypt_path), IDS_FILE_ENCRYPTING, IDS_FILE_ENCRYPTED_SUCCESSFULLY, IDS_UNABLE_TO_COMPLETE_ENCRYPT_FILE_OPERATION };
-							const INT_PTR code = ::DialogBoxParamW(::GetModuleHandleW(nullptr), MAKEINTRESOURCEW(IDD_PROGRESS), dialog, ProgressDialog, reinterpret_cast<LPARAM>(&context));
+							const auto current_module = KAA::dll::get_calling_process_module_handle();
+							const auto code = ::DialogBoxParamW(current_module, MAKEINTRESOURCEW(IDD_PROGRESS), dialog, ProgressDialog, reinterpret_cast<LPARAM>(&context));
 							if(IDOK == code)
 							{
 								UpdateButtonsState(dialog);
@@ -186,7 +188,8 @@ namespace
 						try
 						{
 							const KAA::FileSecurity::OperationContext context = { DecryptFileTask, const_cast<std::wstring*>(&file_to_decrypt_path), IDS_FILE_DECRYPTING, IDS_FILE_DECRYPTED_SUCCESSFULLY, IDS_UNABLE_TO_COMPLETE_DECRYPT_FILE_OPERATION };
-							const INT_PTR code = ::DialogBoxParamW(::GetModuleHandleW(nullptr), MAKEINTRESOURCEW(IDD_PROGRESS), dialog, ProgressDialog, reinterpret_cast<LPARAM>(&context));
+							const auto current_module = KAA::dll::get_calling_process_module_handle();
+							const auto code = ::DialogBoxParamW(current_module, MAKEINTRESOURCEW(IDD_PROGRESS), dialog, ProgressDialog, reinterpret_cast<LPARAM>(&context));
 							if(IDOK == code)
 							{
 								UpdateButtonsState(dialog);
@@ -238,7 +241,8 @@ namespace
 			} break;
 		case IDC_ENCRYPT_FILE_SETTINGS_MENU:
 			{
-				const INT_PTR code = ::DialogBoxW(::GetModuleHandleW(nullptr), MAKEINTRESOURCEW(IDD_SETTINGS), dialog, SettingsDialog);
+				const auto current_module = KAA::dll::get_calling_process_module_handle();
+				const auto code = ::DialogBoxW(current_module, MAKEINTRESOURCEW(IDD_SETTINGS), dialog, SettingsDialog);
 				if(IDOK == code)
 				{
 					// FUTURE: KAA: should settings be applied here?
@@ -246,7 +250,8 @@ namespace
 			} break;
 		case IDC_ENCRYPT_FILE_ABOUT_MENU:
 			{
-				::DialogBoxW(::GetModuleHandleW(nullptr), MAKEINTRESOURCEW(IDD_ABOUT), dialog, AboutDialog);
+				const auto current_module = KAA::dll::get_calling_process_module_handle();
+				::DialogBoxW(current_module, MAKEINTRESOURCEW(IDD_ABOUT), dialog, AboutDialog);
 			} break;
 		default:
 			return FALSE;
@@ -328,17 +333,18 @@ namespace
 		}
 
 		{
-			const HINSTANCE current_module = ::GetModuleHandleW(nullptr);
-			const HANDLE lock_icon = ::LoadImageW(current_module, MAKEINTRESOURCEW(IDI_LOCK_XP), IMAGE_ICON, 0, 0, LR_DEFAULTCOLOR | LR_DEFAULTSIZE);
-			::SendMessageW(dialog, WM_SETICON, ICON_BIG, reinterpret_cast<LPARAM>(lock_icon));
-			::SendMessageW(dialog, WM_SETICON, ICON_SMALL, reinterpret_cast<LPARAM>(lock_icon));
-		}
-		{
-			const HINSTANCE current_module = ::GetModuleHandleW(nullptr);
-			const SIZE icon_size = { 16, 16 };
-			const HANDLE browse_icon = ::LoadImageW(current_module, MAKEINTRESOURCEW(IDI_EXPLORER_XP), IMAGE_ICON, icon_size.cx, icon_size.cy, LR_DEFAULTCOLOR);
-			const HWND browse_button = ::GetDlgItem(dialog, IDC_MAIN_BROWSE_FILE_TO_ENCRYPT_BUTTON);
-			::SendMessageW(browse_button, BM_SETIMAGE, IMAGE_ICON, reinterpret_cast<LPARAM>(browse_icon));
+			const auto current_module = KAA::dll::get_calling_process_module_handle();
+			{
+				const HANDLE lock_icon = ::LoadImageW(current_module, MAKEINTRESOURCEW(IDI_LOCK_XP), IMAGE_ICON, 0, 0, LR_DEFAULTCOLOR | LR_DEFAULTSIZE);
+				::SendMessageW(dialog, WM_SETICON, ICON_BIG, reinterpret_cast<LPARAM>(lock_icon));
+				::SendMessageW(dialog, WM_SETICON, ICON_SMALL, reinterpret_cast<LPARAM>(lock_icon));
+			}
+			{
+				const SIZE icon_size = { 16, 16 };
+				const HANDLE browse_icon = ::LoadImageW(current_module, MAKEINTRESOURCEW(IDI_EXPLORER_XP), IMAGE_ICON, icon_size.cx, icon_size.cy, LR_DEFAULTCOLOR);
+				const HWND browse_button = ::GetDlgItem(dialog, IDC_MAIN_BROWSE_FILE_TO_ENCRYPT_BUTTON);
+				::SendMessageW(browse_button, BM_SETIMAGE, IMAGE_ICON, reinterpret_cast<LPARAM>(browse_icon));
+			}
 		}
 		{
 			const HWND file_to_encrypt_edit = ::GetDlgItem(dialog, IDC_MAIN_FILE_TO_ENCRYPT_PATH_EDIT);

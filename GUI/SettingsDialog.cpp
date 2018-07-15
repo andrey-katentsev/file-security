@@ -2,6 +2,7 @@
 #include <vector>
 
 #include "KAA/include/load_string.h"
+#include "KAA/include/dll/get_module_handle.h"
 #include "KAA/include/exception/com_failure.h"
 #include "KAA/include/exception/operation_failure.h"
 #include "KAA/include/exception/windows_api_failure.h"
@@ -200,7 +201,7 @@ namespace
 	{
 		// DEFECT: KAA: DRY violation.
 		{
-			const HINSTANCE current_module = ::GetModuleHandleW(nullptr);
+			const auto current_module = KAA::dll::get_calling_process_module_handle();
 			const SIZE icon_size = { 16, 16 };
 			// DEFECT: KAA: handle leak.
 			const HANDLE browse_icon = ::LoadImageW(current_module, MAKEINTRESOURCEW(IDI_EXPLORER_XP), IMAGE_ICON, icon_size.cx, icon_size.cy, LR_DEFAULTCOLOR);
