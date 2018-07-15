@@ -213,6 +213,7 @@ namespace
 		}
 		{
 			const HWND absolute_security_check = ::GetDlgItem(dialog, IDC_SETTINGS_ABSOLUTE_STRONG_SECURITY_CHECK);
+			// TODO: KAA: move to the SDK.
 			::SendMessageW(absolute_security_check, BM_SETCHECK, BST_CHECKED, 0);
 			::EnableWindow(absolute_security_check, FALSE);
 		}
@@ -223,9 +224,7 @@ namespace
 				const auto available_wipe_methods = GetCommunicator().GetAvailableWipeMethods();
 				for (const auto& wipe_method : available_wipe_methods)
 				{
-					// FUTURE: KAA: potential CB_ERR or CB_ERRSPACE
-					// FUTURE: KAA: move to the SDK.
-					const LRESULT index = ::SendMessageW(wipe_method_combo, CB_ADDSTRING, 0, reinterpret_cast<LPARAM>(wipe_method.first.c_str()));
+					const auto index = KAA::user_interface::add_string(wipe_method_combo, wipe_method.first);
 					KAA::user_interface::set_item_data(wipe_method_combo, index, wipe_method.second);
 				}
 				unsigned current_method = ToIndex(wipe_method_combo, GetCommunicator().GetWipeMethod());
