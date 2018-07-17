@@ -2,6 +2,7 @@
 
 #include "KAA/include/exception/operation_failure.h"
 
+#include "CRC32BasedKeyStorage.h"
 #include "MD5BasedKeyStorage.h"
 
 namespace KAA
@@ -14,6 +15,8 @@ namespace KAA
 			{
 			case md5_based:
 				return std::auto_ptr<KeyStorage> { new MD5BasedKeyStorage { path } };
+			case crc32_based:
+				return std::auto_ptr<KeyStorage> { new CRC32BasedKeyStorage { path } };
 			default:
 				{
 					const std::wstring source { __FUNCTIONW__ };

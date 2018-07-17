@@ -96,6 +96,9 @@
     <ClCompile Include="MD5BasedKeyStorage.cpp">
       <Filter>Source Files\Storages</Filter>
     </ClCompile>
+    <ClCompile Include="CRC32BasedKeyStorage.cpp">
+      <Filter>Source Files\Storages</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Kernel.h">
@@ -159,6 +162,9 @@
       <Filter>Header Files\Storages</Filter>
     </ClInclude>
     <ClInclude Include="MD5BasedKeyStorage.h">
+      <Filter>Header Files\Storages</Filter>
+    </ClInclude>
+    <ClInclude Include="CRC32BasedKeyStorage.h">
       <Filter>Header Files\Storages</Filter>
     </ClInclude>
   </ItemGroup>

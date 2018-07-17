@@ -112,6 +112,7 @@
   <ItemGroup>
     <ClCompile Include="AbsoluteSecurityCore.cpp" />
     <ClCompile Include="CoreFactory.cpp" />
+    <ClCompile Include="CRC32BasedKeyStorage.cpp" />
     <ClCompile Include="DllMain.cpp" />
     <ClCompile Include="FileCipher.cpp" />
     <ClCompile Include="FileCipherFactory.cpp" />
@@ -133,6 +134,7 @@
   <ItemGroup>
     <ClInclude Include="AbsoluteSecurityCore.h" />
     <ClInclude Include="CoreFactory.h" />
+    <ClInclude Include="CRC32BasedKeyStorage.h" />
     <ClInclude Include="FileCipher.h" />
     <ClInclude Include="FileCipherFactory.h" />
     <ClInclude Include="GammaFileCipher.h" />
