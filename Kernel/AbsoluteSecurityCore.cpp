@@ -1,7 +1,7 @@
 #include "AbsoluteSecurityCore.h"
 
+// FIX: TODO: throw operation_failure.
 #include <stdexcept>
-#include <vector>
 
 #include <cerrno>
 
@@ -70,7 +70,7 @@ namespace KAA
 
 		void AbsoluteSecurityCore::ISetKeyStoragePath(const filesystem::path::directory& path)
 		{
-			m_key_storage->SetPath(path);
+			return m_key_storage->SetPath(path);
 		}
 
 		void AbsoluteSecurityCore::IEncryptFile(const filesystem::path::file& path)

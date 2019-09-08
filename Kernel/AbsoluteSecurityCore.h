@@ -1,6 +1,6 @@
 #pragma once
 
-#include <vector> // private
+#include <vector>
 
 #include "KAA/include/progress_state.h"
 #include "KAA/include/stdtypes.h"
