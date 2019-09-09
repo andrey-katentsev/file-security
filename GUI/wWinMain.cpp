@@ -1,4 +1,5 @@
 #include <exception>
+#include <typeinfo>
 
 #include "KAA/include/convert.h"
 #include "KAA/include/format_string.h"
