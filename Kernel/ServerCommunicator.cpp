@@ -10,10 +10,10 @@
 #include <cerrno>
 
 #include "KAA/include/load_string.h"
-#include "KAA/include/module_context.h"
 #include "KAA/include/random.h"
 #include "KAA/include/registry_key.h"
 #include "KAA/include/windows_registry.h"
+#include "KAA/include/dll/module_context.h"
 #include "KAA/include/exception/windows_api_failure.h"
 #undef EncryptFile
 #undef DecryptFile
