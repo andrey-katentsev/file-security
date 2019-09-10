@@ -3,7 +3,7 @@
 #include <windows.h>
 
 // DEFECT: KAA: deal with global value.
-KAA::module_context core_dll;
+KAA::dll::module_context core_dll;
 
 // When the system calls the DllMain function with the DLL_PROCESS_ATTACH value, the function returns TRUE if it succeeds or FALSE if initialization fails.
 // When the system calls the DllMain function with any value other than DLL_PROCESS_ATTACH, the return value is ignored.

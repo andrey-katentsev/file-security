@@ -29,7 +29,7 @@
 
 #include "resource.h"
 
-extern KAA::module_context core_dll;
+extern KAA::dll::module_context core_dll;
 
 namespace
 {
