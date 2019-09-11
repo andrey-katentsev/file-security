@@ -21,8 +21,8 @@ BOOL WINAPI DllMain(HINSTANCE module, DWORD reason, LPVOID reserved)
 			}
 			else // static loads
 			{
-				::DisableThreadLibraryCalls(module);
 				core_dll.m_module = module;
+				core_dll.disable_thread_notifications();
 			}
 		} break;
 	case DLL_THREAD_ATTACH: // do thread-specific initialization
