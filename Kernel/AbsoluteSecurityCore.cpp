@@ -45,11 +45,11 @@ namespace KAA
 {
 	namespace FileSecurity
 	{
-		AbsoluteSecurityCore::AbsoluteSecurityCore(const std::shared_ptr<filesystem::driver> filesystem, const filesystem::path::directory& key_storage_path) :
+		AbsoluteSecurityCore::AbsoluteSecurityCore(std::shared_ptr<filesystem::driver> filesystem, filesystem::path::directory key_storage_path) :
 		m_filesystem(filesystem),
 		//m_wiper(new ordinary_file_remover(filesystem)),
 		m_cipher(CreateFileCipher(gamma_cipher, filesystem)),
-		m_key_storage(CreateKeyStorage(md5_based, key_storage_path)),
+		m_key_storage(CreateKeyStorage(md5_based, std::move(key_storage_path))),
 		cipher_progress(new CipherProgressDispatcher),
 		core_progress(nullptr)
 		{

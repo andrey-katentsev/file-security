@@ -26,7 +26,7 @@ namespace KAA
 		class AbsoluteSecurityCore final : public Core
 		{
 		public:
-			AbsoluteSecurityCore(std::shared_ptr<filesystem::driver>, const filesystem::path::directory& key_storage_path);
+			AbsoluteSecurityCore(std::shared_ptr<filesystem::driver>, filesystem::path::directory key_storage_path);
 			AbsoluteSecurityCore(const AbsoluteSecurityCore&) = delete;
 			AbsoluteSecurityCore(AbsoluteSecurityCore&&) = delete;
 			~AbsoluteSecurityCore() = default;

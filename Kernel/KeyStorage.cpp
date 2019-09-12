@@ -4,9 +4,9 @@ namespace KAA
 {
 	namespace FileSecurity
 	{
-		void KeyStorage::SetPath(const filesystem::path::directory& path)
+		void KeyStorage::SetPath(filesystem::path::directory path)
 		{
-			return ISetPath(path);
+			return ISetPath(std::move(path));
 		}
 
 		filesystem::path::directory KeyStorage::GetPath(void) const

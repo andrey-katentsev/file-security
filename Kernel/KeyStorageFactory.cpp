@@ -9,14 +9,14 @@ namespace KAA
 {
 	namespace FileSecurity
 	{
-		std::auto_ptr<KeyStorage> CreateKeyStorage(const key_storage_t type, const filesystem::path::directory& path)
+		std::auto_ptr<KeyStorage> CreateKeyStorage(const key_storage_t type, filesystem::path::directory path)
 		{
 			switch(type)
 			{
 			case md5_based:
-				return std::auto_ptr<KeyStorage> { new MD5BasedKeyStorage { path } };
+				return std::auto_ptr<KeyStorage> { new MD5BasedKeyStorage { std::move(path) } };
 			case crc32_based:
-				return std::auto_ptr<KeyStorage> { new CRC32BasedKeyStorage { path } };
+				return std::auto_ptr<KeyStorage> { new CRC32BasedKeyStorage { std::move(path) } };
 			default:
 				{
 					const std::wstring source { __FUNCTIONW__ };

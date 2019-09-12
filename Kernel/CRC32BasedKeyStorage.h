@@ -9,16 +9,16 @@ namespace KAA
 		class CRC32BasedKeyStorage final : public KeyStorage
 		{
 		public:
-			explicit CRC32BasedKeyStorage(const filesystem::path::directory&);
+			explicit CRC32BasedKeyStorage(filesystem::path::directory storage_path);
 			~CRC32BasedKeyStorage() = default;
 
 		private:
-			filesystem::path::directory path;
-
-			void ISetPath(const filesystem::path::directory&) override;
+			void ISetPath(filesystem::path::directory) override;
 			filesystem::path::directory IGetPath(void) const override;
 
 			filesystem::path::file IGetKeyPathForSpecifiedPath(const filesystem::path::file&) const override;
+
+			filesystem::path::directory storage_path;
 		};
 	}
 }
