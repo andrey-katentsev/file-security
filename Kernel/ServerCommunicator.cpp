@@ -218,14 +218,14 @@ namespace
 		}
 	}
 
-	std::auto_ptr<KAA::FileSecurity::Core> QueryCore(const KAA::FileSecurity::core_t interface_id, const std::shared_ptr<KAA::filesystem::driver> filesystem, const KAA::filesystem::path::directory& key_storage_path)
+	std::auto_ptr<KAA::FileSecurity::Core> QueryCore(const KAA::FileSecurity::core_t interface_id, std::shared_ptr<KAA::filesystem::driver> filesystem, KAA::filesystem::path::directory key_storage_path)
 	{
 		switch(interface_id)
 		{
 		case KAA::FileSecurity::strong_security:
 			throw std::invalid_argument(__FUNCTION__);
 		case KAA::FileSecurity::absolute_security:
-			return std::auto_ptr<KAA::FileSecurity::Core>(new KAA::FileSecurity::AbsoluteSecurityCore(filesystem, key_storage_path));
+			return std::auto_ptr<KAA::FileSecurity::Core>(new KAA::FileSecurity::AbsoluteSecurityCore(filesystem, std::move(key_storage_path)));
 		default:
 			throw std::invalid_argument(__FUNCTION__);
 		}
@@ -315,8 +315,8 @@ namespace KAA
 		void ServerCommunicator::ISetCipher(const core_id value)
 		{
 			const core_t engine = ToCoreType(value);
-			const auto current_key_storage_path = m_core->GetKeyStoragePath();
-			m_core.reset(QueryCore(engine, m_filesystem, current_key_storage_path).release());
+			auto current_key_storage_path = m_core->GetKeyStoragePath();
+			m_core.reset(QueryCore(engine, m_filesystem, std::move(current_key_storage_path)).release());
 			SaveCoreType(*m_registry, engine);
 		}
 
