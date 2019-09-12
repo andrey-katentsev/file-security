@@ -18,9 +18,9 @@ namespace KAA
 			return IGetKeyStoragePath();
 		}
 
-		void Core::SetKeyStoragePath(const filesystem::path::directory& path)
+		void Core::SetKeyStoragePath(filesystem::path::directory path)
 		{
-			return ISetKeyStoragePath(path);
+			return ISetKeyStoragePath(std::move(path));
 		}
 
 		void Core::EncryptFile(const filesystem::path::file& path)

@@ -68,9 +68,9 @@ namespace KAA
 			return m_key_storage->GetPath();
 		}
 
-		void AbsoluteSecurityCore::ISetKeyStoragePath(const filesystem::path::directory& path)
+		void AbsoluteSecurityCore::ISetKeyStoragePath(filesystem::path::directory path)
 		{
-			return m_key_storage->SetPath(path);
+			return m_key_storage->SetPath(std::move(path));
 		}
 
 		void AbsoluteSecurityCore::IEncryptFile(const filesystem::path::file& path)

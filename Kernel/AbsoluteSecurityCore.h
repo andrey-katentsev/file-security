@@ -43,7 +43,7 @@ namespace KAA
 			std::shared_ptr<CoreProgressHandler> core_progress;
 
 			filesystem::path::directory IGetKeyStoragePath(void) const override;
-			void ISetKeyStoragePath(const filesystem::path::directory&) override;
+			void ISetKeyStoragePath(filesystem::path::directory) override;
 
 			void IEncryptFile(const filesystem::path::file&) override;
 			void IDecryptFile(const filesystem::path::file&) override;

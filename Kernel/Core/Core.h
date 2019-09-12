@@ -25,7 +25,7 @@ namespace KAA
 			virtual ~Core() = default;
 
 			filesystem::path::directory GetKeyStoragePath(void) const;
-			void SetKeyStoragePath(const filesystem::path::directory&);
+			void SetKeyStoragePath(filesystem::path::directory);
 
 			void EncryptFile(const filesystem::path::file&);
 			void DecryptFile(const filesystem::path::file&);
@@ -36,7 +36,7 @@ namespace KAA
 
 		private:
 			virtual filesystem::path::directory IGetKeyStoragePath(void) const = 0;
-			virtual void ISetKeyStoragePath(const filesystem::path::directory&) = 0;
+			virtual void ISetKeyStoragePath(filesystem::path::directory) = 0;
 
 			virtual void IEncryptFile(const filesystem::path::file&) = 0;
 			virtual void IDecryptFile(const filesystem::path::file&) = 0;
