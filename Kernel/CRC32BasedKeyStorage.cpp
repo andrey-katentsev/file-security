@@ -26,10 +26,8 @@ namespace KAA
 			const auto data = path.to_wstring();
 			const auto size = sizeof(decltype(data)::value_type) * data.length();
 			const auto checksum = checksum::crc32(data.c_str(), size, 0x04c11db7);
-			const std::wstring extension { L".bin" };
-			const auto filename = convert::to_wstring(checksum) + extension;
+			const auto filename = convert::to_wstring(checksum) + std::wstring{ L".bin" };
 			return storage_path + filename;
 		}
 	}
 }
-	

@@ -2,11 +2,6 @@
 
 #include "KAA/include/md5.h"
 
-namespace
-{
-	const std::wstring key_file_extension(L".bin");
-}
-
 namespace KAA
 {
 	namespace FileSecurity
@@ -30,7 +25,7 @@ namespace KAA
 			const auto data = path.to_wstring();
 			const auto data_size = sizeof ( decltype(data)::value_type ) * data.length();
 			const auto hash = cryptography::calculate_md5(data.c_str(), data_size);
-			const auto filename = convert::to_wstring(hash) + key_file_extension;
+			const auto filename = convert::to_wstring(hash) + std::wstring{ L".bin" };
 			return storage_path + filename;
 		}
 	}
