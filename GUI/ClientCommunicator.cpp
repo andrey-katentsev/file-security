@@ -103,7 +103,7 @@ namespace KAA
 			ThrowUserReport(error, UserReport::error, IDS_UNABLE_TO_RETRIEVE_KEY_STORAGE_PATH);
 		}
 
-		void ClientCommunicator::ISetKeyStoragePath(const filesystem::path::directory& path)
+		void ClientCommunicator::ISetKeyStoragePath(filesystem::path::directory path)
 		try
 		{
 			return m_communicator->SetKeyStoragePath(path);

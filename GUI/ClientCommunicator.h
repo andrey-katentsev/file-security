@@ -39,7 +39,7 @@ namespace KAA
 			void ISetWipeMethod(wipe_method_id) override;
 
 			filesystem::path::directory IGetKeyStoragePath(void) const override;
-			void ISetKeyStoragePath(const filesystem::path::directory&) override;
+			void ISetKeyStoragePath(filesystem::path::directory) override;
 
 			std::shared_ptr<CommunicatorProgressHandler> ISetProgressHandler(std::shared_ptr<CommunicatorProgressHandler>) override;
 		};

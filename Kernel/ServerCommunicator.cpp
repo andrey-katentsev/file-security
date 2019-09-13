@@ -346,7 +346,7 @@ namespace KAA
 		}
 
 		// FUTURE: KAA: consider use SetWorkingDirectory / _wchdir.
-		void ServerCommunicator::ISetKeyStoragePath(const filesystem::path::directory& new_key_storage_path)
+		void ServerCommunicator::ISetKeyStoragePath(const filesystem::path::directory new_key_storage_path)
 		{
 			const auto previous_key_storage_path = m_core->GetKeyStoragePath();
 			if(previous_key_storage_path != new_key_storage_path)

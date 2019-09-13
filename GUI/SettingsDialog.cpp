@@ -121,15 +121,15 @@ namespace
 					{
 						// DEFECT: KAA: user-provided data must be validated.
 						// KAA: check that path is valid.
-						const auto key_storage_path = KAA::filesystem::path::directory { get_control_text(dialog, IDC_SETTINGS_KEY_STORAGE_PATH_EDIT) };
-						if(!key_storage_path.to_wstring().empty())
+						auto key_storage_path = get_control_text(dialog, IDC_SETTINGS_KEY_STORAGE_PATH_EDIT);
+						if(!key_storage_path.empty())
 						{
 							try
 							{
 								const HWND security_checkbox = ::GetDlgItem(dialog, IDC_SETTINGS_ABSOLUTE_STRONG_SECURITY_CHECK); // FUTURE: KAA: implement feature.
 								const HWND wipe_method_combobox = ::GetDlgItem(dialog, IDC_SETTINGS_WIPE_METHOD_COMBO);
 								GetCommunicator().SetWipeMethod(GetWipeMethod(wipe_method_combobox)); // DEFECT: KAA: implement transaction model.
-								GetCommunicator().SetKeyStoragePath(key_storage_path);
+								GetCommunicator().SetKeyStoragePath(std::move(key_storage_path));
 								::EndDialog(dialog, IDOK);
 							}
 							catch(const KAA::FileSecurity::UserReport& report)

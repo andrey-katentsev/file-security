@@ -44,7 +44,7 @@ namespace KAA
 			void SetWipeMethod(wipe_method_id);
 
 			filesystem::path::directory GetKeyStoragePath(void) const;
-			void SetKeyStoragePath(const filesystem::path::directory&);
+			void SetKeyStoragePath(filesystem::path::directory);
 
 			std::shared_ptr<CommunicatorProgressHandler> SetProgressHandler(std::shared_ptr<CommunicatorProgressHandler>);
 
@@ -63,7 +63,7 @@ namespace KAA
 			virtual void ISetWipeMethod(wipe_method_id) = 0;
 
 			virtual filesystem::path::directory IGetKeyStoragePath(void) const = 0;
-			virtual void ISetKeyStoragePath(const filesystem::path::directory&) = 0;
+			virtual void ISetKeyStoragePath(filesystem::path::directory) = 0;
 
 			virtual std::shared_ptr<CommunicatorProgressHandler> ISetProgressHandler(std::shared_ptr<CommunicatorProgressHandler>) = 0;
 		};

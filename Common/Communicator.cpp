@@ -63,9 +63,9 @@ namespace KAA
 			return IGetKeyStoragePath();
 		}
 		
-		void Communicator::SetKeyStoragePath(const filesystem::path::directory& path)
+		void Communicator::SetKeyStoragePath(filesystem::path::directory path)
 		{
-			return ISetKeyStoragePath(path);
+			return ISetKeyStoragePath(std::move(path));
 		}
 
 		std::shared_ptr<CommunicatorProgressHandler> Communicator::SetProgressHandler(std::shared_ptr<CommunicatorProgressHandler> handler)
