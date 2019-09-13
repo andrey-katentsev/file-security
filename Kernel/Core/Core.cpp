@@ -40,7 +40,7 @@ namespace KAA
 
 		std::shared_ptr<CoreProgressHandler> Core::SetProgressHandler(std::shared_ptr<CoreProgressHandler> handler)
 		{
-			return ISetProgressHandler(handler);
+			return ISetProgressHandler(std::move(handler));
 		}
 	}
 }
