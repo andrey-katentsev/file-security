@@ -118,7 +118,7 @@ namespace KAA
 		std::shared_ptr<CommunicatorProgressHandler> ClientCommunicator::ISetProgressHandler(std::shared_ptr<CommunicatorProgressHandler> handler)
 		try
 		{
-			return m_communicator->SetProgressHandler(handler);
+			return m_communicator->SetProgressHandler(std::move(handler));
 		}
 		catch(const failure& error)
 		{

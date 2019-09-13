@@ -70,7 +70,7 @@ namespace KAA
 
 		std::shared_ptr<CommunicatorProgressHandler> Communicator::SetProgressHandler(std::shared_ptr<CommunicatorProgressHandler> handler)
 		{
-			return ISetProgressHandler(handler);
+			return ISetProgressHandler(std::move(handler));
 		}
 	}
 }
