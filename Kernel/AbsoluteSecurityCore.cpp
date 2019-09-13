@@ -84,8 +84,8 @@ namespace KAA
 
 			{
 				OperationStarted(resources::load_string(IDS_GENERATING_KEY, core_dll.get_module_handle()));
-				const std::auto_ptr< std::vector<uint8_t> > key_data(GenerateKey(file_to_encrypt_size));
-				CreateKeyFile(key_path, *key_data);
+				const auto key_data = GenerateKey(file_to_encrypt_size);
+				CreateKeyFile(key_path, key_data);
 				total_processed += file_to_encrypt_size;
 				OverallProgress(total_processed, overall_size);
 			}
@@ -145,28 +145,26 @@ namespace KAA
 			return previous;
 		}
 
-		std::auto_ptr< std::vector<uint8_t> > AbsoluteSecurityCore::GenerateKey(const size_t bytes_to_generate)
+		std::vector<uint8_t> AbsoluteSecurityCore::GenerateKey(const size_t bytes_to_generate)
 		{
-			std::auto_ptr< std::vector<uint8_t> > buffer(new std::vector<uint8_t>(bytes_to_generate, 0));
-
+			std::vector<uint8_t> buffer(bytes_to_generate, 0U);
 			{
 				size_t chunk_size = (64 * 1024) - 1;
 				unsigned chunks_total = bytes_to_generate / chunk_size;
 
 				for(unsigned chunk = 0; chunk < chunks_total; ++chunk)
 				{
-					KAA::cryptography::generate(chunk_size, &(*buffer)[chunk * chunk_size]);
+					KAA::cryptography::generate(chunk_size, &buffer[chunk * chunk_size]);
 					ChunkProcessed((chunk + 1) * chunk_size, bytes_to_generate);
 				}
 
 				size_t last_chunk_size = bytes_to_generate % chunk_size;
 				if(0 < last_chunk_size)
 				{
-					KAA::cryptography::generate(last_chunk_size, &(*buffer)[chunks_total * chunk_size]);
+					KAA::cryptography::generate(last_chunk_size, &buffer[chunks_total * chunk_size]);
 					ChunkProcessed(bytes_to_generate, bytes_to_generate);
 				}
 			}
-
 			return buffer;
 		}
 

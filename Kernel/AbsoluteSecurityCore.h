@@ -52,7 +52,7 @@ namespace KAA
 
 			std::shared_ptr<CoreProgressHandler> ISetProgressHandler(std::shared_ptr<CoreProgressHandler>) override;
 
-			std::auto_ptr< std::vector<uint8_t> > GenerateKey(size_t bytes_to_generate);
+			std::vector<uint8_t> GenerateKey(size_t bytes_to_generate);
 			void CreateKeyFile(const filesystem::path::file& path, const std::vector<uint8_t>& data);
 
 			progress_state OperationStarted(const std::wstring& name);
