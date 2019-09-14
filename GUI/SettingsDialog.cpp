@@ -87,25 +87,24 @@ namespace
 						setup.lpfn = BrowseForFolderCallback;
 
 						// DEFECT: KAA: may be empty control.
-						auto directory = KAA::filesystem::path::directory { get_control_text(dialog, IDC_SETTINGS_KEY_STORAGE_PATH_EDIT) };
-						const auto initial_directory = KAA::filesystem::path::make_WinAPI_directory_path(directory.to_wstring());
+						auto directory = get_control_text(dialog, IDC_SETTINGS_KEY_STORAGE_PATH_EDIT);
+						const auto initial_directory = KAA::filesystem::path::make_WinAPI_directory_path(std::move(directory));
 						setup.lParam = reinterpret_cast<LPARAM>(&initial_directory);
-
-						std::vector<wchar_t> buffer(MAX_PATH, L'\0');
 
 						const KAA::RAII::com_initializer com(COINIT_APARTMENTTHREADED);
 						PIDLIST_ABSOLUTE selected_directory = ::SHBrowseForFolderW(&setup);
 						if(nullptr != selected_directory)
 						{
 							const KAA::RAII::com_task_memory acquired_memory(selected_directory);
-							if(TRUE != ::SHGetPathFromIDList(selected_directory, &buffer[0]))
+							std::vector<wchar_t> buffer(MAX_PATH, L'\0');
+							if(TRUE != ::SHGetPathFromIDList(selected_directory, buffer.data()))
 							{
 								const DWORD error = ::GetLastError();
 								throw KAA::windows_api_failure(__FUNCTIONW__, L"Unable to convert an item identifier list to a file system path.", error);
 							}
 
-							directory = KAA::filesystem::path::directory { &buffer[0] };
-							const auto new_key_storage_path = KAA::filesystem::path::make_CRT_directory_path(directory.to_wstring());
+							directory = buffer.data();
+							const auto new_key_storage_path = KAA::filesystem::path::make_CRT_directory_path(std::move(directory));
 							set_control_text(dialog, IDC_SETTINGS_KEY_STORAGE_PATH_EDIT, new_key_storage_path);
 						}
 					} break;
