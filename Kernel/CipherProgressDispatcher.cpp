@@ -14,10 +14,10 @@ namespace KAA
 		core_progress(core_progress)
 		{}
 
-		std::shared_ptr<CoreProgressHandler> CipherProgressDispatcher::SetProgressHandler(std::shared_ptr<CoreProgressHandler> core_progress)
+		std::shared_ptr<CoreProgressHandler> CipherProgressDispatcher::SetProgressHandler(std::shared_ptr<CoreProgressHandler> handler)
 		{
-			const auto previous = this->core_progress;
-			this->core_progress = core_progress;
+			const auto previous = std::move(core_progress);
+			core_progress = std::move(handler);
 			return previous;
 		}
 

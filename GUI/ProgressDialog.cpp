@@ -77,8 +77,8 @@ namespace
 		//INT_PTR result = IDOK;
 		g_result = IDOK;
 
-		auto progress_handler = std::make_shared<ProgressDialogHandler>(dialog);
-		const auto previous = KAA::FileSecurity::GetCommunicator().SetProgressHandler(progress_handler);
+		auto session = std::make_shared<ProgressDialogHandler>(dialog);
+		auto original = KAA::FileSecurity::GetCommunicator().SetProgressHandler(std::move(session));
 
 		try
 		{
@@ -116,7 +116,7 @@ namespace
 			}
 		}
 
-		KAA::FileSecurity::GetCommunicator().SetProgressHandler(previous);
+		KAA::FileSecurity::GetCommunicator().SetProgressHandler(std::move(original));
 
 		{
 			//const HWND progress = ::GetDlgItem(dialog, IDC_PROGRESS_TOTAL_PROGRESS);

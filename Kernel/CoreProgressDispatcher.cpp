@@ -14,10 +14,10 @@ namespace KAA
 		communicator_progress(communicator_progress)
 		{}
 
-		std::shared_ptr<CommunicatorProgressHandler> CoreProgressDispatcher::SetProgressHandler(std::shared_ptr<CommunicatorProgressHandler> communicator_progress)
+		std::shared_ptr<CommunicatorProgressHandler> CoreProgressDispatcher::SetProgressHandler(std::shared_ptr<CommunicatorProgressHandler> handler)
 		{
-			const auto previous = this->communicator_progress;
-			this->communicator_progress = communicator_progress;
+			const auto previous = std::move(communicator_progress);
+			communicator_progress = std::move(handler);
 			return previous;
 		}
 
