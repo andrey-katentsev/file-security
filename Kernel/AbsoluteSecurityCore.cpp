@@ -137,7 +137,7 @@ namespace KAA
 
 		std::shared_ptr<CoreProgressHandler> AbsoluteSecurityCore::ISetProgressHandler(std::shared_ptr<CoreProgressHandler> handler)
 		{
-			const auto previous = std::move(core_progress);
+			auto previous = std::move(core_progress);
 			core_progress = std::move(handler);
 			cipher_progress->SetProgressHandler(core_progress);
 			m_cipher->SetProgressCallback(cipher_progress);

@@ -16,7 +16,7 @@ namespace KAA
 
 		std::shared_ptr<CommunicatorProgressHandler> WiperProgressDispatcher::SetProgressHandler(std::shared_ptr<CommunicatorProgressHandler> handler)
 		{
-			const auto previous = std::move(communicator_progress);
+			auto previous = std::move(communicator_progress);
 			communicator_progress = std::move(handler);
 			return previous;
 		}

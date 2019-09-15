@@ -83,7 +83,7 @@ namespace KAA
 
 		std::shared_ptr<FileProgressHandler> GammaFileCipher::ISetProgressCallback(std::shared_ptr<FileProgressHandler> handler)
 		{
-			const auto previous = cipher_progress;
+			auto previous = cipher_progress;
 			cipher_progress = handler;
 			return previous;
 		}

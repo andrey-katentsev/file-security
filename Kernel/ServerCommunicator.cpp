@@ -382,7 +382,7 @@ namespace KAA
 
 		std::shared_ptr<CommunicatorProgressHandler> ServerCommunicator::ISetProgressHandler(std::shared_ptr<CommunicatorProgressHandler> handler)
 		{
-			const auto previous = std::move(server_progress);
+			auto previous = std::move(server_progress);
 			server_progress = std::move(handler);
 
 			core_progress->SetProgressHandler(server_progress);

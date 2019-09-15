@@ -16,7 +16,7 @@ namespace KAA
 
 		std::shared_ptr<CoreProgressHandler> CipherProgressDispatcher::SetProgressHandler(std::shared_ptr<CoreProgressHandler> handler)
 		{
-			const auto previous = std::move(core_progress);
+			auto previous = std::move(core_progress);
 			core_progress = std::move(handler);
 			return previous;
 		}
