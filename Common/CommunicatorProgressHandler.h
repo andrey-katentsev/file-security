@@ -3,9 +3,9 @@
 #pragma once
 
 #include <string>
+#include <cstdint>
 
 #include "KAA/include/progress_state.h"
-#include "KAA/include/stdtypes.h"
 
 namespace KAA
 {

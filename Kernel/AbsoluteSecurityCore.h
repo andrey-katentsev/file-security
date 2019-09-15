@@ -1,9 +1,9 @@
 #pragma once
 
 #include <vector>
+#include <cstdint>
 
 #include "KAA/include/progress_state.h"
-#include "KAA/include/stdtypes.h"
 
 #include "./Core/Core.h"
 
