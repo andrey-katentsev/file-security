@@ -370,7 +370,7 @@ namespace KAA
 				}
 				catch(const KAA::system_failure& error)
 				{
-					if(ENOENT != error || ENOTEMPTY != error) // FUTURE: KAA: introduce replace key storage feature.
+					if(ENOENT != error && ENOTEMPTY != error) // FUTURE: KAA: introduce replace key storage feature.
 						throw;
 					//{
 					//const std::wstring message(L"Unable to remove " + previous_key_storage_path + L".\nSystem message: " + error.format_message());
