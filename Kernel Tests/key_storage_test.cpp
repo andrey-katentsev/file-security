@@ -3,7 +3,8 @@
 
 using namespace KAA::FileSecurity;
 
-TEST(key_storage, default_path)
+// FUTURE: KAA: mock key storage.
+TEST(key_storage, DISABLED_default_path)
 {
 	const auto core = GetClassObject();
 	const auto path = core->GetKeyStoragePath();
