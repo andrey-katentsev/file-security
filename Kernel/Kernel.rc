@@ -51,8 +51,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 0,9,3,8
- PRODUCTVERSION 0,9,1,1
+ FILEVERSION 0,9,4,1
+ PRODUCTVERSION 0,9,2,1
  FILEFLAGSMASK 0x17L
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -67,14 +67,14 @@ BEGIN
     BEGIN
         BLOCK "041904b0"
         BEGIN
-            VALUE "Comments", "Новосибирск, 2014"
+            VALUE "Comments", "Москва, 2019"
             VALUE "CompanyName", "Hyperlink Software"
             VALUE "FileDescription", "Управляющий модуль"
-            VALUE "FileVersion", "0.9.3.8"
-            VALUE "LegalCopyright", "© Катенцев Андрей Александрович, 2014"
+            VALUE "FileVersion", "0.9.4.1"
+            VALUE "LegalCopyright", "© Катенцев Андрей Александрович, 2019"
             VALUE "OriginalFilename", "core.dll"
             VALUE "ProductName", "Безопасность данных"
-            VALUE "ProductVersion", "0.9.1.1"
+            VALUE "ProductVersion", "0.9.2.1"
         END
     END
     BLOCK "VarFileInfo"
