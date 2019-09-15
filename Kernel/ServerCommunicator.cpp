@@ -396,8 +396,7 @@ namespace KAA
 
 		filesystem::path::file ServerCommunicator::BackupFile(const filesystem::path::file& path)
 		{
-			const auto working_directory = path.get_directory();
-			const auto backup_file_path = working_directory + m_filesystem->get_temp_filename();
+			auto backup_file_path = m_filesystem->get_temp_filename(path.get_directory());
 			CopyFile(path, backup_file_path); // FUTURE: KAA: remove incomplete file.
 			return backup_file_path;
 		}

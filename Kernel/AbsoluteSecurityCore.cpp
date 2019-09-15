@@ -79,7 +79,7 @@ namespace KAA
 			const size_t overall_size = 2*file_to_encrypt_size;
 			size_t total_processed = 0;
 
-			auto key_path = m_key_storage->GetPath() + m_filesystem->get_temp_filename();
+			auto key_path = m_filesystem->get_temp_filename(m_key_storage->GetPath());
 			{
 				OperationStarted(resources::load_string(IDS_GENERATING_KEY, core_dll.get_module_handle()));
 				const auto key_data = GenerateKey(file_to_encrypt_size);
