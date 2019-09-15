@@ -1,12 +1,16 @@
 #include "MD5BasedKeyStorage.h"
 
+#include <vector>
+
 #include "KAA/include/md5.h"
+#include "KAA/include/filesystem/driver.h"
 
 namespace KAA
 {
 	namespace FileSecurity
 	{
-		MD5BasedKeyStorage::MD5BasedKeyStorage(filesystem::path::directory path) :
+		MD5BasedKeyStorage::MD5BasedKeyStorage(std::shared_ptr<filesystem::driver> driver, filesystem::path::directory path) :
+		filesystem(std::move(driver)),
 		storage_path(std::move(path))
 		{}
 
@@ -22,11 +26,16 @@ namespace KAA
 
 		filesystem::path::file MD5BasedKeyStorage::IGetKeyPathForSpecifiedPath(const filesystem::path::file& path) const
 		{
-			const auto data = path.to_wstring();
-			const auto data_size = sizeof ( decltype(data)::value_type ) * data.length();
-			const auto hash = cryptography::calculate_md5(data.c_str(), data_size);
-			const auto filename = convert::to_wstring(hash) + std::wstring{ L".bin" };
-			return storage_path + filename;
+			const filesystem::driver::mode sequential_read_only { false };
+			const filesystem::driver::share share_read { false };
+			auto file = filesystem->open_file(path, sequential_read_only, share_read);
+			// DEFECT: KAA: read and calculate chunks instead of whole file.
+			const auto chunk_size = file->get_size();
+			std::vector<uint8_t> data(chunk_size);
+			const auto bytes_read = file->read(chunk_size, data.data());
+			const auto hash = cryptography::calculate_md5(data.data(), bytes_read);
+			auto filename = convert::to_wstring(hash) + std::wstring{ L".bin" };
+			return storage_path + std::move(filename);
 		}
 	}
 }

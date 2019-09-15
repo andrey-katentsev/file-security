@@ -1,15 +1,22 @@
 #pragma once
 
+#include <memory>
+
 #include "KeyStorage.h"
 
 namespace KAA
 {
+	namespace filesystem
+	{
+		class driver;
+	}
+
 	namespace FileSecurity
 	{
 		class MD5BasedKeyStorage final : public KeyStorage
 		{
 		public:
-			explicit MD5BasedKeyStorage(filesystem::path::directory storage_path);
+			MD5BasedKeyStorage(std::shared_ptr<filesystem::driver>, filesystem::path::directory storage_path);
 			MD5BasedKeyStorage(const MD5BasedKeyStorage&) = delete;
 			MD5BasedKeyStorage(MD5BasedKeyStorage&&) = delete;
 			~MD5BasedKeyStorage() = default;
@@ -23,6 +30,7 @@ namespace KAA
 
 			filesystem::path::file IGetKeyPathForSpecifiedPath(const filesystem::path::file&) const override;
 
+			std::shared_ptr<filesystem::driver> filesystem;
 			filesystem::path::directory storage_path;
 		};
 	}
