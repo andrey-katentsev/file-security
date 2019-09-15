@@ -202,17 +202,17 @@ namespace
 		}
 	}
 
-	std::auto_ptr<KAA::filesystem::wiper> QueryWiper(const KAA::FileSecurity::wiper_t interface_identifier, const std::shared_ptr<KAA::filesystem::driver> filesystem)
+	std::auto_ptr<KAA::filesystem::wiper> QueryWiper(const KAA::FileSecurity::wiper_t interface_identifier, std::shared_ptr<KAA::filesystem::driver> filesystem)
 	{
 		switch(interface_identifier)
 		{
 		case KAA::FileSecurity::ordinary_remove:
-			return std::auto_ptr<KAA::filesystem::wiper>(new KAA::filesystem::ordinary_file_remover(filesystem));
+			return std::auto_ptr<KAA::filesystem::wiper>(new KAA::filesystem::ordinary_file_remover(std::move(filesystem)));
 		case KAA::FileSecurity::simple_overwrite:
-			{
-				const uint8_t aggregate = KAA::cryptography::random() % std::numeric_limits<uint8_t>::max();
-				return std::auto_ptr<KAA::filesystem::wiper>(new KAA::filesystem::simple_owerwrite_wiper(filesystem, aggregate));
-			}
+		{
+			const uint8_t aggregate = KAA::cryptography::random() % std::numeric_limits<uint8_t>::max();
+			return std::auto_ptr<KAA::filesystem::wiper>(new KAA::filesystem::simple_owerwrite_wiper(std::move(filesystem), aggregate));
+		}
 		default:
 			throw std::invalid_argument(__FUNCTION__);
 		}
