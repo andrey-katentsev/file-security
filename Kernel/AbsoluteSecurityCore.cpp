@@ -99,23 +99,24 @@ namespace KAA
 		void AbsoluteSecurityCore::IDecryptFile(const filesystem::path::file& path)
 		{
 			OperationStarted(resources::load_string(IDS_RETRIEVING_KEY_PATH, core_dll.get_module_handle()));
-			const auto key_path = m_key_storage->GetKeyPathForSpecifiedPath(path);
 
 			const auto file_to_decrypt_size = get_file_size(*m_filesystem, path);
 			const size_t overall_size = 2*file_to_decrypt_size;
 			size_t total_processed = 0;
 
+			const auto key_path = m_key_storage->GetKeyPathForSpecifiedPath(path);
 			{
 				OperationStarted(resources::load_string(IDS_DECRYPTING_FILE, core_dll.get_module_handle()));
 				m_cipher->DecryptFile(path, key_path);
 				total_processed += file_to_decrypt_size;
 				OverallProgress(total_processed, overall_size);
 			}
-
-			OperationStarted(resources::load_string(IDS_REMOVING_KEY, core_dll.get_module_handle()));
-			RemoveKeyFile(m_filesystem, key_path);
-			total_processed += file_to_decrypt_size;
-			OverallProgress(total_processed, overall_size);
+			{
+				OperationStarted(resources::load_string(IDS_REMOVING_KEY, core_dll.get_module_handle()));
+				RemoveKeyFile(m_filesystem, key_path);
+				total_processed += file_to_decrypt_size;
+				OverallProgress(total_processed, overall_size);
+			}
 		}
 
 		bool AbsoluteSecurityCore::IIsFileEncrypted(const filesystem::path::file& path) const
@@ -149,7 +150,6 @@ namespace KAA
 			{
 				size_t chunk_size = (64 * 1024) - 1;
 				unsigned chunks_total = bytes_to_generate / chunk_size;
-
 				for(unsigned chunk = 0; chunk < chunks_total; ++chunk)
 				{
 					KAA::cryptography::generate(chunk_size, &buffer[chunk * chunk_size]);
