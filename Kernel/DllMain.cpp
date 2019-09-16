@@ -1,8 +1,5 @@
 #include "KAA/include/dll/module_context.h"
 
-#include <windows.h>
-
-// DEFECT: KAA: deal with global value.
 KAA::dll::module_context core_dll;
 
 // When the system calls the DllMain function with the DLL_PROCESS_ATTACH value, the function returns TRUE if it succeeds or FALSE if initialization fails.
@@ -21,7 +18,7 @@ BOOL WINAPI DllMain(HINSTANCE module, DWORD reason, LPVOID reserved)
 			}
 			else // static loads
 			{
-				core_dll.m_module = module;
+				core_dll.initialize(module);
 				core_dll.disable_thread_notifications();
 			}
 		} break;
