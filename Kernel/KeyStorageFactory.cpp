@@ -20,10 +20,10 @@ namespace KAA
 				return std::auto_ptr<KeyStorage> { new CRC32BasedKeyStorage { std::move(path) } };
 			default:
 				{
-					const std::wstring source { __FUNCTIONW__ };
-					const std::wstring description { L"Unable to create a specified key storage class instance." };
-					const KAA::operation_failure::status_code_t reason = KAA::operation_failure::R_INVALID_ARGUMENT;
-					const KAA::operation_failure::severity_t severity = KAA::operation_failure::S_ERROR;
+					constexpr auto source { __FUNCTIONW__ };
+					constexpr auto description { L"cannot create key storage class instance: specified type is not supported" };
+					constexpr auto reason = operation_failure::R_INVALID_ARGUMENT;
+					constexpr auto severity = operation_failure::S_ERROR;
 					throw operation_failure(source, description, reason, severity);
 				}
 			}

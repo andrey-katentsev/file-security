@@ -36,7 +36,11 @@ namespace
 				return item_index;
 		}
 
-		throw KAA::operation_failure(__FUNCTIONW__, L"Unable to convert a wipe method id to a combobox item index. There is no combobox item associated with specified value.", KAA::operation_failure::R_NOT_FOUND, KAA::operation_failure::S_ERROR);
+		constexpr auto source { __FUNCTIONW__ };
+		constexpr auto description { L"failed to convert wipe method id to a combobox item index: there is no combobox item associated with a specified value" };
+		constexpr auto reason = KAA::operation_failure::R_NOT_FOUND;
+		constexpr auto severity = KAA::operation_failure::S_ERROR;
+		throw KAA::operation_failure(source, description, reason, severity);
 	}
 
 	KAA::FileSecurity::wipe_method_id GetWipeMethod(const HWND combobox)

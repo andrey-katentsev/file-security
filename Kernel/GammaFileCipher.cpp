@@ -21,10 +21,10 @@ namespace KAA
 		{
 			if(nullptr == filesystem)
 			{
-				const std::wstring source { __FUNCTIONW__ };
-				const std::wstring description { L"Unable to create a gamma file cipher class instance." };
-				const KAA::operation_failure::status_code_t reason = KAA::operation_failure::R_INVALID_ARGUMENT;
-				const KAA::operation_failure::severity_t severity = KAA::operation_failure::S_ERROR;
+				constexpr auto source { __FUNCTIONW__ };
+				constexpr auto description { L"unable to create gamma file cipher class instance" };
+				constexpr auto reason = operation_failure::R_INVALID_ARGUMENT;
+				constexpr auto severity = operation_failure::S_ERROR;
 				throw operation_failure(source, description, reason, severity);
 			}
 		}
