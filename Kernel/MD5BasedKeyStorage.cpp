@@ -3,6 +3,7 @@
 #include <vector>
 
 #include "KAA/include/md5.h"
+#include "KAA/include/exception/operation_failure.h"
 #include "KAA/include/filesystem/driver.h"
 
 namespace KAA
@@ -12,7 +13,16 @@ namespace KAA
 		MD5BasedKeyStorage::MD5BasedKeyStorage(std::shared_ptr<filesystem::driver> driver, filesystem::path::directory path) :
 		filesystem(std::move(driver)),
 		storage_path(std::move(path))
-		{}
+		{
+			if (!filesystem)
+			{
+				constexpr auto source { __FUNCTIONW__ };
+				constexpr auto description { L"unable to create MD5 based key storage class instance" };
+				constexpr auto reason = operation_failure::R_INVALID_ARGUMENT;
+				constexpr auto severity = operation_failure::S_ERROR;
+				throw operation_failure(source, description, reason, severity);
+			}
+		}
 
 		void MD5BasedKeyStorage::ISetPath(filesystem::path::directory path)
 		{
