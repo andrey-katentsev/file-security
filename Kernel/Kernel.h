@@ -27,7 +27,7 @@ namespace KAA
 {
 	namespace FileSecurity
 	{
-		KERNEL_API std::auto_ptr<Communicator> GetClassObject(void);
+		KERNEL_API std::unique_ptr<Communicator> GetClassObject(void);
 
 		//STDAPI DllCanUnloadNow(void);
 		//STDAPI DllGetClassObject(REFCLSID, REFIID, LPVOID*);

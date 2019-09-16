@@ -15,10 +15,10 @@ namespace KAA
 {
 	namespace FileSecurity
 	{
-		std::auto_ptr<Communicator> GetClassObject(void)
+		std::unique_ptr<Communicator> GetClassObject(void)
 		{
 			auto filesystem = std::make_shared<filesystem::crt_file_system>();
-			return std::auto_ptr<Communicator>(new ServerCommunicator(std::move(filesystem)));
+			return std::make_unique<ServerCommunicator>(std::move(filesystem));
 		}
 	}
 }

@@ -23,7 +23,7 @@ namespace KAA
 			ClientCommunicator& operator = (ClientCommunicator&&) = delete;
 
 		private:
-			std::auto_ptr<Communicator> m_communicator;
+			std::unique_ptr<Communicator> m_communicator;
 
 			void IEncryptFile(const filesystem::path::file&) override;
 			void IDecryptFile(const filesystem::path::file&) override;
