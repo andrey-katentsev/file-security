@@ -31,11 +31,11 @@ extern KAA::dll::module_context core_dll;
 
 namespace
 {
-	void RemoveKeyFile(const std::shared_ptr<KAA::filesystem::driver> filesystem, const KAA::filesystem::path::file& path)
+	void RemoveKeyFile(KAA::filesystem::driver& filesystem, const KAA::filesystem::path::file& path)
 	{
 		KAA::filesystem::driver::permission write_only(true, false);
-		filesystem->set_file_permissions(path, write_only);
-		filesystem->remove_file(path);
+		filesystem.set_file_permissions(path, write_only);
+		filesystem.remove_file(path);
 	}
 }
 
@@ -105,7 +105,7 @@ namespace KAA
 			}
 			{
 				OperationStarted(resources::load_string(IDS_REMOVING_KEY, core_dll.get_module_handle()));
-				RemoveKeyFile(m_filesystem, key_path);
+				RemoveKeyFile(*m_filesystem, key_path);
 				total_processed += file_to_decrypt_size;
 				OverallProgress(total_processed, overall_size);
 			}
@@ -169,7 +169,7 @@ namespace KAA
 			if(bytes_written != data.size())
 			{
 				key.reset();
-				RemoveKeyFile(m_filesystem, path);
+				RemoveKeyFile(*m_filesystem, path);
 				throw std::runtime_error(__FUNCTION__); // FUTURE: KAA: remove incomplete file : whose responsibility?
 			}
 		}
