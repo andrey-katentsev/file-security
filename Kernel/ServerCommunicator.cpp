@@ -302,7 +302,7 @@ namespace KAA
 		}
 
 		// FIX: KAA: implement communicator.
-		std::vector< std::pair<std::wstring, core_id> > ServerCommunicator::IGetAvailableCiphers(void) const
+		std::vector<std::pair<std::wstring, core_id>> ServerCommunicator::IGetAvailableCiphers(void) const
 		{
 			throw std::exception(__FUNCTION__);
 		}
@@ -320,9 +320,9 @@ namespace KAA
 			SaveCoreType(*m_registry, engine);
 		}
 
-		std::vector< std::pair<std::wstring, wipe_method_id> > ServerCommunicator::IGetAvailableWipeMethods(void) const
+		std::vector<std::pair<std::wstring, wipe_method_id>> ServerCommunicator::IGetAvailableWipeMethods(void) const
 		{
-			std::vector< std::pair<std::wstring, wipe_method_id> > available_wipe_methods;
+			std::vector<std::pair<std::wstring, wipe_method_id>> available_wipe_methods;
 			available_wipe_methods.push_back(std::make_pair(resources::load_string(IDS_WIPE_METHOD_A, core_dll.get_module_handle()), ToWipeMethodID(ordinary_remove)));
 			available_wipe_methods.push_back(std::make_pair(resources::load_string(IDS_WIPE_METHOD_B, core_dll.get_module_handle()), ToWipeMethodID(simple_overwrite)));
 			return available_wipe_methods;

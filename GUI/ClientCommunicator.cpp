@@ -63,7 +63,7 @@ namespace KAA
 			ThrowUserReport(error, UserReport::warning, IDS_UNABLE_TO_DETERMINE_FILE_STATE);
 		}
 
-		std::vector< std::pair<std::wstring, core_id> > ClientCommunicator::IGetAvailableCiphers(void) const
+		std::vector<std::pair<std::wstring, core_id>> ClientCommunicator::IGetAvailableCiphers(void) const
 		{
 			return m_communicator->GetAvailableCiphers();
 		}
@@ -78,7 +78,7 @@ namespace KAA
 			return m_communicator->SetCipher(cipher);
 		}
 
-		std::vector< std::pair<std::wstring, wipe_method_id> > ClientCommunicator::IGetAvailableWipeMethods(void) const
+		std::vector<std::pair<std::wstring, wipe_method_id>> ClientCommunicator::IGetAvailableWipeMethods(void) const
 		{
 			return m_communicator->GetAvailableWipeMethods();
 		}

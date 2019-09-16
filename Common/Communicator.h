@@ -35,11 +35,11 @@ namespace KAA
 
 			bool IsFileEncrypted(const filesystem::path::file&) const;
 
-			std::vector< std::pair<std::wstring, core_id> > GetAvailableCiphers(void) const;
+			std::vector<std::pair<std::wstring, core_id>> GetAvailableCiphers(void) const;
 			core_id GetCipher(void) const;
 			void SetCipher(core_id);
 
-			std::vector< std::pair<std::wstring, wipe_method_id> > GetAvailableWipeMethods(void) const;
+			std::vector<std::pair<std::wstring, wipe_method_id>> GetAvailableWipeMethods(void) const;
 			wipe_method_id GetWipeMethod(void) const;
 			void SetWipeMethod(wipe_method_id);
 
@@ -54,11 +54,11 @@ namespace KAA
 
 			virtual bool IIsFileEncrypted(const filesystem::path::file&) const = 0;
 
-			virtual std::vector< std::pair<std::wstring, core_id> > IGetAvailableCiphers(void) const = 0;
+			virtual std::vector<std::pair<std::wstring, core_id>> IGetAvailableCiphers(void) const = 0;
 			virtual core_id IGetCipher(void) const = 0;
 			virtual void ISetCipher(core_id) = 0;
 
-			virtual std::vector< std::pair<std::wstring, wipe_method_id> > IGetAvailableWipeMethods(void) const = 0;
+			virtual std::vector<std::pair<std::wstring, wipe_method_id>> IGetAvailableWipeMethods(void) const = 0;
 			virtual wipe_method_id IGetWipeMethod(void) const = 0;
 			virtual void ISetWipeMethod(wipe_method_id) = 0;
 

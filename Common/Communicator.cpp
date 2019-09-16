@@ -28,7 +28,7 @@ namespace KAA
 			return IIsFileEncrypted(path);
 		}
 
-		std::vector< std::pair<std::wstring, core_id> > Communicator::GetAvailableCiphers(void) const
+		std::vector<std::pair<std::wstring, core_id>> Communicator::GetAvailableCiphers(void) const
 		{
 			return IGetAvailableCiphers();
 		}
@@ -43,7 +43,7 @@ namespace KAA
 			return ISetCipher(cipher);
 		}
 
-		std::vector< std::pair<std::wstring, wipe_method_id> > Communicator::GetAvailableWipeMethods(void) const
+		std::vector<std::pair<std::wstring, wipe_method_id>> Communicator::GetAvailableWipeMethods(void) const
 		{
 			return IGetAvailableWipeMethods();
 		}

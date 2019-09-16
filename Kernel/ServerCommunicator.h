@@ -55,11 +55,11 @@ namespace KAA
 
 			bool IIsFileEncrypted(const filesystem::path::file&) const override;
 
-			std::vector< std::pair<std::wstring, core_id> > IGetAvailableCiphers(void) const override;
+			std::vector<std::pair<std::wstring, core_id>> IGetAvailableCiphers(void) const override;
 			core_id IGetCipher(void) const override;
 			void ISetCipher(core_id) override;
 
-			std::vector< std::pair<std::wstring, wipe_method_id> > IGetAvailableWipeMethods(void) const override;
+			std::vector<std::pair<std::wstring, wipe_method_id>> IGetAvailableWipeMethods(void) const override;
 			wipe_method_id IGetWipeMethod(void) const override;
 			void ISetWipeMethod(wipe_method_id) override;
 
