@@ -33,45 +33,38 @@ namespace KAA
 		{
 			const filesystem::driver::mode random_read_write(true, true, true, true);
 			const filesystem::driver::share exclusive_access(false, false);
-
 			const auto master = m_filesystem->open_file(path, random_read_write, exclusive_access);
+			const auto master_data_size = master->get_size();
 
 			const filesystem::driver::mode sequential_read_only(false);
-
 			const auto key = m_filesystem->open_file(key_path, sequential_read_only, exclusive_access);
 
-			const _fsize_t master_data_size = master->get_size();
-
 			const size_t chunk_size = (64 * 1024) - 1;
-
 			std::vector<uint8_t> master_buffer(chunk_size);
 			std::vector<uint8_t> key_buffer(chunk_size);
 
 			size_t bytes_read = 0;
 			size_t total_bytes_written = 0;
 
+			bool stop = false;
+			bool chunk_processed = false;
+			progress_state progress = progress_continue;
+			do
 			{
-				bool stop = false;
-				bool chunk_processed = false;
-				progress_state progress = progress_continue;
-
-				do 
 				{
-					{
-						bytes_read = master->read(chunk_size, &master_buffer[0]);
-						key->read(bytes_read, &key_buffer[0]);
-						cryptography::gamma(&master_buffer[0], &key_buffer[0], &master_buffer[0], bytes_read);
-						master->seek(-static_cast<_off_t>(bytes_read), filesystem::file::current);
-						total_bytes_written += master->write(&master_buffer[0], bytes_read);
-					}
-					{
-						chunk_processed = ( 0 != bytes_read );
-						if(chunk_processed && ( progress_quiet != progress ))
-							progress = ChunkProcessed(total_bytes_written, master_data_size);
-						stop = ( !chunk_processed ) || ( progress_cancel == progress ) || ( progress_stop == progress );
-					}
-				} while(!stop);
-			}
+					bytes_read = master->read(chunk_size, &master_buffer[0]);
+					key->read(bytes_read, &key_buffer[0]);
+					cryptography::gamma(&master_buffer[0], &key_buffer[0], &master_buffer[0], bytes_read);
+					master->seek(-static_cast<_off_t>(bytes_read), filesystem::file::current);
+					total_bytes_written += master->write(&master_buffer[0], bytes_read);
+				}
+				{
+					chunk_processed = ( 0 != bytes_read );
+					if(chunk_processed && ( progress_quiet != progress ))
+						progress = ChunkProcessed(total_bytes_written, master_data_size);
+					stop = ( !chunk_processed ) || ( progress_cancel == progress ) || ( progress_stop == progress );
+				}
+			} while(!stop);
 		}
 
 		void GammaFileCipher::IDecryptFile(const filesystem::path::file& path, const filesystem::path::file& key)
