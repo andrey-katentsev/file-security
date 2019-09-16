@@ -8,9 +8,7 @@
 //
 
 #include "Kernel.h"
-
 #include "KAA/include/filesystem/crt_file_system.h"
-
 #include "ServerCommunicator.h"
 
 namespace KAA
@@ -19,8 +17,8 @@ namespace KAA
 	{
 		std::auto_ptr<Communicator> GetClassObject(void)
 		{
-			const auto filesystem = std::make_shared<filesystem::crt_file_system>();
-			return std::auto_ptr<Communicator>(new ServerCommunicator(filesystem));
+			auto filesystem = std::make_shared<filesystem::crt_file_system>();
+			return std::auto_ptr<Communicator>(new ServerCommunicator(std::move(filesystem)));
 		}
 	}
 }

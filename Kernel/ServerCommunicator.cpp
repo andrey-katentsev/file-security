@@ -241,15 +241,16 @@ namespace KAA
 {
 	namespace FileSecurity
 	{
-		ServerCommunicator::ServerCommunicator(const std::shared_ptr<filesystem::driver> filesystem) :
+		ServerCommunicator::ServerCommunicator(std::shared_ptr<filesystem::driver> filesystem) :
 		m_registry(QueryRegistry(windows_registry)),
-		m_filesystem(filesystem),
+		m_filesystem(std::move(filesystem)),
 		m_wiper(QueryWiper(QueryWiperType(*m_registry), m_filesystem)),
 		m_core(QueryCore(QueryCoreType(*m_registry), m_filesystem, QueryKeyStoragePath(*m_registry))),
 		core_progress(new CoreProgressDispatcher),
 		wiper_progress(new WiperProgressDispatcher),
 		server_progress(nullptr)
 		{
+			// KAA: filesystem already verified by wiper and core.
 			try
 			{
 				m_filesystem->create_directory(m_core->GetKeyStoragePath());

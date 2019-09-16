@@ -2,7 +2,6 @@
 
 // FIX: TODO: throw operation_failure.
 #include <stdexcept>
-
 #include <cerrno>
 
 #include "KAA/include/cryptography.h"
@@ -45,20 +44,13 @@ namespace KAA
 	namespace FileSecurity
 	{
 		AbsoluteSecurityCore::AbsoluteSecurityCore(std::shared_ptr<filesystem::driver> filesystem, filesystem::path::directory key_storage_path) :
-		m_filesystem(filesystem),
-		m_cipher(CreateFileCipher(gamma_cipher, filesystem)),
-		m_key_storage(CreateKeyStorage(md5_based, filesystem, std::move(key_storage_path))),
+		m_filesystem(std::move(filesystem)),
+		m_cipher(CreateFileCipher(gamma_cipher, m_filesystem)),
+		m_key_storage(CreateKeyStorage(md5_based, m_filesystem, std::move(key_storage_path))),
 		cipher_progress(new CipherProgressDispatcher),
 		core_progress(nullptr)
 		{
-			if(nullptr == filesystem)
-			{
-				constexpr auto source { __FUNCTIONW__ };
-				constexpr auto description { L"unable to create absolute security core class instance" };
-				constexpr auto reason = operation_failure::R_INVALID_ARGUMENT;
-				constexpr auto severity = operation_failure::S_ERROR;
-				throw operation_failure(source, description, reason, severity);
-			}
+			// KAA: filesystem already verified by cipher and key storage.
 		}
 
 		filesystem::path::directory AbsoluteSecurityCore::IGetKeyStoragePath(void) const

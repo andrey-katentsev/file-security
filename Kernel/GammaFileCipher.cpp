@@ -15,11 +15,11 @@ namespace KAA
 {
 	namespace FileSecurity
 	{
-		GammaFileCipher::GammaFileCipher(const std::shared_ptr<filesystem::driver> filesystem) :
-		m_filesystem(filesystem),
+		GammaFileCipher::GammaFileCipher(std::shared_ptr<filesystem::driver> filesystem) :
+		m_filesystem(std::move(filesystem)),
 		cipher_progress(nullptr)
 		{
-			if(nullptr == filesystem)
+			if(!m_filesystem)
 			{
 				constexpr auto source { __FUNCTIONW__ };
 				constexpr auto description { L"unable to create gamma file cipher class instance" };

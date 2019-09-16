@@ -15,12 +15,12 @@ namespace KAA
 
 	namespace FileSecurity
 	{
-		std::auto_ptr<FileCipher> CreateFileCipher(const cipher_t type, const std::shared_ptr<filesystem::driver> filesystem)
+		std::auto_ptr<FileCipher> CreateFileCipher(const cipher_t type, std::shared_ptr<filesystem::driver> filesystem)
 		{
 			switch(type)
 			{
 			case gamma_cipher:
-				return std::auto_ptr<FileCipher>(new GammaFileCipher(filesystem));
+				return std::auto_ptr<FileCipher>(new GammaFileCipher(std::move(filesystem)));
 			default:
 				{
 					constexpr auto source { __FUNCTIONW__ };

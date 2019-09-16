@@ -12,11 +12,11 @@ namespace KAA
 {
 	namespace FileSecurity
 	{
-		UserSessionKeyFileCipher::UserSessionKeyFileCipher(const std::shared_ptr<filesystem::driver> filesystem) :
-		filesystem(filesystem),
+		UserSessionKeyFileCipher::UserSessionKeyFileCipher(std::shared_ptr<filesystem::driver> driver) :
+		filesystem(std::move(driver)),
 		cipher_progress(nullptr)
 		{
-			if (nullptr == filesystem)
+			if (!filesystem)
 			{
 				constexpr auto source { __FUNCTIONW__ };
 				constexpr auto description { L"unable to create user session key based file cipher class instance" };
