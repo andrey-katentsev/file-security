@@ -82,18 +82,6 @@ namespace
 		::EnableWindow(decrypt_button, file_encrypted);
 	}
 
-	void EncryptFileTask(void* context)
-	{
-		const auto path = reinterpret_cast<const std::wstring*>(context);
-		GetCommunicator().EncryptFile(KAA::filesystem::path::file { *path });
-	}
-
-	void DecryptFileTask(void* context)
-	{
-		const auto path = reinterpret_cast<const std::wstring*>(context);
-		GetCommunicator().DecryptFile(KAA::filesystem::path::file { *path });
-	}
-
 	BOOL ProcessControlMessage(const HWND dialog, const HWND control, const int control_identifier, const int notification_code)
 	{
 		switch(control_identifier)
@@ -144,36 +132,39 @@ namespace
 				switch(notification_code)
 				{
 				case BN_CLICKED:
+					try
 					{
 						const std::wstring file_to_encrypt_path(get_control_text(dialog, IDC_MAIN_FILE_TO_ENCRYPT_PATH_EDIT));
-						try
+						auto EncryptFileTask = [&file_to_encrypt_path](void) -> void
 						{
-							// FUTURE: KAA: DRY violation.
-							const KAA::FileSecurity::OperationContext context = { EncryptFileTask, const_cast<std::wstring*>(&file_to_encrypt_path), IDS_FILE_ENCRYPTING, IDS_FILE_ENCRYPTED_SUCCESSFULLY, IDS_UNABLE_TO_COMPLETE_ENCRYPT_FILE_OPERATION };
-							const auto current_module = KAA::dll::get_calling_process_module_handle();
-							const auto code = ::DialogBoxParamW(current_module, MAKEINTRESOURCEW(IDD_PROGRESS), dialog, ProgressDialog, reinterpret_cast<LPARAM>(&context));
-							if(IDOK == code)
+							GetCommunicator().EncryptFile(file_to_encrypt_path);
+						};
+						// FUTURE: KAA: DRY violation.
+						const KAA::FileSecurity::OperationContext context = { std::move(EncryptFileTask), IDS_FILE_ENCRYPTING, IDS_FILE_ENCRYPTED_SUCCESSFULLY, IDS_UNABLE_TO_COMPLETE_ENCRYPT_FILE_OPERATION };
+						const auto current_module = KAA::dll::get_calling_process_module_handle();
+						const auto code = ::DialogBoxParamW(current_module, MAKEINTRESOURCEW(IDD_PROGRESS), dialog, ProgressDialog, reinterpret_cast<LPARAM>(&context));
+						if(IDOK == code)
+						{
+							UpdateButtonsState(dialog);
 							{
-								UpdateButtonsState(dialog);
-								{
-									KAA::system::windows_registry registry;
-									SaveLastUsedPath(*GetRegistrySoftwareRootWrite(registry), file_to_encrypt_path);
-								}
+								KAA::system::windows_registry registry;
+								SaveLastUsedPath(*GetRegistrySoftwareRootWrite(registry), file_to_encrypt_path);
 							}
 						}
-						catch(const KAA::FileSecurity::UserReport& report)
-						{
-							const auto message_box_title = KAA::resources::load_string(IDS_FILE_ENCRYPTING);
-							::MessageBoxW(dialog, report.format_message().c_str(), message_box_title.c_str(), MB_OK | ToIconID(report.severity()));
-						}
-						catch(const KAA::windows_api_failure& error)
-						{
-							const auto message_box_title = KAA::resources::load_string(IDS_FILE_ENCRYPTING);
-							const auto message = KAA::resources::load_string(IDS_UNABLE_TO_ACCESS_SYSTEM_REGISTRY);
-							// FUTURE: KAA: combine message.
-							::MessageBoxW(dialog, (message + L'\n' + error.get_system_message()).c_str(), message_box_title.c_str(), MB_OK | MB_ICONEXCLAMATION);
-						}
-					} break;
+					}
+					catch(const KAA::FileSecurity::UserReport& report)
+					{
+						const auto message_box_title = KAA::resources::load_string(IDS_FILE_ENCRYPTING);
+						::MessageBoxW(dialog, report.format_message().c_str(), message_box_title.c_str(), MB_OK | ToIconID(report.severity()));
+					}
+					catch(const KAA::windows_api_failure& error)
+					{
+						const auto message_box_title = KAA::resources::load_string(IDS_FILE_ENCRYPTING);
+						const auto message = KAA::resources::load_string(IDS_UNABLE_TO_ACCESS_SYSTEM_REGISTRY);
+						// FUTURE: KAA: combine message.
+						::MessageBoxW(dialog, (message + L'\n' + error.get_system_message()).c_str(), message_box_title.c_str(), MB_OK | MB_ICONEXCLAMATION);
+					}
+					break;
 				default:
 					return FALSE;
 				}
@@ -183,24 +174,27 @@ namespace
 				switch(notification_code)
 				{
 				case BN_CLICKED:
+					try
 					{
 						const std::wstring file_to_decrypt_path(get_control_text(dialog, IDC_MAIN_FILE_TO_ENCRYPT_PATH_EDIT));
-						try
+						auto DecryptFileTask = [&file_to_decrypt_path](void) -> void
 						{
-							const KAA::FileSecurity::OperationContext context = { DecryptFileTask, const_cast<std::wstring*>(&file_to_decrypt_path), IDS_FILE_DECRYPTING, IDS_FILE_DECRYPTED_SUCCESSFULLY, IDS_UNABLE_TO_COMPLETE_DECRYPT_FILE_OPERATION };
-							const auto current_module = KAA::dll::get_calling_process_module_handle();
-							const auto code = ::DialogBoxParamW(current_module, MAKEINTRESOURCEW(IDD_PROGRESS), dialog, ProgressDialog, reinterpret_cast<LPARAM>(&context));
-							if(IDOK == code)
-							{
-								UpdateButtonsState(dialog);
-							}
-						}
-						catch(const KAA::FileSecurity::UserReport& report)
+							GetCommunicator().DecryptFile(file_to_decrypt_path);
+						};
+						const KAA::FileSecurity::OperationContext context = { std::move(DecryptFileTask), IDS_FILE_DECRYPTING, IDS_FILE_DECRYPTED_SUCCESSFULLY, IDS_UNABLE_TO_COMPLETE_DECRYPT_FILE_OPERATION };
+						const auto current_module = KAA::dll::get_calling_process_module_handle();
+						const auto code = ::DialogBoxParamW(current_module, MAKEINTRESOURCEW(IDD_PROGRESS), dialog, ProgressDialog, reinterpret_cast<LPARAM>(&context));
+						if(IDOK == code)
 						{
-							const auto message_box_title = KAA::resources::load_string(IDS_FILE_DECRYPTING);
-							::MessageBoxW(dialog, report.format_message().c_str(), message_box_title.c_str(), MB_OK | ToIconID(report.severity()));
+							UpdateButtonsState(dialog);
 						}
-					} break;
+					}
+					catch(const KAA::FileSecurity::UserReport& report)
+					{
+						const auto message_box_title = KAA::resources::load_string(IDS_FILE_DECRYPTING);
+						::MessageBoxW(dialog, report.format_message().c_str(), message_box_title.c_str(), MB_OK | ToIconID(report.severity()));
+					}
+					break;
 				default:
 					return FALSE;
 				}

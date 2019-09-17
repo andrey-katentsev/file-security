@@ -67,11 +67,6 @@ namespace
 	// DEFECT: KAA: global data.
 	INT_PTR g_result = IDOK;
 
-	void ExecuteTask(void (*task)(void*), void* context)
-	{
-		(*task)(context);
-	}
-
 	void ExecuteTask(const HWND dialog, KAA::FileSecurity::OperationContext* task)
 	{
 		//INT_PTR result = IDOK;
@@ -79,11 +74,9 @@ namespace
 
 		auto session = std::make_shared<ProgressDialogHandler>(dialog);
 		auto original = KAA::FileSecurity::GetCommunicator().SetProgressHandler(std::move(session));
-
 		try
 		{
-			ExecuteTask(task->m_requested_operation, task->m_context);
-
+			task->run();
 			{
 				const HWND progress = ::GetDlgItem(dialog, IDC_PROGRESS_TOTAL_PROGRESS);
 				//::SendMessageW(progress, PBM_SETPOS, 100, 0); // DEFECT: KAA: no callback for simple remove operation.
