@@ -191,41 +191,41 @@ namespace
 		return software_root->set_string_value(registry_key_storage_path_value_name, path.to_wstring());
 	}
 
-	std::auto_ptr<KAA::system::registry> QueryRegistry(const KAA::FileSecurity::registry_t interface_identifier)
+	std::unique_ptr<KAA::system::registry> QueryRegistry(const KAA::FileSecurity::registry_t interface_identifier)
 	{
 		switch(interface_identifier)
 		{
 		case KAA::FileSecurity::windows_registry:
-			return std::auto_ptr<KAA::system::registry>(new KAA::system::windows_registry);
+			return std::make_unique<KAA::system::windows_registry>();
 		default:
 			throw std::invalid_argument(__FUNCTION__);
 		}
 	}
 
-	std::auto_ptr<KAA::filesystem::wiper> QueryWiper(const KAA::FileSecurity::wiper_t interface_identifier, std::shared_ptr<KAA::filesystem::driver> filesystem)
+	std::unique_ptr<KAA::filesystem::wiper> QueryWiper(const KAA::FileSecurity::wiper_t interface_identifier, std::shared_ptr<KAA::filesystem::driver> filesystem)
 	{
 		switch(interface_identifier)
 		{
 		case KAA::FileSecurity::ordinary_remove:
-			return std::auto_ptr<KAA::filesystem::wiper>(new KAA::filesystem::ordinary_file_remover(std::move(filesystem)));
+			return std::make_unique<KAA::filesystem::ordinary_file_remover>(std::move(filesystem));
 		case KAA::FileSecurity::simple_overwrite:
 		{
 			const uint8_t aggregate = KAA::cryptography::random() % std::numeric_limits<uint8_t>::max();
-			return std::auto_ptr<KAA::filesystem::wiper>(new KAA::filesystem::simple_owerwrite_wiper(std::move(filesystem), aggregate));
+			return std::make_unique<KAA::filesystem::simple_owerwrite_wiper>(std::move(filesystem), aggregate);
 		}
 		default:
 			throw std::invalid_argument(__FUNCTION__);
 		}
 	}
 
-	std::auto_ptr<KAA::FileSecurity::Core> QueryCore(const KAA::FileSecurity::core_t interface_id, std::shared_ptr<KAA::filesystem::driver> filesystem, KAA::filesystem::path::directory key_storage_path)
+	std::unique_ptr<KAA::FileSecurity::Core> QueryCore(const KAA::FileSecurity::core_t interface_id, std::shared_ptr<KAA::filesystem::driver> filesystem, KAA::filesystem::path::directory key_storage_path)
 	{
 		switch(interface_id)
 		{
 		case KAA::FileSecurity::strong_security:
 			throw std::invalid_argument(__FUNCTION__);
 		case KAA::FileSecurity::absolute_security:
-			return std::auto_ptr<KAA::FileSecurity::Core>(new KAA::FileSecurity::AbsoluteSecurityCore(filesystem, std::move(key_storage_path)));
+			return std::make_unique<KAA::FileSecurity::AbsoluteSecurityCore>(std::move(filesystem), std::move(key_storage_path));
 		default:
 			throw std::invalid_argument(__FUNCTION__);
 		}
@@ -266,6 +266,8 @@ namespace KAA
 				//}
 			}
 		}
+
+		ServerCommunicator::~ServerCommunicator() = default;
 
 		void ServerCommunicator::IEncryptFile(const filesystem::path::file& path)
 		{
@@ -317,7 +319,7 @@ namespace KAA
 		{
 			const core_t engine = ToCoreType(value);
 			auto current_key_storage_path = m_core->GetKeyStoragePath();
-			m_core.reset(QueryCore(engine, m_filesystem, std::move(current_key_storage_path)).release());
+			m_core = QueryCore(engine, m_filesystem, std::move(current_key_storage_path));
 			SaveCoreType(*m_registry, engine);
 		}
 
@@ -337,7 +339,7 @@ namespace KAA
 		void ServerCommunicator::ISetWipeMethod(const wipe_method_id value)
 		{
 			const wiper_t algorithm = ToWiperType(value);
-			m_wiper.reset(QueryWiper(algorithm, m_filesystem).release());
+			m_wiper = QueryWiper(algorithm, m_filesystem);
 			SaveWiperType(*m_registry, algorithm);
 		}
 

@@ -34,16 +34,16 @@ namespace KAA
 			explicit ServerCommunicator(std::shared_ptr<filesystem::driver>);
 			ServerCommunicator(const ServerCommunicator&) = delete;
 			ServerCommunicator(ServerCommunicator&&) = delete;
-			~ServerCommunicator() = default;
+			~ServerCommunicator();
 
 			ServerCommunicator& operator = (const ServerCommunicator&) = delete;
 			ServerCommunicator& operator = (ServerCommunicator&&) = delete;
 
 		private:
-			std::auto_ptr<system::registry> m_registry;
+			std::unique_ptr<system::registry> m_registry;
 			std::shared_ptr<filesystem::driver> m_filesystem;
-			std::auto_ptr<filesystem::wiper> m_wiper;
-			std::auto_ptr<Core> m_core;
+			std::unique_ptr<filesystem::wiper> m_wiper;
+			std::unique_ptr<Core> m_core;
 
 			std::shared_ptr<CoreProgressDispatcher> core_progress;
 			std::shared_ptr<WiperProgressDispatcher> wiper_progress;
