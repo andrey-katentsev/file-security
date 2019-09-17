@@ -1,6 +1,6 @@
 #include "KAA/include/load_string.h"
 
-#include <process.h>
+#include <thread>
 
 #include "ClientCommunicator.h"
 #include "OperationContext.h"
@@ -120,18 +120,6 @@ namespace
 		//::EndDialog(dialog, result);
 	}
 
-	struct ExecuteTaskContext
-	{
-		HWND dialog;
-		KAA::FileSecurity::OperationContext* context;
-	};
-
-	void ExecuteTask(void* context)
-	{
-		const std::auto_ptr<ExecuteTaskContext> task_context(reinterpret_cast<ExecuteTaskContext*>(context));
-		ExecuteTask(task_context->dialog, task_context->context);
-	}
-
 	BOOL ProcessControlMessage(const HWND dialog, const HWND control, const int control_identifier, const int notification_code)
 	{
 		switch(control_identifier)
@@ -227,15 +215,9 @@ namespace
 		}
 		//::SendMessageW(progress, PBM_SETMARQUEE, KAA::user_interface::marquee_on, update_time_in_milliseconds);
 
-		{
-			KAA::FileSecurity::OperationContext* context = reinterpret_cast<KAA::FileSecurity::OperationContext*>(initialization_data);
-
-			std::auto_ptr<ExecuteTaskContext> task_context(new ExecuteTaskContext);
-			task_context->dialog = dialog;
-			task_context->context =  context;
-			_beginthread(ExecuteTask, 0, task_context.get()); // FUTURE: KAA: introduce SDK beginthread (throw on failure).
-			task_context.release(); // DEFECT: KAA: memory-leak possible.
-		}
+		KAA::FileSecurity::OperationContext* context = reinterpret_cast<KAA::FileSecurity::OperationContext*>(initialization_data);
+		std::thread task { ExecuteTask, dialog, context };
+		task.detach();
 
 		return TRUE;
 	}
