@@ -34,13 +34,13 @@ namespace
 	const std::wstring registry_window_horizontal_position_value_name(L"HPosition");
 	const std::wstring registry_window_vertical_position_value_name(L"VPosition");
 
-	std::auto_ptr<KAA::system::registry_key> GetRegistrySoftwareRootRead(KAA::system::registry& registry)
+	std::unique_ptr<KAA::system::registry_key> GetRegistrySoftwareRootRead(KAA::system::registry& registry)
 	{
 		const KAA::system::registry::key_access query_only = { false, false, false, false, true, false };
 		return registry.open_key(KAA::system::registry::current_user, registry_software_sub_key, query_only);
 	}
 
-	std::auto_ptr<KAA::system::registry_key> GetRegistrySoftwareRootWrite(KAA::system::registry& registry)
+	std::unique_ptr<KAA::system::registry_key> GetRegistrySoftwareRootWrite(KAA::system::registry& registry)
 	{
 		const KAA::system::registry::key_access set_only = { false, false, false, false, false, true };
 		return registry.open_key(KAA::system::registry::current_user, registry_software_sub_key, set_only);
