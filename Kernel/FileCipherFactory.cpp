@@ -1,9 +1,6 @@
 #include "FileCipherFactory.h"
-
 #include <stdexcept>
-
 #include "KAA/include/exception/operation_failure.h"
-
 #include "GammaFileCipher.h"
 
 namespace KAA
@@ -15,12 +12,12 @@ namespace KAA
 
 	namespace FileSecurity
 	{
-		std::auto_ptr<FileCipher> CreateFileCipher(const cipher_t type, std::shared_ptr<filesystem::driver> filesystem)
+		std::unique_ptr<FileCipher> CreateFileCipher(const cipher_t type, std::shared_ptr<filesystem::driver> filesystem)
 		{
 			switch(type)
 			{
 			case gamma_cipher:
-				return std::auto_ptr<FileCipher>(new GammaFileCipher(std::move(filesystem)));
+				return std::make_unique<GammaFileCipher>(std::move(filesystem));
 			default:
 				{
 					constexpr auto source { __FUNCTIONW__ };

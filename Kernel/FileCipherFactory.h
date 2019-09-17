@@ -1,7 +1,6 @@
 #pragma once
 
 #include <memory>
-
 #include "FileCipher.h"
 
 namespace KAA
@@ -14,12 +13,11 @@ namespace KAA
 	namespace FileSecurity
 	{
 		class FileCipher;
-
 		enum cipher_t
 		{
 			gamma_cipher,
 		};
 
-		std::auto_ptr<FileCipher> CreateFileCipher(cipher_t, std::shared_ptr<filesystem::driver>);
+		std::unique_ptr<FileCipher> CreateFileCipher(cipher_t, std::shared_ptr<filesystem::driver>);
 	}
 }

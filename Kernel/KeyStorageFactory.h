@@ -23,6 +23,6 @@ namespace KAA
 			crc32_based
 		};
 
-		std::auto_ptr<KeyStorage> CreateKeyStorage(key_storage_t, std::shared_ptr<filesystem::driver>, filesystem::path::directory);
+		std::unique_ptr<KeyStorage> CreateKeyStorage(key_storage_t, std::shared_ptr<filesystem::driver>, filesystem::path::directory);
 	}
 }

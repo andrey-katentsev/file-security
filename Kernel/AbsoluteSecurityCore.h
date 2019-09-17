@@ -29,15 +29,15 @@ namespace KAA
 			AbsoluteSecurityCore(std::shared_ptr<filesystem::driver>, filesystem::path::directory key_storage_path);
 			AbsoluteSecurityCore(const AbsoluteSecurityCore&) = delete;
 			AbsoluteSecurityCore(AbsoluteSecurityCore&&) = delete;
-			~AbsoluteSecurityCore() = default;
+			~AbsoluteSecurityCore();
 
 			AbsoluteSecurityCore& operator = (const AbsoluteSecurityCore&) = delete;
 			AbsoluteSecurityCore& operator = (AbsoluteSecurityCore&&) = delete;
 
 		private:
 			std::shared_ptr<filesystem::driver> m_filesystem;
-			std::auto_ptr<FileCipher> m_cipher;
-			std::auto_ptr<KeyStorage> m_key_storage;
+			std::unique_ptr<FileCipher> m_cipher;
+			std::unique_ptr<KeyStorage> m_key_storage;
 			std::shared_ptr<CipherProgressDispatcher> cipher_progress;
 
 			std::shared_ptr<CoreProgressHandler> core_progress;

@@ -53,6 +53,8 @@ namespace KAA
 			// KAA: filesystem already verified by cipher and key storage.
 		}
 
+		AbsoluteSecurityCore::~AbsoluteSecurityCore() = default;
+
 		filesystem::path::directory AbsoluteSecurityCore::IGetKeyStoragePath(void) const
 		{
 			return m_key_storage->GetPath();
