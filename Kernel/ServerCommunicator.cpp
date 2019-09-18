@@ -11,8 +11,8 @@
 
 #include "KAA/include/load_string.h"
 #include "KAA/include/random.h"
+#include "KAA/include/registry.h"
 #include "KAA/include/registry_key.h"
-#include "KAA/include/windows_registry.h"
 #include "KAA/include/dll/module_context.h"
 #include "KAA/include/exception/windows_api_failure.h"
 #undef EncryptFile
@@ -189,17 +189,6 @@ namespace
 		const KAA::system::registry::key_access set_value = { false, false, false, false, false, true };
 		const auto software_root = registry.open_key(KAA::system::registry::current_user, registry_software_sub_key, set_value);
 		return software_root->set_string_value(registry_key_storage_path_value_name, path.to_wstring());
-	}
-
-	std::unique_ptr<KAA::system::registry> QueryRegistry(const KAA::FileSecurity::registry_t interface_identifier)
-	{
-		switch(interface_identifier)
-		{
-		case KAA::FileSecurity::windows_registry:
-			return std::make_unique<KAA::system::windows_registry>();
-		default:
-			throw std::invalid_argument(__FUNCTION__);
-		}
 	}
 
 	std::unique_ptr<KAA::filesystem::wiper> QueryWiper(const KAA::FileSecurity::wiper_t interface_identifier, std::shared_ptr<KAA::filesystem::driver> filesystem)

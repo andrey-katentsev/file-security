@@ -99,6 +99,9 @@
     <ClCompile Include="CRC32BasedKeyStorage.cpp">
       <Filter>Source Files\Storages</Filter>
     </ClCompile>
+    <ClCompile Include="RegistryFactory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Kernel.h">

@@ -123,6 +123,7 @@
     <ClCompile Include="KeyStorage.cpp" />
     <ClCompile Include="KeyStorageFactory.cpp" />
     <ClCompile Include="MD5BasedKeyStorage.cpp" />
+    <ClCompile Include="RegistryFactory.cpp" />
     <ClCompile Include="ServerCommunicator.cpp" />
     <ClCompile Include="StrongSecurityCore.cpp" />
     <ClCompile Include="Core\Core.cpp" />
