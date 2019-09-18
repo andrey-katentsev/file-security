@@ -2,10 +2,8 @@
 
 #include "ServerCommunicator.h"
 
-#include <memory>
 #include <stdexcept>
 #include <string>
-
 #include <cerrno>
 
 #include "KAA/include/load_string.h"
@@ -23,12 +21,9 @@
 #include "KAA/include/filesystem/filesystem.h"
 #include "KAA/include/filesystem/wiper.h"
 
-#include "./Core/Core.h"
+#include "Core/Core.h"
 
 #include "CoreFactory.h"
-#include "AbsoluteSecurityCore.h"
-#include "StrongSecurityCore.h"
-
 #include "RegistryFactory.h"
 #include "WiperFactory.h"
 
@@ -185,19 +180,6 @@ namespace
 		const KAA::system::registry::key_access set_value = { false, false, false, false, false, true };
 		const auto software_root = registry.open_key(KAA::system::registry::current_user, registry_software_sub_key, set_value);
 		return software_root->set_string_value(registry_key_storage_path_value_name, path.to_wstring());
-	}
-
-	std::unique_ptr<KAA::FileSecurity::Core> QueryCore(const KAA::FileSecurity::core_t interface_id, std::shared_ptr<KAA::filesystem::driver> filesystem, KAA::filesystem::path::directory key_storage_path)
-	{
-		switch(interface_id)
-		{
-		case KAA::FileSecurity::strong_security:
-			throw std::invalid_argument(__FUNCTION__);
-		case KAA::FileSecurity::absolute_security:
-			return std::make_unique<KAA::FileSecurity::AbsoluteSecurityCore>(std::move(filesystem), std::move(key_storage_path));
-		default:
-			throw std::invalid_argument(__FUNCTION__);
-		}
 	}
 
 	void RemoveFileBackup(KAA::filesystem::driver* const filesystem, const std::wstring& path)
