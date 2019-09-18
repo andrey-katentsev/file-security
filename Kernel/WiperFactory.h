@@ -2,8 +2,16 @@
 
 #pragma once
 
+#include <memory>
+
 namespace KAA
 {
+	namespace filesystem
+	{
+		class driver;
+		class wiper;
+	}
+
 	namespace FileSecurity
 	{
 		enum wiper_t
@@ -11,5 +19,7 @@ namespace KAA
 			ordinary_remove,
 			simple_overwrite
 		};
+
+		std::unique_ptr<filesystem::wiper> QueryWiper(wiper_t, std::shared_ptr<filesystem::driver>);
 	}
 }

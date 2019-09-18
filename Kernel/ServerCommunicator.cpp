@@ -2,7 +2,6 @@
 
 #include "ServerCommunicator.h"
 
-#include <limits>
 #include <memory>
 #include <stdexcept>
 #include <string>
@@ -10,7 +9,6 @@
 #include <cerrno>
 
 #include "KAA/include/load_string.h"
-#include "KAA/include/random.h"
 #include "KAA/include/registry.h"
 #include "KAA/include/registry_key.h"
 #include "KAA/include/dll/module_context.h"
@@ -23,8 +21,6 @@
 #include "KAA/include/exception/system_failure.h"
 #include "KAA/include/filesystem/driver.h"
 #include "KAA/include/filesystem/filesystem.h"
-#include "KAA/include/filesystem/ordinary_file_remover.h"
-#include "KAA/include/filesystem/simple_overwrite_wiper.h"
 #include "KAA/include/filesystem/wiper.h"
 
 #include "./Core/Core.h"
@@ -189,22 +185,6 @@ namespace
 		const KAA::system::registry::key_access set_value = { false, false, false, false, false, true };
 		const auto software_root = registry.open_key(KAA::system::registry::current_user, registry_software_sub_key, set_value);
 		return software_root->set_string_value(registry_key_storage_path_value_name, path.to_wstring());
-	}
-
-	std::unique_ptr<KAA::filesystem::wiper> QueryWiper(const KAA::FileSecurity::wiper_t interface_identifier, std::shared_ptr<KAA::filesystem::driver> filesystem)
-	{
-		switch(interface_identifier)
-		{
-		case KAA::FileSecurity::ordinary_remove:
-			return std::make_unique<KAA::filesystem::ordinary_file_remover>(std::move(filesystem));
-		case KAA::FileSecurity::simple_overwrite:
-		{
-			const uint8_t aggregate = KAA::cryptography::random() % std::numeric_limits<uint8_t>::max();
-			return std::make_unique<KAA::filesystem::simple_owerwrite_wiper>(std::move(filesystem), aggregate);
-		}
-		default:
-			throw std::invalid_argument(__FUNCTION__);
-		}
 	}
 
 	std::unique_ptr<KAA::FileSecurity::Core> QueryCore(const KAA::FileSecurity::core_t interface_id, std::shared_ptr<KAA::filesystem::driver> filesystem, KAA::filesystem::path::directory key_storage_path)

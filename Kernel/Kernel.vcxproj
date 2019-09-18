@@ -132,6 +132,7 @@
     <ClCompile Include="CoreProgressDispatcher.cpp" />
     <ClCompile Include="FileProgressHandler.cpp" />
     <ClCompile Include="UserSessionKeyFileCipher.cpp" />
+    <ClCompile Include="WiperFactory.cpp" />
     <ClCompile Include="WiperProgressDispatcher.cpp" />
   </ItemGroup>
   <ItemGroup>
