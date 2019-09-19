@@ -181,11 +181,6 @@ namespace
 		const auto software_root = registry.open_key(KAA::system::registry::current_user, registry_software_sub_key, set_value);
 		return software_root->set_string_value(registry_key_storage_path_value_name, path.to_wstring());
 	}
-
-	void RemoveFileBackup(KAA::filesystem::driver* const filesystem, const std::wstring& path)
-	{
-		filesystem->remove_file(KAA::filesystem::path::file { path });
-	}
 }
 
 namespace KAA
