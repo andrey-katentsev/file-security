@@ -56,6 +56,19 @@ namespace
 		return key.set_string_value(registry_last_used_path_value_name, last_used_path);
 	}
 
+	// TODO: KAA: move to the SDK.
+	RECT GetWindowCoordinates(HWND window)
+	{
+		WINDOWINFO window_attributes = { 0 };
+		window_attributes.cbSize = sizeof(window_attributes);
+		if (0 == ::GetWindowInfo(window, &window_attributes))
+		{
+			const auto error = ::GetLastError();
+			throw KAA::windows_api_failure(__FUNCTIONW__, L"cannot retrieve information about the specified window", error);
+		}
+		return window_attributes.rcWindow;
+	}
+
 	POINT QueryWindowPosition(const KAA::system::registry_key& key)
 	{
 		const POINT coordinates =
@@ -259,19 +272,14 @@ namespace
 	// If an application processes this message, it should return zero.
 	INT_PTR OnClose(const HWND dialog)
 	{
+		try
 		{
-			WINDOWINFO window_attributes = { 0 };
-			window_attributes.cbSize = sizeof(WINDOWINFO);
-
-			if(0 != ::GetWindowInfo(dialog, &window_attributes))
-			{
-				const POINT coordinates = { window_attributes.rcWindow.left, window_attributes.rcWindow.top };
-				{
-					KAA::system::windows_registry registry;
-					SetRegWindowPosition(*GetRegistrySoftwareRootWrite(registry), coordinates);
-				}
-			}
+			const auto coordinates = GetWindowCoordinates(dialog);
+			KAA::system::windows_registry registry;
+			SetRegWindowPosition(*GetRegistrySoftwareRootWrite(registry), { coordinates.left, coordinates.top });
 		}
+		catch (const KAA::windows_api_failure&)
+		{ }
 
 		::EndDialog(dialog, IDCLOSE);
 		::SetWindowLongPtrW(dialog, DWL_MSGRESULT, 0L);
