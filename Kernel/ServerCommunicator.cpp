@@ -362,7 +362,7 @@ namespace KAA
 			const auto destination = m_filesystem->create_file(destination_path, persistent_not_exists, sequential_write_only, exclusive_access, allow_read_write);
 
 			{
-				const size_t chunk_size = (64 * 1024) - 1;
+				constexpr auto chunk_size = 64U * 1024U; // 64 KiB
 				std::vector<uint8_t> buffer(chunk_size);
 
 				{

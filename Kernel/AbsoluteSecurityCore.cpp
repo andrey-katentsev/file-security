@@ -132,7 +132,7 @@ namespace KAA
 		{
 			std::vector<uint8_t> buffer(bytes_to_generate, 0U);
 			{
-				size_t chunk_size = (64 * 1024) - 1;
+				constexpr auto chunk_size = 64U * 1024U; // 64 KiB
 				unsigned chunks_total = bytes_to_generate / chunk_size;
 				for(unsigned chunk = 0; chunk < chunks_total; ++chunk)
 				{

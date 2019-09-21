@@ -39,7 +39,7 @@ namespace KAA
 			const filesystem::driver::mode sequential_read_only(false);
 			const auto key = m_filesystem->open_file(key_path, sequential_read_only, exclusive_access);
 
-			const size_t chunk_size = (64 * 1024) - 1;
+			constexpr auto chunk_size = 64U * 1024U; // 64 KiB
 			std::vector<uint8_t> master_buffer(chunk_size);
 			std::vector<uint8_t> key_buffer(chunk_size);
 
