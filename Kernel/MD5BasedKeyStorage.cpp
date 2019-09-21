@@ -39,12 +39,23 @@ namespace KAA
 			const filesystem::driver::mode sequential_read_only { false };
 			const filesystem::driver::share share_read { false };
 			auto file = filesystem->open_file(path, sequential_read_only, share_read);
-			// DEFECT: KAA: read and calculate chunks instead of whole file.
-			const auto chunk_size = file->get_size();
-			std::vector<uint8_t> data(chunk_size);
-			const auto bytes_read = file->read(chunk_size, data.data());
-			const auto hash = cryptography::calculate_md5(data.data(), bytes_read);
-			auto filename = convert::to_wstring(hash) + std::wstring{ L".bin" };
+			cryptography::md5 hash;
+			{
+				auto last_chunk = false;
+				constexpr auto chunk_size = 64U * 1024U; // 64 KiB
+				std::vector<uint8_t> data(chunk_size);
+				do
+				{
+					const auto bytes_read = file->read(chunk_size, data.data());
+					last_chunk = bytes_read < chunk_size;
+					if (last_chunk)
+					{
+						data.resize(bytes_read);
+					}
+					hash.add_data(data);
+				} while (!last_chunk);
+			}
+			auto filename = convert::to_wstring(hash.complete()) + L".bin";
 			return storage_path + std::move(filename);
 		}
 	}
