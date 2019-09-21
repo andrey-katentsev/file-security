@@ -116,17 +116,7 @@ namespace KAA
 		bool AbsoluteSecurityCore::IIsFileEncrypted(const filesystem::path::file& path) const
 		{
 			const auto key_file_path = m_key_storage->GetKeyPathForSpecifiedPath(path);
-			try
-			{
-				m_filesystem->get_file_permissions(key_file_path);
-				return true;
-			}
-			catch(const system_failure& error) // DEFECT: KAA: provide filesystem::driver with own exception class type.
-			{
-				if(ENOENT == error)
-					return false;
-				throw;
-			}
+			return filesystem::file_exists(*m_filesystem, key_file_path);
 		}
 
 		std::shared_ptr<CoreProgressHandler> AbsoluteSecurityCore::ISetProgressHandler(std::shared_ptr<CoreProgressHandler> handler)
