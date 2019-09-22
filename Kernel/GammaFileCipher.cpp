@@ -43,7 +43,6 @@ namespace KAA
 			std::vector<uint8_t> master_buffer(chunk_size);
 			std::vector<uint8_t> key_buffer(chunk_size);
 
-			size_t bytes_read = 0;
 			size_t total_bytes_written = 0;
 
 			bool stop = false;
@@ -51,13 +50,11 @@ namespace KAA
 			progress_state progress = progress_continue;
 			do
 			{
-				{
-					bytes_read = master->read(chunk_size, &master_buffer[0]);
-					key->read(bytes_read, &key_buffer[0]);
-					cryptography::gamma(&master_buffer[0], &key_buffer[0], &master_buffer[0], bytes_read);
-					master->seek(-static_cast<_off_t>(bytes_read), filesystem::file::current);
-					total_bytes_written += master->write(&master_buffer[0], bytes_read);
-				}
+				const auto bytes_read = master->read(chunk_size, &master_buffer[0]);
+				key->read(bytes_read, &key_buffer[0]);
+				cryptography::gamma(&master_buffer[0], &key_buffer[0], &master_buffer[0], bytes_read);
+				master->seek(-static_cast<_off_t>(bytes_read), filesystem::file::current);
+				total_bytes_written += master->write(&master_buffer[0], bytes_read);
 				{
 					chunk_processed = ( 0 != bytes_read );
 					if(chunk_processed && ( progress_quiet != progress ))
