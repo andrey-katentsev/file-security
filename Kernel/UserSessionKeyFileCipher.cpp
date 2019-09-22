@@ -2,7 +2,7 @@
 
 #include <vector>
 
-#include "KAA/include/cryptography.h"
+#include "KAA/include/cryptography/cryptography.h"
 #include "KAA/include/exception/operation_failure.h"
 #include "KAA/include/filesystem/driver.h"
 

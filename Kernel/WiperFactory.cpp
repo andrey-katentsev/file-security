@@ -12,7 +12,7 @@
 #include <stdexcept>
 #include <limits>
 
-#include "KAA/include/random.h"
+#include "KAA/include/cryptography/random.h"
 #include "KAA/include/filesystem/ordinary_file_remover.h"
 #include "KAA/include/filesystem/simple_overwrite_wiper.h"
 

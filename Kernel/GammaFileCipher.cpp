@@ -5,9 +5,9 @@
 #include <vector>
 
 #include "KAA/include/convert.h"
-#include "KAA/include/cryptography.h"
-#include "KAA/include/filesystem/driver.h"
+#include "KAA/include/cryptography/cryptography.h"
 #include "KAA/include/exception/operation_failure.h"
+#include "KAA/include/filesystem/driver.h"
 
 #include "FileProgressHandler.h"
 

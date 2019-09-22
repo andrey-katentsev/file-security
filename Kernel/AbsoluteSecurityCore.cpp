@@ -4,9 +4,9 @@
 #include <stdexcept>
 #include <cerrno>
 
-#include "KAA/include/cryptography.h"
 #include "KAA/include/load_string.h"
-#include "KAA/include/random.h"
+#include "KAA/include/cryptography/cryptography.h"
+#include "KAA/include/cryptography/random.h"
 #include "KAA/include/dll/module_context.h"
 #include "KAA/include/exception/operation_failure.h"
 #include "KAA/include/exception/system_failure.h"
@@ -76,6 +76,7 @@ namespace KAA
 			auto key_path = m_filesystem->get_temp_filename(m_key_storage->GetPath());
 			{
 				OperationStarted(resources::load_string(IDS_GENERATING_KEY, core_dll.get_module_handle()));
+				// DEFECT: KAA: what if 1 GiB size?
 				const auto key_data = GenerateKey(file_to_encrypt_size);
 				CreateKeyFile(key_path, key_data);
 				total_processed += file_to_encrypt_size;
