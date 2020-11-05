@@ -18,8 +18,8 @@ namespace KAA
 			{
 				constexpr auto source = __FUNCTION__;
 				constexpr auto description = "unable to create MD5 based key storage class instance";
-				constexpr auto reason = operation_failure::R_INVALID_ARGUMENT;
-				constexpr auto severity = operation_failure::S_ERROR;
+				constexpr auto reason = operation_failure::status_code_t::invalid_argument;
+				constexpr auto severity = operation_failure::severity_t::error;
 				throw operation_failure(source, description, reason, severity);
 			}
 		}
