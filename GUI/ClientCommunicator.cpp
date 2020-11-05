@@ -2,6 +2,7 @@
 
 #include "KAA/include/format_string.h"
 #include "KAA/include/load_string.h"
+#include "KAA/include/unicode.h"
 #include "KAA/include/exception/failure.h"
 #undef EncryptFile
 #undef DecryptFile
@@ -13,9 +14,9 @@
 
 namespace
 {
-	std::wstring CombineMessage(const unsigned requested_string_index, const std::wstring& system_message)
+	std::wstring CombineMessage(const unsigned requested_string_index, const std::string& system_message)
 	{
-		return KAA::resources::load_string(requested_string_index) + L'\n' + system_message;
+		return KAA::resources::load_string(requested_string_index) + L'\n' + KAA::unicode::to_UTF16(system_message);
 	}
 
 	__declspec(noreturn) void ThrowUserReport(const KAA::failure& error, const KAA::FileSecurity::UserReport::severity_t severity, const UINT text_id)

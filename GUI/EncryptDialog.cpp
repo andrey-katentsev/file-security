@@ -2,6 +2,7 @@
 #include "KAA/include/load_string.h"
 #include "KAA/include/registry.h"
 #include "KAA/include/registry_key.h"
+#include "KAA/include/unicode.h"
 #include "KAA/include/windows_registry.h"
 #include "KAA/include/dll/get_module_handle.h"
 #include "KAA/include/exception/windows_api_failure.h"
@@ -175,7 +176,7 @@ namespace
 						const auto message_box_title = KAA::resources::load_string(IDS_FILE_ENCRYPTING);
 						const auto message = KAA::resources::load_string(IDS_UNABLE_TO_ACCESS_SYSTEM_REGISTRY);
 						// FUTURE: KAA: combine message.
-						::MessageBoxW(dialog, (message + L'\n' + error.get_system_message()).c_str(), message_box_title.c_str(), MB_OK | MB_ICONEXCLAMATION);
+						::MessageBoxW(dialog, (message + L'\n' + KAA::unicode::to_UTF16(error.get_system_message())).c_str(), message_box_title.c_str(), MB_OK | MB_ICONEXCLAMATION);
 					}
 					break;
 				default:
