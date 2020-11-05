@@ -42,13 +42,11 @@ namespace KAA
 			case UserReport::error:
 				return MB_ICONHAND;
 			default:
-				{
 					constexpr auto source { __FUNCTIONW__ };
 					constexpr auto description { L"cannot convert user report severity to message box icon index: specified severity is not supported" };
-					constexpr auto reason = operation_failure::R_INVALID_ARGUMENT;
-					constexpr auto severity = operation_failure::S_ERROR;
+					constexpr auto reason = operation_failure::status_code_t::invalid_argument;
+					constexpr auto severity = operation_failure::severity_t::error;
 					throw operation_failure(source, description, reason, severity);
-				}
 			}
 		}
 	}
