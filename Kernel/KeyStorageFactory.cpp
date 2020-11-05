@@ -18,8 +18,8 @@ namespace KAA
 			case crc32_based:
 				return std::make_unique<CRC32BasedKeyStorage>(std::move(path));
 			default:
-					constexpr auto source { __FUNCTIONW__ };
-					constexpr auto description { L"cannot create key storage class instance: specified type is not supported" };
+					constexpr auto source = __FUNCTION__;
+					constexpr auto description = "cannot create key storage class instance: specified type is not supported";
 					constexpr auto reason = operation_failure::status_code_t::invalid_argument;
 					constexpr auto severity = operation_failure::severity_t::error;
 					throw operation_failure(source, description, reason, severity);

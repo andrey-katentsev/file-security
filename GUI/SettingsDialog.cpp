@@ -36,8 +36,8 @@ namespace
 				return item_index;
 		}
 
-		constexpr auto source { __FUNCTIONW__ };
-		constexpr auto description { L"failed to convert wipe method id to a combobox item index: there is no combobox item associated with a specified value" };
+		constexpr auto source = __FUNCTION__;
+		constexpr auto description = "failed to convert wipe method id to a combobox item index: there is no combobox item associated with a specified value";
 		constexpr auto reason = KAA::operation_failure::status_code_t::not_found;
 		constexpr auto severity = KAA::operation_failure::severity_t::error;
 		throw KAA::operation_failure(source, description, reason, severity);
