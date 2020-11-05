@@ -9,6 +9,7 @@
 #include "KAA/include/load_string.h"
 #include "KAA/include/registry.h"
 #include "KAA/include/registry_key.h"
+#include "KAA/include/unicode.h"
 #include "KAA/include/dll/module_context.h"
 #include "KAA/include/exception/windows_api_failure.h"
 #undef EncryptFile
@@ -37,12 +38,14 @@
 
 extern KAA::dll::module_context core_dll;
 
+using namespace KAA::unicode;
+
 namespace
 {
-	const std::wstring registry_software_sub_key(L"Software\\Hyperlink Software\\File Security");
-	const std::wstring registry_wipe_algorithm_value_name(L"WipeMethod");
-	const std::wstring registry_core_value_name(L"Engine");
-	const std::wstring registry_key_storage_path_value_name(L"KeyStoragePath");
+	constexpr auto registry_software_sub_key = R"(Software\Hyperlink Software\File Security)";
+	constexpr auto registry_wipe_algorithm_value_name = "WipeMethod";
+	constexpr auto registry_core_value_name = "Engine";
+	constexpr auto registry_key_storage_path_value_name = "KeyStoragePath";
 
 	KAA::FileSecurity::wipe_method_id ToWipeMethodID(const KAA::FileSecurity::wiper_t wipe_algorithm)
 	{
@@ -160,7 +163,7 @@ namespace
 	{
 		const KAA::system::registry::key_access query_value = { false, false, false, false, true, false };
 		const auto software_root = registry.open_key(KAA::system::registry::current_user, registry_software_sub_key, query_value);
-		return KAA::filesystem::path::directory { software_root->query_string_value(registry_key_storage_path_value_name) };
+		return KAA::filesystem::path::directory { to_UTF16(software_root->query_string_value(registry_key_storage_path_value_name)) };
 	}
 	catch(const KAA::windows_api_failure& error)
 	{
@@ -169,7 +172,7 @@ namespace
 			const KAA::filesystem::path::directory default_key_storage_path { LR"(.\keys)" };
 			const KAA::system::registry::key_access set_value = { false, false, false, false, false, true };
 			const auto software_root = registry.create_key(KAA::system::registry::current_user, registry_software_sub_key, KAA::system::registry::persistent, set_value);
-			software_root->set_string_value(registry_key_storage_path_value_name, default_key_storage_path.to_wstring());
+			software_root->set_string_value(registry_key_storage_path_value_name, to_UTF8(default_key_storage_path.to_wstring()));
 			return default_key_storage_path;
 		}
 		throw;
@@ -179,7 +182,7 @@ namespace
 	{
 		const KAA::system::registry::key_access set_value = { false, false, false, false, false, true };
 		const auto software_root = registry.open_key(KAA::system::registry::current_user, registry_software_sub_key, set_value);
-		return software_root->set_string_value(registry_key_storage_path_value_name, path.to_wstring());
+		return software_root->set_string_value(registry_key_storage_path_value_name, to_UTF8(path.to_wstring()));
 	}
 }
 

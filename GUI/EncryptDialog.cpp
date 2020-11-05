@@ -22,6 +22,8 @@ using KAA::FileSecurity::GetCommunicator;
 using KAA::user_interface::get_control_text;
 using KAA::user_interface::set_control_text;
 
+using namespace KAA::unicode;
+
 // FUTURE: KAA: separate code to modules.
 
 INT_PTR CALLBACK ProgressDialog(HWND, UINT, WPARAM, LPARAM);
@@ -30,10 +32,10 @@ INT_PTR CALLBACK AboutDialog(HWND, UINT, WPARAM, LPARAM);
 
 namespace
 {
-	const std::wstring registry_software_sub_key(L"Software\\Hyperlink Software\\File Security");
-	const std::wstring registry_last_used_path_value_name(L"LastUsedPath");
-	const std::wstring registry_window_horizontal_position_value_name(L"HPosition");
-	const std::wstring registry_window_vertical_position_value_name(L"VPosition");
+	constexpr auto registry_software_sub_key = R"(Software\Hyperlink Software\File Security)";
+	constexpr auto registry_last_used_path_value_name = "LastUsedPath";
+	constexpr auto registry_window_horizontal_position_value_name = "HPosition";
+	constexpr auto registry_window_vertical_position_value_name = "VPosition";
 
 	std::unique_ptr<KAA::system::registry_key> GetRegistrySoftwareRootRead(KAA::system::registry& registry)
 	{
@@ -49,12 +51,12 @@ namespace
 
 	std::wstring QueryLastUsedPath(const KAA::system::registry_key& key)
 	{
-		return key.query_string_value(registry_last_used_path_value_name);
+		return to_UTF16(key.query_string_value(registry_last_used_path_value_name));
 	}
 
 	void SaveLastUsedPath(KAA::system::registry_key& key, const std::wstring& last_used_path)
 	{
-		return key.set_string_value(registry_last_used_path_value_name, last_used_path);
+		return key.set_string_value(registry_last_used_path_value_name, to_UTF8(last_used_path));
 	}
 
 	// TODO: KAA: move to the SDK.
@@ -176,7 +178,7 @@ namespace
 						const auto message_box_title = KAA::resources::load_string(IDS_FILE_ENCRYPTING);
 						const auto message = KAA::resources::load_string(IDS_UNABLE_TO_ACCESS_SYSTEM_REGISTRY);
 						// FUTURE: KAA: combine message.
-						::MessageBoxW(dialog, (message + L'\n' + KAA::unicode::to_UTF16(error.get_system_message())).c_str(), message_box_title.c_str(), MB_OK | MB_ICONEXCLAMATION);
+						::MessageBoxW(dialog, (message + L'\n' + to_UTF16(error.get_system_message())).c_str(), message_box_title.c_str(), MB_OK | MB_ICONEXCLAMATION);
 					}
 					break;
 				default:
