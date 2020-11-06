@@ -104,7 +104,7 @@ namespace
 							if(TRUE != ::SHGetPathFromIDList(selected_directory, buffer.data()))
 							{
 								const DWORD error = ::GetLastError();
-								throw KAA::windows_api_failure(__FUNCTIONW__, L"Unable to convert an item identifier list to a file system path.", error);
+								throw KAA::windows_api_failure { __FUNCTION__, "cannot convert an item identifier list to a file system path", error };
 							}
 
 							directory = buffer.data();

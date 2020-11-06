@@ -67,7 +67,7 @@ namespace
 		if (0 == ::GetWindowInfo(window, &window_attributes))
 		{
 			const auto error = ::GetLastError();
-			throw KAA::windows_api_failure(__FUNCTIONW__, L"cannot retrieve information about the specified window", error);
+			throw KAA::windows_api_failure { __FUNCTION__, "cannot retrieve information about the specified window", error };
 		}
 		return window_attributes.rcWindow;
 	}
