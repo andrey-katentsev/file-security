@@ -19,7 +19,7 @@ INT_PTR CALLBACK EncryptDialog(HWND, UINT, WPARAM, LPARAM);
 // If the function succeeds, terminating when it receives a WM_QUIT message,
 // it should return the exit value contained in that message's wParam parameter.
 // If the function terminates before entering the message loop, it should return zero.
-int WINAPI wWinMain(HINSTANCE instance, HINSTANCE, LPWSTR, int)
+int WINAPI wWinMain(_In_ HINSTANCE instance, _In_opt_ HINSTANCE, _In_ LPWSTR, _In_ int)
 {
 	{
 		const WORD winver = WINVER;
