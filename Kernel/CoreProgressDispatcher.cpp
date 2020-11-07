@@ -21,7 +21,7 @@ namespace KAA
 			return previous;
 		}
 
-		progress_state_t CoreProgressDispatcher::IOperationStarted(const std::wstring& name)
+		progress_state_t CoreProgressDispatcher::IOperationStarted(const std::string& name)
 		{
 			if(nullptr != communicator_progress)
 				return communicator_progress->OperationStarted(name);

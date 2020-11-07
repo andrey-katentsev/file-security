@@ -55,7 +55,7 @@ namespace KAA
 			std::vector<uint8_t> GenerateKey(size_t bytes_to_generate);
 			void CreateKeyFile(const filesystem::path::file& path, const std::vector<uint8_t>& data);
 
-			progress_state_t OperationStarted(const std::wstring& name);
+			progress_state_t OperationStarted(const std::string& name);
 			progress_state_t ChunkProcessed(uint64_t total_bytes_processed, uint64_t total_file_size);
 			progress_state_t OverallProgress(uint64_t total_bytes_processed, uint64_t total_size);
 		};

@@ -5,6 +5,7 @@
 #include <cerrno>
 
 #include "KAA/include/load_string.h"
+#include "KAA/include/unicode.h"
 #include "KAA/include/cryptography/cryptography.h"
 #include "KAA/include/cryptography/random.h"
 #include "KAA/include/dll/module_context.h"
@@ -41,6 +42,7 @@ namespace
 
 namespace KAA
 {
+	using namespace unicode;
 	namespace FileSecurity
 	{
 		AbsoluteSecurityCore::AbsoluteSecurityCore(std::shared_ptr<filesystem::driver> filesystem, filesystem::path::directory key_storage_path) :
@@ -67,7 +69,7 @@ namespace KAA
 
 		void AbsoluteSecurityCore::IEncryptFile(const filesystem::path::file& path)
 		{
-			OperationStarted(resources::load_string(IDS_RETRIEVING_KEY_PATH, core_dll.get_module_handle()));
+			OperationStarted(to_UTF8(resources::load_string(IDS_RETRIEVING_KEY_PATH, core_dll.get_module_handle())));
 
 			const auto file_to_encrypt_size = get_file_size(*m_filesystem, path);
 			const size_t overall_size = 2*file_to_encrypt_size;
@@ -75,7 +77,7 @@ namespace KAA
 
 			auto key_path = m_filesystem->get_temp_filename(m_key_storage->GetPath());
 			{
-				OperationStarted(resources::load_string(IDS_GENERATING_KEY, core_dll.get_module_handle()));
+				OperationStarted(to_UTF8(resources::load_string(IDS_GENERATING_KEY, core_dll.get_module_handle())));
 				// DEFECT: KAA: what if 1 GiB size?
 				const auto key_data = GenerateKey(file_to_encrypt_size);
 				CreateKeyFile(key_path, key_data);
@@ -83,7 +85,7 @@ namespace KAA
 				OverallProgress(total_processed, overall_size);
 			}
 			{
-				OperationStarted(resources::load_string(IDS_ENCRYPTING_FILE, core_dll.get_module_handle()));
+				OperationStarted(to_UTF8(resources::load_string(IDS_ENCRYPTING_FILE, core_dll.get_module_handle())));
 				m_cipher->EncryptFile(path, key_path);
 				total_processed += file_to_encrypt_size;
 				OverallProgress(total_processed, overall_size);
@@ -93,7 +95,7 @@ namespace KAA
 
 		void AbsoluteSecurityCore::IDecryptFile(const filesystem::path::file& path)
 		{
-			OperationStarted(resources::load_string(IDS_RETRIEVING_KEY_PATH, core_dll.get_module_handle()));
+			OperationStarted(to_UTF8(resources::load_string(IDS_RETRIEVING_KEY_PATH, core_dll.get_module_handle())));
 
 			const auto file_to_decrypt_size = get_file_size(*m_filesystem, path);
 			const size_t overall_size = 2*file_to_decrypt_size;
@@ -101,13 +103,13 @@ namespace KAA
 
 			const auto key_path = m_key_storage->GetKeyPathForSpecifiedPath(path);
 			{
-				OperationStarted(resources::load_string(IDS_DECRYPTING_FILE, core_dll.get_module_handle()));
+				OperationStarted(to_UTF8(resources::load_string(IDS_DECRYPTING_FILE, core_dll.get_module_handle())));
 				m_cipher->DecryptFile(path, key_path);
 				total_processed += file_to_decrypt_size;
 				OverallProgress(total_processed, overall_size);
 			}
 			{
-				OperationStarted(resources::load_string(IDS_REMOVING_KEY, core_dll.get_module_handle()));
+				OperationStarted(to_UTF8(resources::load_string(IDS_REMOVING_KEY, core_dll.get_module_handle())));
 				RemoveKeyFile(*m_filesystem, key_path);
 				total_processed += file_to_decrypt_size;
 				OverallProgress(total_processed, overall_size);
@@ -167,7 +169,7 @@ namespace KAA
 			}
 		}
 
-		progress_state_t AbsoluteSecurityCore::OperationStarted(const std::wstring& name)
+		progress_state_t AbsoluteSecurityCore::OperationStarted(const std::string& name)
 		{
 			if(nullptr != core_progress)
 				return core_progress->OperationStarted(name);

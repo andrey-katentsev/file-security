@@ -1,4 +1,5 @@
 #include "KAA/include/load_string.h"
+#include "KAA/include/unicode.h"
 
 #include <thread>
 
@@ -21,6 +22,8 @@ namespace KAA
 	}
 }
 
+using namespace KAA::unicode;
+
 namespace
 {
 	unsigned short PercentComplete(const uint64_t total_processed, const uint64_t total_size)
@@ -39,9 +42,9 @@ namespace
 	private:
 		HWND dialog;
 
-		KAA::progress_state_t IOperationStarted(const std::wstring& name) override
+		KAA::progress_state_t IOperationStarted(const std::string& name) override
 		{
-			::SetDlgItemTextW(dialog, IDC_PROGRESS_CURRENT_OPERATION_STATIC, name.c_str());
+			::SetDlgItemTextW(dialog, IDC_PROGRESS_CURRENT_OPERATION_STATIC, to_UTF16(name).c_str());
 			{
 				const HWND progress = ::GetDlgItem(dialog, IDC_PROGRESS_TOTAL_PROGRESS);
 				//::SendMessageW(progress, PBM_SETPOS, 0, 0);

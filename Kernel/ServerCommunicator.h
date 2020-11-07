@@ -47,7 +47,6 @@ namespace KAA
 
 			std::shared_ptr<CoreProgressDispatcher> core_progress;
 			std::shared_ptr<WiperProgressDispatcher> wiper_progress;
-
 			std::shared_ptr<CommunicatorProgressHandler> server_progress;
 
 			void IEncryptFile(const filesystem::path::file&) override;
@@ -71,7 +70,7 @@ namespace KAA
 			filesystem::path::file BackupFile(const filesystem::path::file&);
 			void CopyFile(const filesystem::path::file& from, const filesystem::path::file& to);
 
-			progress_state_t OperationStarted(const std::wstring& name);
+			progress_state_t OperationStarted(const std::string& name);
 			progress_state_t PortionProcessed(uint64_t total_processed, uint64_t total_size);
 			progress_state_t OverallProgress(uint64_t total_processed, uint64_t total_size);
 		};

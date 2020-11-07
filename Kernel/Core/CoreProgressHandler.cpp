@@ -4,7 +4,7 @@ namespace KAA
 {
 	namespace FileSecurity
 	{
-		progress_state_t CoreProgressHandler::OperationStarted(const std::wstring& name)
+		progress_state_t CoreProgressHandler::OperationStarted(const std::string& name)
 		{
 			return IOperationStarted(name);
 		}

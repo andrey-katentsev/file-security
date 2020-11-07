@@ -223,13 +223,13 @@ namespace KAA
 			const auto file_size = get_file_size(*m_filesystem.get(), path);
 			const size_t overall_size = 3*file_size;
 
-			OperationStarted(resources::load_string(IDS_CREATING_BACKUP, core_dll.get_module_handle()));
+			OperationStarted(to_UTF8(resources::load_string(IDS_CREATING_BACKUP, core_dll.get_module_handle())));
 			const auto backup = BackupFile(path);
 
-			OperationStarted(resources::load_string(IDS_ENCRYPTING_FILE, core_dll.get_module_handle()));
+			OperationStarted(to_UTF8(resources::load_string(IDS_ENCRYPTING_FILE, core_dll.get_module_handle())));
 			m_core->EncryptFile(path);
 
-			OperationStarted(resources::load_string(IDS_WIPING_FILE, core_dll.get_module_handle()));
+			OperationStarted(to_UTF8(resources::load_string(IDS_WIPING_FILE, core_dll.get_module_handle())));
 			m_wiper->wipe_file(backup);
 		}
 
@@ -238,13 +238,13 @@ namespace KAA
 			const auto file_size = get_file_size(*m_filesystem.get(), path);
 			const size_t overall_size = 3*file_size;
 
-			OperationStarted(resources::load_string(IDS_CREATING_BACKUP, core_dll.get_module_handle()));
+			OperationStarted(to_UTF8(resources::load_string(IDS_CREATING_BACKUP, core_dll.get_module_handle())));
 			const auto backup = BackupFile(path);
 
-			OperationStarted(resources::load_string(IDS_DECRYPTING_FILE, core_dll.get_module_handle()));
+			OperationStarted(to_UTF8(resources::load_string(IDS_DECRYPTING_FILE, core_dll.get_module_handle())));
 			m_core->DecryptFile(path);
 
-			OperationStarted(resources::load_string(IDS_REMOVING_BACKUP, core_dll.get_module_handle()));
+			OperationStarted(to_UTF8(resources::load_string(IDS_REMOVING_BACKUP, core_dll.get_module_handle())));
 			m_filesystem->remove_file(backup);
 		}
 
@@ -393,7 +393,7 @@ namespace KAA
 			destination->commit();
 		}
 
-		progress_state_t ServerCommunicator::OperationStarted(const std::wstring& name)
+		progress_state_t ServerCommunicator::OperationStarted(const std::string& name)
 		{
 			if(nullptr != server_progress)
 				return server_progress->OperationStarted(name);
