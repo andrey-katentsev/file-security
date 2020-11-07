@@ -393,25 +393,25 @@ namespace KAA
 			destination->commit();
 		}
 
-		progress_state ServerCommunicator::OperationStarted(const std::wstring& name)
+		progress_state_t ServerCommunicator::OperationStarted(const std::wstring& name)
 		{
 			if(nullptr != server_progress)
 				return server_progress->OperationStarted(name);
-			return progress_quiet;
+			return progress_state_t::quiet;
 		}
 
-		progress_state ServerCommunicator::PortionProcessed(const uint64_t total_processed, const uint64_t total_size)
+		progress_state_t ServerCommunicator::PortionProcessed(const uint64_t total_processed, const uint64_t total_size)
 		{
 			if(nullptr != server_progress)
 				return server_progress->PortionProcessed(total_processed, total_size);
-			return progress_quiet;
+			return progress_state_t::quiet;
 		}
 
-		progress_state ServerCommunicator::OverallProgress(const uint64_t total_processed, const uint64_t total_size)
+		progress_state_t ServerCommunicator::OverallProgress(const uint64_t total_processed, const uint64_t total_size)
 		{
 			if(nullptr != server_progress)
 				return server_progress->OverallProgress(total_processed, total_size);
-			return progress_quiet;
+			return progress_state_t::quiet;
 		}
 	}
 }

@@ -69,9 +69,9 @@ namespace KAA
 			return previous;
 		}
 
-		progress_state UserSessionKeyFileCipher::ChunkProcessed(const uint64_t total_bytes_processed, const uint64_t total_file_size)
+		progress_state_t UserSessionKeyFileCipher::ChunkProcessed(const uint64_t total_bytes_processed, const uint64_t total_file_size)
 		{
-			return cipher_progress ? cipher_progress->ChunkProcessed(total_bytes_processed, total_file_size) : progress_quiet;
+			return cipher_progress ? cipher_progress->ChunkProcessed(total_bytes_processed, total_file_size) : progress_state_t::quiet;
 		}
 	}
 }

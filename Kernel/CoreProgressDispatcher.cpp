@@ -21,25 +21,25 @@ namespace KAA
 			return previous;
 		}
 
-		progress_state CoreProgressDispatcher::IOperationStarted(const std::wstring& name)
+		progress_state_t CoreProgressDispatcher::IOperationStarted(const std::wstring& name)
 		{
 			if(nullptr != communicator_progress)
 				return communicator_progress->OperationStarted(name);
-			return progress_quiet;
+			return progress_state_t::quiet;
 		}
 
-		progress_state CoreProgressDispatcher::IChunkProcessed(const uint64_t total_processed, const uint64_t total_size)
+		progress_state_t CoreProgressDispatcher::IChunkProcessed(const uint64_t total_processed, const uint64_t total_size)
 		{
 			if(nullptr != communicator_progress)
 				return communicator_progress->PortionProcessed(total_processed, total_size);
-			return progress_quiet;
+			return progress_state_t::quiet;
 		}
 
-		progress_state CoreProgressDispatcher::IOverallProgress(const uint64_t total_processed, const uint64_t total_size)
+		progress_state_t CoreProgressDispatcher::IOverallProgress(const uint64_t total_processed, const uint64_t total_size)
 		{
 			if(nullptr != communicator_progress)
 				return communicator_progress->OverallProgress(total_processed, total_size);
-			return progress_quiet;
+			return progress_state_t::quiet;
 		}
 	}
 }

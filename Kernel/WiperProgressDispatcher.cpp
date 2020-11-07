@@ -21,11 +21,11 @@ namespace KAA
 			return previous;
 		}
 
-		progress_state WiperProgressDispatcher::ichunk_processed(_fsize_t total_processed, _fsize_t total_size)
+		progress_state_t WiperProgressDispatcher::ichunk_processed(_fsize_t total_processed, _fsize_t total_size)
 		{
 			if(nullptr != communicator_progress)
 				return communicator_progress->PortionProcessed(total_processed, total_size);
-			return progress_quiet;
+			return progress_state_t::quiet;
 		}
 	}
 }

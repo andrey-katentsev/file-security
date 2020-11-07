@@ -21,11 +21,11 @@ namespace KAA
 			return previous;
 		}
 
-		progress_state CipherProgressDispatcher::IChunkProcessed(const uint64_t total_bytes_processed, const uint64_t total_file_size)
+		progress_state_t CipherProgressDispatcher::IChunkProcessed(const uint64_t total_bytes_processed, const uint64_t total_file_size)
 		{
 			if(nullptr != core_progress)
 				return core_progress->ChunkProcessed(total_bytes_processed, total_file_size);
-			return progress_quiet;
+			return progress_state_t::quiet;
 		}
 	}
 }

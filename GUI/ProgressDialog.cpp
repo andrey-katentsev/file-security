@@ -39,28 +39,28 @@ namespace
 	private:
 		HWND dialog;
 
-		KAA::progress_state IOperationStarted(const std::wstring& name) override
+		KAA::progress_state_t IOperationStarted(const std::wstring& name) override
 		{
 			::SetDlgItemTextW(dialog, IDC_PROGRESS_CURRENT_OPERATION_STATIC, name.c_str());
 			{
 				const HWND progress = ::GetDlgItem(dialog, IDC_PROGRESS_TOTAL_PROGRESS);
 				//::SendMessageW(progress, PBM_SETPOS, 0, 0);
 			}
-			return KAA::progress_continue;
+			return KAA::progress_state_t::proceed;
 		}
 
-		KAA::progress_state IPortionProcessed(uint64_t total_processed, uint64_t total_size) override
+		KAA::progress_state_t IPortionProcessed(uint64_t total_processed, uint64_t total_size) override
 		{ // DEFECT: KAA: extra call.
 			{
 				const HWND progress = ::GetDlgItem(dialog, IDC_PROGRESS_TOTAL_PROGRESS);
 				::SendMessageW(progress, PBM_SETPOS, PercentComplete(total_processed, total_size), 0);
 			}
-			return KAA::progress_continue;
+			return KAA::progress_state_t::proceed;
 		}
 
-		KAA::progress_state IOverallProgress(uint64_t total_processed, uint64_t total_size) override
+		KAA::progress_state_t IOverallProgress(uint64_t total_processed, uint64_t total_size) override
 		{
-			return KAA::progress_continue;
+			return KAA::progress_state_t::proceed;
 		}
 	};
 

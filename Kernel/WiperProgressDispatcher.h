@@ -21,7 +21,7 @@ namespace KAA
 		private:
 			std::shared_ptr<CommunicatorProgressHandler> communicator_progress;
 
-			progress_state ichunk_processed(_fsize_t total_processed, _fsize_t total_size) override;
+			progress_state_t ichunk_processed(_fsize_t total_processed, _fsize_t total_size) override;
 		};
 	}
 }

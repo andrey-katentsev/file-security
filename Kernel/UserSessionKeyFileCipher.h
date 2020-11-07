@@ -35,7 +35,7 @@ namespace KAA
 
 			std::shared_ptr<FileProgressHandler> ISetProgressCallback(std::shared_ptr<FileProgressHandler>) override;
 
-			progress_state ChunkProcessed(uint64_t total_bytes_processed, uint64_t total_file_size);
+			progress_state_t ChunkProcessed(uint64_t total_bytes_processed, uint64_t total_file_size);
 		};
 	}
 }

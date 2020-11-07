@@ -167,25 +167,25 @@ namespace KAA
 			}
 		}
 
-		progress_state AbsoluteSecurityCore::OperationStarted(const std::wstring& name)
+		progress_state_t AbsoluteSecurityCore::OperationStarted(const std::wstring& name)
 		{
 			if(nullptr != core_progress)
 				return core_progress->OperationStarted(name);
-			return progress_quiet;
+			return progress_state_t::quiet;
 		}
 
-		progress_state AbsoluteSecurityCore::ChunkProcessed(const uint64_t total_bytes_processed, const uint64_t total_file_size)
+		progress_state_t AbsoluteSecurityCore::ChunkProcessed(const uint64_t total_bytes_processed, const uint64_t total_file_size)
 		{
 			if(nullptr != core_progress)
 				return core_progress->ChunkProcessed(total_bytes_processed, total_file_size);
-			return progress_quiet;
+			return progress_state_t::quiet;
 		}
 
-		progress_state AbsoluteSecurityCore::OverallProgress(const uint64_t total_bytes_processed, const uint64_t total_size)
+		progress_state_t AbsoluteSecurityCore::OverallProgress(const uint64_t total_bytes_processed, const uint64_t total_size)
 		{
 			if(nullptr != core_progress)
 				return core_progress->OverallProgress(total_bytes_processed, total_size);
-			return progress_quiet;
+			return progress_state_t::quiet;
 		}
 	}
 }

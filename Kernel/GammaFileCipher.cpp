@@ -47,7 +47,7 @@ namespace KAA
 
 			bool stop = false;
 			bool chunk_processed = false;
-			progress_state progress = progress_continue;
+			auto progress = progress_state_t::proceed;
 			do
 			{
 				const auto bytes_read = master->read(chunk_size, &master_buffer[0]);
@@ -57,9 +57,9 @@ namespace KAA
 				total_bytes_written += master->write(&master_buffer[0], bytes_read);
 				{
 					chunk_processed = ( 0 != bytes_read );
-					if(chunk_processed && ( progress_quiet != progress ))
+					if(chunk_processed && ( progress_state_t::quiet != progress ))
 						progress = ChunkProcessed(total_bytes_written, master_data_size);
-					stop = ( !chunk_processed ) || ( progress_cancel == progress ) || ( progress_stop == progress );
+					stop = ( !chunk_processed ) || ( progress_state_t::cancel == progress ) || ( progress_state_t::stop == progress );
 				}
 			} while(!stop);
 		}
@@ -76,11 +76,11 @@ namespace KAA
 			return previous;
 		}
 
-		progress_state GammaFileCipher::ChunkProcessed(const uint64_t total_bytes_processed, const uint64_t total_file_size)
+		progress_state_t GammaFileCipher::ChunkProcessed(const uint64_t total_bytes_processed, const uint64_t total_file_size)
 		{
 			if(nullptr != cipher_progress)
 				return cipher_progress->ChunkProcessed(total_bytes_processed, total_file_size);
-			return progress_quiet;
+			return progress_state_t::quiet;
 		}
 	}
 }
