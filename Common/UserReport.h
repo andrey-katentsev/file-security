@@ -11,7 +11,7 @@ namespace KAA
 		class UserReport
 		{
 		public:
-			enum severity_t
+			enum class severity_t
 			{
 				success,
 				information,

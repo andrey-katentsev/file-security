@@ -51,10 +51,8 @@ namespace
 	{
 		switch(wipe_algorithm)
 		{
-		case KAA::FileSecurity::ordinary_remove:
-			return 0x01;
-		case KAA::FileSecurity::simple_overwrite:
-			return 0x02;
+		case KAA::FileSecurity::wiper_t::ordinary_remove: return 0x01;
+		case KAA::FileSecurity::wiper_t::simple_overwrite: return 0x02;
 		default:
 			throw std::invalid_argument(__FUNCTION__);
 		}
@@ -64,10 +62,8 @@ namespace
 	{
 		switch(value)
 		{
-		case 0x01:
-			return KAA::FileSecurity::ordinary_remove;
-		case 0x02:
-			return KAA::FileSecurity::simple_overwrite;
+		case 0x01: return KAA::FileSecurity::wiper_t::ordinary_remove;
+		case 0x02: return KAA::FileSecurity::wiper_t::simple_overwrite;
 		default:
 			throw std::invalid_argument(__FUNCTION__);
 		}
@@ -87,7 +83,7 @@ namespace
 	{
 		if(ERROR_FILE_NOT_FOUND == error)
 		{
-			const KAA::FileSecurity::wiper_t default_wipe_algorithm = KAA::FileSecurity::ordinary_remove;
+			constexpr auto default_wipe_algorithm = KAA::FileSecurity::wiper_t::ordinary_remove;
 			const KAA::system::registry::key_access set_value = { false, false, false, false, false, true };
 			const auto software_root = registry.create_key(KAA::system::registry::current_user, registry_software_sub_key, KAA::system::registry::persistent, set_value);
 			software_root->set_dword_value(registry_wipe_algorithm_value_name, ToWipeMethodID(default_wipe_algorithm));
@@ -108,10 +104,8 @@ namespace
 	{
 		switch(engine)
 		{
-		case KAA::FileSecurity::strong_security:
-			return 0x01;
-		case KAA::FileSecurity::absolute_security:
-			return 0x02;
+		case KAA::FileSecurity::core_t::strong_security: return 0x01;
+		case KAA::FileSecurity::core_t::absolute_security: return 0x02;
 		default:
 			throw std::invalid_argument(__FUNCTION__);
 		}
@@ -121,10 +115,8 @@ namespace
 	{
 		switch(value)
 		{
-		case 0x01:
-			return KAA::FileSecurity::strong_security;
-		case 0x02:
-			return KAA::FileSecurity::absolute_security;
+		case 0x01: return KAA::FileSecurity::core_t::strong_security;
+		case 0x02: return KAA::FileSecurity::core_t::absolute_security;
 		default:
 			throw std::invalid_argument(__FUNCTION__);
 		}
@@ -142,7 +134,7 @@ namespace
 	{
 		if(ERROR_FILE_NOT_FOUND == error)
 		{
-			const KAA::FileSecurity::core_t default_core = KAA::FileSecurity::absolute_security; // FUTURE: KAA: introduce and change to strong security.
+			constexpr auto default_core = KAA::FileSecurity::core_t::absolute_security; // FUTURE: KAA: introduce and change to strong security.
 			const KAA::system::registry::key_access set_value = { false, false, false, false, false, true };
 			const auto software_root = registry.create_key(KAA::system::registry::current_user, registry_software_sub_key, KAA::system::registry::persistent, set_value);
 			software_root->set_dword_value(registry_core_value_name, ToCoreID(default_core));
@@ -275,8 +267,8 @@ namespace KAA
 		std::vector<std::pair<std::wstring, wipe_method_id>> ServerCommunicator::IGetAvailableWipeMethods(void) const
 		{
 			std::vector<std::pair<std::wstring, wipe_method_id>> available_wipe_methods;
-			available_wipe_methods.push_back(std::make_pair(resources::load_string(IDS_WIPE_METHOD_A, core_dll.get_module_handle()), ToWipeMethodID(ordinary_remove)));
-			available_wipe_methods.push_back(std::make_pair(resources::load_string(IDS_WIPE_METHOD_B, core_dll.get_module_handle()), ToWipeMethodID(simple_overwrite)));
+			available_wipe_methods.push_back(std::make_pair(resources::load_string(IDS_WIPE_METHOD_A, core_dll.get_module_handle()), ToWipeMethodID(wiper_t::ordinary_remove)));
+			available_wipe_methods.push_back(std::make_pair(resources::load_string(IDS_WIPE_METHOD_B, core_dll.get_module_handle()), ToWipeMethodID(wiper_t::simple_overwrite)));
 			return available_wipe_methods;
 		}
 

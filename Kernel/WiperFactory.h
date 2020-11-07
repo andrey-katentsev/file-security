@@ -14,7 +14,7 @@ namespace KAA
 
 	namespace FileSecurity
 	{
-		enum wiper_t
+		enum class wiper_t
 		{
 			ordinary_remove,
 			simple_overwrite

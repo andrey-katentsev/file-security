@@ -17,7 +17,7 @@ namespace KAA
 	namespace FileSecurity
 	{
 		class Core;
-		enum core_t
+		enum class core_t
 		{
 			strong_security,
 			absolute_security

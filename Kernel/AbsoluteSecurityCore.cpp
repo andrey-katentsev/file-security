@@ -48,7 +48,7 @@ namespace KAA
 		AbsoluteSecurityCore::AbsoluteSecurityCore(std::shared_ptr<filesystem::driver> filesystem, filesystem::path::directory key_storage_path) :
 		m_filesystem(std::move(filesystem)),
 		m_cipher(CreateFileCipher(gamma_cipher, m_filesystem)),
-		m_key_storage(CreateKeyStorage(md5_based, m_filesystem, std::move(key_storage_path))),
+		m_key_storage(CreateKeyStorage(key_storage_t::md5_based, m_filesystem, std::move(key_storage_path))),
 		cipher_progress(new CipherProgressDispatcher),
 		core_progress(nullptr)
 		{

@@ -13,9 +13,9 @@ namespace KAA
 		{
 			switch(type)
 			{
-			case md5_based:
+			case key_storage_t::md5_based:
 				return std::make_unique<MD5BasedKeyStorage>(std::move(filesystem), std::move(path));
-			case crc32_based:
+			case key_storage_t::crc32_based:
 				return std::make_unique<CRC32BasedKeyStorage>(std::move(path));
 			default:
 					constexpr auto source = __FUNCTION__;

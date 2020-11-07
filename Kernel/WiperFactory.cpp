@@ -24,9 +24,9 @@ namespace KAA
 		{
 			switch (interface_identifier)
 			{
-			case ordinary_remove:
+			case wiper_t::ordinary_remove:
 				return std::make_unique<filesystem::ordinary_file_remover>(std::move(filesystem));
-			case simple_overwrite:
+			case wiper_t::simple_overwrite:
 			{
 				const uint8_t aggregate = cryptography::random() % std::numeric_limits<uint8_t>::max();
 				return std::make_unique<filesystem::simple_owerwrite_wiper>(std::move(filesystem), aggregate);

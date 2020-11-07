@@ -41,7 +41,7 @@ namespace KAA
 		}
 		catch(const failure& error)
 		{
-			ThrowUserReport(error, UserReport::warning, IDS_UNABLE_TO_COMPLETE_ENCRYPT_FILE_OPERATION);
+			ThrowUserReport(error, UserReport::severity_t::warning, IDS_UNABLE_TO_COMPLETE_ENCRYPT_FILE_OPERATION);
 		}
 
 		void ClientCommunicator::IDecryptFile(const filesystem::path::file& path)
@@ -51,7 +51,7 @@ namespace KAA
 		}
 		catch(const failure& error)
 		{
-			ThrowUserReport(error, UserReport::warning, IDS_UNABLE_TO_COMPLETE_DECRYPT_FILE_OPERATION);
+			ThrowUserReport(error, UserReport::severity_t::warning, IDS_UNABLE_TO_COMPLETE_DECRYPT_FILE_OPERATION);
 		}
 
 		bool ClientCommunicator::IIsFileEncrypted(const filesystem::path::file& path) const
@@ -61,7 +61,7 @@ namespace KAA
 		}
 		catch(const failure& error)
 		{
-			ThrowUserReport(error, UserReport::warning, IDS_UNABLE_TO_DETERMINE_FILE_STATE);
+			ThrowUserReport(error, UserReport::severity_t::warning, IDS_UNABLE_TO_DETERMINE_FILE_STATE);
 		}
 
 		std::vector<std::pair<std::wstring, core_id>> ClientCommunicator::IGetAvailableCiphers(void) const
@@ -101,7 +101,7 @@ namespace KAA
 		}
 		catch(const failure& error)
 		{
-			ThrowUserReport(error, UserReport::error, IDS_UNABLE_TO_RETRIEVE_KEY_STORAGE_PATH);
+			ThrowUserReport(error, UserReport::severity_t::error, IDS_UNABLE_TO_RETRIEVE_KEY_STORAGE_PATH);
 		}
 
 		void ClientCommunicator::ISetKeyStoragePath(filesystem::path::directory path)
@@ -113,7 +113,7 @@ namespace KAA
 		{
 			const auto message_format = CombineMessage(IDS_UNABLE_TO_CREATE_KEY_STORAGE_AT_FORMAT, error.get_system_message());
 			const auto message = KAA::format_string(message_format, path.to_wstring().c_str());
-			throw KAA::FileSecurity::UserReport(message, KAA::FileSecurity::UserReport::error);
+			throw UserReport(message, UserReport::severity_t::error);
 		}
 
 		std::shared_ptr<CommunicatorProgressHandler> ClientCommunicator::ISetProgressHandler(std::shared_ptr<CommunicatorProgressHandler> handler)
@@ -123,7 +123,7 @@ namespace KAA
 		}
 		catch(const failure& error)
 		{
-			ThrowUserReport(error, UserReport::error, IDS_UNABLE_TO_SETUP_PROGRESS_HANDLER);
+			ThrowUserReport(error, UserReport::severity_t::error, IDS_UNABLE_TO_SETUP_PROGRESS_HANDLER);
 		}
 
 		Communicator& GetCommunicator(void)
@@ -134,7 +134,7 @@ namespace KAA
 		}
 		catch(const failure& error)
 		{
-			ThrowUserReport(error, UserReport::error, IDS_UNABLE_TO_CREATE_COMMUNICATOR);
+			ThrowUserReport(error, UserReport::severity_t::error, IDS_UNABLE_TO_CREATE_COMMUNICATOR);
 		}
 	}
 }

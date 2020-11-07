@@ -17,7 +17,7 @@ namespace KAA
 	namespace FileSecurity
 	{
 		class KeyStorage;
-		enum key_storage_t
+		enum class key_storage_t
 		{
 			md5_based,
 			crc32_based

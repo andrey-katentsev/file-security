@@ -33,13 +33,13 @@ namespace KAA
 		{
 			switch(importance)
 			{
-			case UserReport::success:
+			case UserReport::severity_t::success:
 				return 0; // MB_ICONQUESTION
-			case UserReport::information:
+			case UserReport::severity_t::information:
 				return MB_ICONASTERISK;
-			case UserReport::warning:
+			case UserReport::severity_t::warning:
 				return MB_ICONEXCLAMATION;
-			case UserReport::error:
+			case UserReport::severity_t::error:
 				return MB_ICONHAND;
 			default:
 					constexpr auto source = __FUNCTION__ ;

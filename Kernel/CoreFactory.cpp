@@ -13,9 +13,9 @@ namespace KAA
 		{
 			switch (interface_identifier)
 			{
-			case strong_security:
+			case core_t::strong_security:
 				throw std::invalid_argument(__FUNCTION__);
-			case absolute_security:
+			case core_t::absolute_security:
 				return std::make_unique<AbsoluteSecurityCore>(std::move(filesystem), std::move(key_storage_path));
 			default:
 				throw std::invalid_argument(__FUNCTION__);
