@@ -136,11 +136,12 @@ namespace KAA
 			std::vector<uint8_t> buffer(bytes_to_generate, 0U);
 			{
 				constexpr auto chunk_size = 64U * 1024U; // 64 KiB
-				unsigned chunks_total = bytes_to_generate / chunk_size;
-				for(unsigned chunk = 0; chunk < chunks_total; ++chunk)
+				const auto chunks_total = bytes_to_generate / chunk_size;
+				for(auto chunk = 0U; chunk < chunks_total; ++chunk)
 				{
 					KAA::cryptography::generate(chunk_size, &buffer[chunk * chunk_size]);
-					ChunkProcessed((chunk + 1) * chunk_size, bytes_to_generate);
+					const auto bytes_processed = (static_cast<uint64_t>(chunk) + 1) * chunk_size;
+					ChunkProcessed(bytes_processed, bytes_to_generate);
 				}
 
 				size_t last_chunk_size = bytes_to_generate % chunk_size;
