@@ -72,6 +72,55 @@ namespace
 		return window_attributes.rcWindow;
 	}
 
+	// Returns a common dialog box error code.
+	// This code indicates the most recent error to occur during the execution of one of the common dialog box functions.
+	class dialog_box_failure
+	{
+	public:
+		dialog_box_failure() noexcept :
+		error { ::CommDlgExtendedError() }
+		{}
+
+		explicit dialog_box_failure(const DWORD error) noexcept :
+		error { error }
+		{}
+
+		operator DWORD (void) const noexcept
+		{
+			return error;
+		}
+
+	private:
+		DWORD error;
+	};
+
+	// TODO: KAA: move to the SDK.
+	std::wstring OpenDialogBox(const HWND owner)
+	{
+		// TODO: KAA: move to the SDK.
+		std::vector<wchar_t> buffer(MAX_PATH, L'\0');
+		OPENFILENAMEW setup = { 0 };
+		setup.lStructSize = sizeof(OPENFILENAMEW);
+		setup.hwndOwner = owner;
+		setup.lpstrFilter = L"All Files\0*.*\0\0";
+		setup.lpstrFile = &buffer[0]; // may have initialization path
+		setup.nMaxFile = buffer.size();
+		//setup.lpstrTitle;
+		setup.Flags = OFN_DONTADDTORECENT | OFN_FILEMUSTEXIST | OFN_HIDEREADONLY | OFN_NOREADONLYRETURN | OFN_PATHMUSTEXIST;
+		setup.FlagsEx = OFN_EX_NOPLACESBAR;
+		{
+			const KAA::FileSecurity::CWDRestorer cwd_for_this_session; // GetOpenFileNameW changes the current working directory
+			if (0 != ::GetOpenFileNameW(&setup))
+			{
+				return buffer.data(); // selected file path
+			}
+			else
+			{
+				throw dialog_box_failure();
+			}
+		}
+	}
+
 	POINT QueryWindowPosition(const KAA::system::registry_key& key)
 	{
 		const POINT coordinates =
@@ -108,34 +157,20 @@ namespace
 				{
 				case BN_CLICKED:
 					{
-						std::vector<wchar_t> buffer(MAX_PATH, L'\0');
-						OPENFILENAMEW setup = { 0 };
-						setup.lStructSize = sizeof(OPENFILENAMEW);
-						setup.hwndOwner = dialog;
-						setup.lpstrFilter = L"All Files\0*.*\0\0";
-						setup.lpstrFile = &buffer[0]; // may have initialization path
-						setup.nMaxFile = buffer.size();
-						//setup.lpstrTitle;
-						setup.Flags = OFN_DONTADDTORECENT | OFN_FILEMUSTEXIST | OFN_HIDEREADONLY | OFN_NOREADONLYRETURN | OFN_PATHMUSTEXIST;
-						setup.FlagsEx = OFN_EX_NOPLACESBAR;
-
+						try
 						{
-							const KAA::FileSecurity::CWDRestorer cwd_for_this_session; // GetOpenFileNameW changes the current working directory
-							if(0 != ::GetOpenFileNameW(&setup))
+							const auto selected_file_path = OpenDialogBox(dialog);
+							set_control_text(dialog, IDC_MAIN_FILE_TO_ENCRYPT_PATH_EDIT, selected_file_path);
+						}
+						catch (const dialog_box_failure& error)
+						{
+							const DWORD code = error;
+							if(0 != code) // 0 == user closed or canceled the dialog box
 							{
-								const std::wstring selected_file_path(&buffer[0]);
-								set_control_text(dialog, IDC_MAIN_FILE_TO_ENCRYPT_PATH_EDIT, selected_file_path);
-							}
-							else
-							{
-								const DWORD code = ::CommDlgExtendedError();
-								if(0 != code) // 0 == user closed or canceled the dialog box
-								{
-									const auto message_format = KAA::resources::load_string(IDS_GET_OPEN_FILE_NAME_DIALOG_FAILED_FORMAT);
-									const auto message_box_title = KAA::resources::load_string(IDS_GET_OPEN_FILE_NAME_DIALOG_FAILED_TITLE);
-									const auto message = KAA::format_string(message_format, code);
-									::MessageBoxW(dialog, message.c_str(), message_box_title.c_str(), MB_OK | MB_ICONEXCLAMATION);
-								}
+								const auto message_format = KAA::resources::load_string(IDS_GET_OPEN_FILE_NAME_DIALOG_FAILED_FORMAT);
+								const auto message_box_title = KAA::resources::load_string(IDS_GET_OPEN_FILE_NAME_DIALOG_FAILED_TITLE);
+								const auto message = KAA::format_string(message_format, code);
+								::MessageBoxW(dialog, message.c_str(), message_box_title.c_str(), MB_OK | MB_ICONEXCLAMATION);
 							}
 						}
 					} break;
