@@ -101,7 +101,7 @@ namespace
 						{
 							const KAA::RAII::com_task_memory acquired_memory(selected_directory);
 							std::vector<wchar_t> buffer(MAX_PATH, L'\0');
-							if(TRUE != ::SHGetPathFromIDList(selected_directory, buffer.data()))
+							if(TRUE != ::SHGetPathFromIDListW(selected_directory, buffer.data()))
 							{
 								const DWORD error = ::GetLastError();
 								throw KAA::windows_api_failure { __FUNCTION__, "cannot convert an item identifier list to a file system path", error };
