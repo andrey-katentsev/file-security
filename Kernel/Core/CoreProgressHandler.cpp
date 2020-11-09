@@ -4,14 +4,14 @@ namespace KAA
 {
 	namespace FileSecurity
 	{
-		progress_state_t CoreProgressHandler::ProcessingStarted(const std::string& name)
+		progress_state_t CoreProgressHandler::ProcessingStarted(const std::string& name, uint64_t size)
 		{
-			return IProcessingStarted(name);
+			return IProcessingStarted(name, size);
 		}
 
-		progress_state_t CoreProgressHandler::ChunkProcessed(const uint64_t total_processed, const uint64_t total_size)
+		progress_state_t CoreProgressHandler::ChunkProcessed(uint64_t overall_processed)
 		{
-			return IChunkProcessed(total_processed, total_size);
+			return IChunkProcessed(overall_processed);
 		}
 	}
 }

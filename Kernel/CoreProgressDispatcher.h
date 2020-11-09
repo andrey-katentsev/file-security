@@ -20,8 +20,8 @@ namespace KAA
 		private:
 			std::shared_ptr<CommunicatorProgressHandler> communicator_progress;
 
-			progress_state_t IProcessingStarted(const std::string& name) override;
-			progress_state_t IChunkProcessed(uint64_t total_processed, uint64_t total_size) override;
+			progress_state_t IProcessingStarted(const std::string& name, uint64_t size) override;
+			progress_state_t IChunkProcessed(uint64_t overall_processed) override;
 		};
 	}
 }

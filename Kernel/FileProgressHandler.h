@@ -11,10 +11,10 @@ namespace KAA
 		class FileProgressHandler
 		{
 		public:
-			progress_state_t ChunkProcessed(uint64_t total_bytes_processed, uint64_t total_file_size);
+			progress_state_t ChunkProcessed(uint64_t overall_bytes_processed);
 
 		private:
-			virtual progress_state_t IChunkProcessed(uint64_t total_bytes_processed, uint64_t total_file_size) = 0;
+			virtual progress_state_t IChunkProcessed(uint64_t overall_bytes_processed) = 0;
 		};
 	}
 }

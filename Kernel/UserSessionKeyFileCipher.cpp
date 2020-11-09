@@ -32,6 +32,7 @@ namespace KAA
 			const filesystem::driver::share exclusive_access { false, false };
 			const auto master = filesystem->open_file(path, serial_read_write, exclusive_access);
 
+			// DEFECT: KAA: reads whole file to memory.
 			const auto data_size = master->get_size();
 			std::vector<uint8_t> master_buffer(data_size);
 
@@ -41,7 +42,7 @@ namespace KAA
 			const auto bytes_written = master->write(&master_buffer[0], bytes_read);
 
 			if (0 != bytes_read)
-				ChunkProcessed(bytes_written, data_size);
+				ChunkProcessed(bytes_written);
 		}
 
 		void UserSessionKeyFileCipher::IDecryptFile(const filesystem::path::file& path, const filesystem::path::file&)
@@ -59,7 +60,7 @@ namespace KAA
 			const auto bytes_written = master->write(&master_buffer[0], bytes_read);
 
 			if (0 != bytes_read)
-				ChunkProcessed(bytes_written, data_size);
+				ChunkProcessed(bytes_written);
 		}
 
 		std::shared_ptr<FileProgressHandler> UserSessionKeyFileCipher::ISetProgressCallback(std::shared_ptr<FileProgressHandler> handler)
@@ -69,9 +70,9 @@ namespace KAA
 			return previous;
 		}
 
-		progress_state_t UserSessionKeyFileCipher::ChunkProcessed(const uint64_t total_bytes_processed, const uint64_t total_file_size)
+		progress_state_t UserSessionKeyFileCipher::ChunkProcessed(const uint64_t overall_bytes_processed)
 		{
-			return cipher_progress ? cipher_progress->ChunkProcessed(total_bytes_processed, total_file_size) : progress_state_t::quiet;
+			return cipher_progress ? cipher_progress->ChunkProcessed(overall_bytes_processed) : progress_state_t::quiet;
 		}
 	}
 }

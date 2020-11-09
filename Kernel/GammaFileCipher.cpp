@@ -34,7 +34,6 @@ namespace KAA
 			const filesystem::driver::mode random_read_write(true, true, true, true);
 			const filesystem::driver::share exclusive_access(false, false);
 			const auto master = m_filesystem->open_file(path, random_read_write, exclusive_access);
-			const auto master_data_size = master->get_size();
 
 			const filesystem::driver::mode sequential_read_only(false);
 			const auto key = m_filesystem->open_file(key_path, sequential_read_only, exclusive_access);
@@ -58,7 +57,7 @@ namespace KAA
 				{
 					chunk_processed = ( 0 != bytes_read );
 					if(chunk_processed && ( progress_state_t::quiet != progress ))
-						progress = ChunkProcessed(total_bytes_written, master_data_size);
+						progress = ChunkProcessed(total_bytes_written);
 					stop = ( !chunk_processed ) || ( progress_state_t::cancel == progress ) || ( progress_state_t::stop == progress );
 				}
 			} while(!stop);
@@ -76,10 +75,10 @@ namespace KAA
 			return previous;
 		}
 
-		progress_state_t GammaFileCipher::ChunkProcessed(const uint64_t total_bytes_processed, const uint64_t total_file_size)
+		progress_state_t GammaFileCipher::ChunkProcessed(uint64_t overall_bytes_processed)
 		{
 			if(nullptr != cipher_progress)
-				return cipher_progress->ChunkProcessed(total_bytes_processed, total_file_size);
+				return cipher_progress->ChunkProcessed(overall_bytes_processed);
 			return progress_state_t::quiet;
 		}
 	}

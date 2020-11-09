@@ -4,14 +4,14 @@ namespace KAA
 {
 	namespace FileSecurity
 	{
-		progress_state_t CommunicatorProgressHandler::OperationStarted(const std::string& name)
+		progress_state_t CommunicatorProgressHandler::OperationStarted(const std::string& name, uint64_t size)
 		{
-			return IOperationStarted(name);
+			return IOperationStarted(name, size);
 		}
 
-		progress_state_t CommunicatorProgressHandler::OperationProgress(const uint64_t overall_processed, const uint64_t total_size)
+		progress_state_t CommunicatorProgressHandler::OperationProgress(const uint64_t overall_processed)
 		{
-			return IOperationProgress(overall_processed, total_size);
+			return IOperationProgress(overall_processed);
 		}
 	}
 }

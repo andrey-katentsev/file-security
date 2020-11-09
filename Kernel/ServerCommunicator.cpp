@@ -213,30 +213,29 @@ namespace KAA
 		void ServerCommunicator::IEncryptFile(const filesystem::path::file& path)
 		{
 			const auto file_size = get_file_size(*m_filesystem.get(), path);
-			const size_t overall_size = 3*file_size;
 
-			OperationStarted(to_UTF8(resources::load_string(IDS_CREATING_BACKUP, core_dll.get_module_handle())));
+			OperationStarted(to_UTF8(resources::load_string(IDS_CREATING_BACKUP, core_dll.get_module_handle())), file_size);
 			const auto backup = BackupFile(path);
 
-			OperationStarted(to_UTF8(resources::load_string(IDS_ENCRYPTING_FILE, core_dll.get_module_handle())));
+			// TODO: KAA: #SubOperationStarted
+			OperationStarted(to_UTF8(resources::load_string(IDS_ENCRYPTING_FILE, core_dll.get_module_handle())), file_size);
 			m_core->EncryptFile(path);
 
-			OperationStarted(to_UTF8(resources::load_string(IDS_WIPING_FILE, core_dll.get_module_handle())));
+			OperationStarted(to_UTF8(resources::load_string(IDS_WIPING_FILE, core_dll.get_module_handle())), file_size);
 			m_wiper->wipe_file(backup);
 		}
 
 		void ServerCommunicator::IDecryptFile(const filesystem::path::file& path)
 		{
 			const auto file_size = get_file_size(*m_filesystem.get(), path);
-			const size_t overall_size = 3*file_size;
 
-			OperationStarted(to_UTF8(resources::load_string(IDS_CREATING_BACKUP, core_dll.get_module_handle())));
+			OperationStarted(to_UTF8(resources::load_string(IDS_CREATING_BACKUP, core_dll.get_module_handle())), file_size);
 			const auto backup = BackupFile(path);
 
-			OperationStarted(to_UTF8(resources::load_string(IDS_DECRYPTING_FILE, core_dll.get_module_handle())));
+			OperationStarted(to_UTF8(resources::load_string(IDS_DECRYPTING_FILE, core_dll.get_module_handle())), file_size);
 			m_core->DecryptFile(path);
 
-			OperationStarted(to_UTF8(resources::load_string(IDS_REMOVING_BACKUP, core_dll.get_module_handle())));
+			OperationStarted(to_UTF8(resources::load_string(IDS_REMOVING_BACKUP, core_dll.get_module_handle())), file_size);
 			m_filesystem->remove_file(backup);
 		}
 
@@ -355,10 +354,7 @@ namespace KAA
 			{
 				constexpr auto chunk_size = 64U * 1024U; // 64 KiB
 				std::vector<uint8_t> buffer(chunk_size);
-
 				{
-					const _fsize_t source_file_size = source->get_size();
-
 					size_t bytes_read = 0;
 					size_t bytes_written = 0;
 					size_t total_bytes_written = 0;
@@ -368,7 +364,7 @@ namespace KAA
 						bytes_read = source->read(chunk_size, &buffer[0]);
 						bytes_written = destination->write(&buffer[0], bytes_read);
 						total_bytes_written += bytes_written;
-						PortionProcessed(total_bytes_written, source_file_size);
+						PortionProcessed(total_bytes_written);
 
 						if(bytes_read != bytes_written)
 						{
@@ -381,17 +377,17 @@ namespace KAA
 			destination->commit();
 		}
 
-		progress_state_t ServerCommunicator::OperationStarted(const std::string& name)
+		progress_state_t ServerCommunicator::OperationStarted(const std::string& name, uint64_t size)
 		{
 			if(nullptr != server_progress)
-				return server_progress->OperationStarted(name);
+				return server_progress->OperationStarted(name, size);
 			return progress_state_t::quiet;
 		}
 
-		progress_state_t ServerCommunicator::PortionProcessed(const uint64_t total_processed, const uint64_t total_size)
+		progress_state_t ServerCommunicator::PortionProcessed(uint64_t overall_processed)
 		{
 			if(nullptr != server_progress)
-				return server_progress->OperationProgress(total_processed, total_size);
+				return server_progress->OperationProgress(overall_processed);
 			return progress_state_t::quiet;
 		}
 	}
