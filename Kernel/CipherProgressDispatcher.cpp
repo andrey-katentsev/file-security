@@ -16,9 +16,8 @@ namespace KAA
 
 		std::shared_ptr<CoreProgressHandler> CipherProgressDispatcher::SetProgressHandler(std::shared_ptr<CoreProgressHandler> handler)
 		{
-			auto previous = std::move(core_progress);
-			core_progress = std::move(handler);
-			return previous;
+			core_progress.swap(handler);
+			return handler;
 		}
 
 		progress_state_t CipherProgressDispatcher::IChunkProcessed(const uint64_t total_bytes_processed, const uint64_t total_file_size)

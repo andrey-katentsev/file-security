@@ -124,11 +124,10 @@ namespace KAA
 
 		std::shared_ptr<CoreProgressHandler> AbsoluteSecurityCore::ISetProgressHandler(std::shared_ptr<CoreProgressHandler> handler)
 		{
-			auto previous = std::move(core_progress);
-			core_progress = std::move(handler);
+			core_progress.swap(handler);
 			cipher_progress->SetProgressHandler(core_progress);
 			m_cipher->SetProgressCallback(cipher_progress);
-			return previous;
+			return handler;
 		}
 
 		std::vector<uint8_t> AbsoluteSecurityCore::GenerateKey(const size_t bytes_to_generate)

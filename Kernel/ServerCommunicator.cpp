@@ -326,16 +326,12 @@ namespace KAA
 
 		std::shared_ptr<CommunicatorProgressHandler> ServerCommunicator::ISetProgressHandler(std::shared_ptr<CommunicatorProgressHandler> handler)
 		{
-			auto previous = std::move(server_progress);
-			server_progress = std::move(handler);
-
+			server_progress.swap(handler);
 			core_progress->SetProgressHandler(server_progress);
 			wiper_progress->SetProgressHandler(server_progress);
-
 			m_core->SetProgressHandler(core_progress);
 			m_wiper->set_progress_handler(wiper_progress);
-
-			return previous;
+			return handler;
 		}
 
 		filesystem::path::file ServerCommunicator::BackupFile(const filesystem::path::file& path)
