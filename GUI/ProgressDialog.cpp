@@ -52,7 +52,7 @@ namespace
 			return KAA::progress_state_t::proceed;
 		}
 
-		KAA::progress_state_t IPortionProcessed(uint64_t total_processed, uint64_t total_size) override
+		KAA::progress_state_t IOperationProgress(uint64_t total_processed, uint64_t total_size) override
 		{ // DEFECT: KAA: extra call.
 			{
 				const HWND progress = ::GetDlgItem(dialog, IDC_PROGRESS_TOTAL_PROGRESS);

@@ -9,9 +9,9 @@ namespace KAA
 			return IOperationStarted(name);
 		}
 
-		progress_state_t CommunicatorProgressHandler::PortionProcessed(const uint64_t total_processed, const uint64_t total_size)
+		progress_state_t CommunicatorProgressHandler::OperationProgress(const uint64_t overall_processed, const uint64_t total_size)
 		{
-			return IPortionProcessed(total_processed, total_size);
+			return IOperationProgress(overall_processed, total_size);
 		}
 	}
 }
