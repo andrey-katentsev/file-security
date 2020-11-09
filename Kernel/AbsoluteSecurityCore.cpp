@@ -72,8 +72,6 @@ namespace KAA
 			OperationStarted(to_UTF8(resources::load_string(IDS_RETRIEVING_KEY_PATH, core_dll.get_module_handle())));
 
 			const auto file_to_encrypt_size = get_file_size(*m_filesystem, path);
-			const size_t overall_size = 2*file_to_encrypt_size;
-			size_t total_processed = 0;
 
 			auto key_path = m_filesystem->get_temp_filename(m_key_storage->GetPath());
 			{
@@ -81,14 +79,10 @@ namespace KAA
 				// DEFECT: KAA: what if 1 GiB size?
 				const auto key_data = GenerateKey(file_to_encrypt_size);
 				CreateKeyFile(key_path, key_data);
-				total_processed += file_to_encrypt_size;
-				OverallProgress(total_processed, overall_size);
 			}
 			{
 				OperationStarted(to_UTF8(resources::load_string(IDS_ENCRYPTING_FILE, core_dll.get_module_handle())));
 				m_cipher->EncryptFile(path, key_path);
-				total_processed += file_to_encrypt_size;
-				OverallProgress(total_processed, overall_size);
 			}
 			m_filesystem->rename_file(key_path, m_key_storage->GetKeyPathForSpecifiedPath(path));
 		}
@@ -97,22 +91,14 @@ namespace KAA
 		{
 			OperationStarted(to_UTF8(resources::load_string(IDS_RETRIEVING_KEY_PATH, core_dll.get_module_handle())));
 
-			const auto file_to_decrypt_size = get_file_size(*m_filesystem, path);
-			const size_t overall_size = 2*file_to_decrypt_size;
-			size_t total_processed = 0;
-
 			const auto key_path = m_key_storage->GetKeyPathForSpecifiedPath(path);
 			{
 				OperationStarted(to_UTF8(resources::load_string(IDS_DECRYPTING_FILE, core_dll.get_module_handle())));
 				m_cipher->DecryptFile(path, key_path);
-				total_processed += file_to_decrypt_size;
-				OverallProgress(total_processed, overall_size);
 			}
 			{
 				OperationStarted(to_UTF8(resources::load_string(IDS_REMOVING_KEY, core_dll.get_module_handle())));
 				RemoveKeyFile(*m_filesystem, key_path);
-				total_processed += file_to_decrypt_size;
-				OverallProgress(total_processed, overall_size);
 			}
 		}
 
@@ -180,13 +166,6 @@ namespace KAA
 		{
 			if(nullptr != core_progress)
 				return core_progress->ChunkProcessed(total_bytes_processed, total_file_size);
-			return progress_state_t::quiet;
-		}
-
-		progress_state_t AbsoluteSecurityCore::OverallProgress(const uint64_t total_bytes_processed, const uint64_t total_size)
-		{
-			if(nullptr != core_progress)
-				return core_progress->OverallProgress(total_bytes_processed, total_size);
 			return progress_state_t::quiet;
 		}
 	}

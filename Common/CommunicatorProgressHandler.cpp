@@ -13,10 +13,5 @@ namespace KAA
 		{
 			return IPortionProcessed(total_processed, total_size);
 		}
-
-		progress_state_t CommunicatorProgressHandler::OverallProgress(const uint64_t total_processed, const uint64_t total_size)
-		{
-			return IOverallProgress(total_processed, total_size);
-		}
 	}
 }

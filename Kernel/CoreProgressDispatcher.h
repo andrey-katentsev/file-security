@@ -22,7 +22,6 @@ namespace KAA
 
 			progress_state_t IOperationStarted(const std::string& name) override;
 			progress_state_t IChunkProcessed(uint64_t total_processed, uint64_t total_size) override;
-			progress_state_t IOverallProgress(uint64_t total_processed, uint64_t total_size) override;
 		};
 	}
 }

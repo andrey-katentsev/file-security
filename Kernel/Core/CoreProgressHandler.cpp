@@ -13,10 +13,5 @@ namespace KAA
 		{
 			return IChunkProcessed(total_processed, total_size);
 		}
-
-		progress_state_t CoreProgressHandler::OverallProgress(const uint64_t total_processed, const uint64_t total_size)
-		{
-			return IOverallProgress(total_processed, total_size);
-		}
 	}
 }

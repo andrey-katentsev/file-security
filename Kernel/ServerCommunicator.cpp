@@ -394,12 +394,5 @@ namespace KAA
 				return server_progress->PortionProcessed(total_processed, total_size);
 			return progress_state_t::quiet;
 		}
-
-		progress_state_t ServerCommunicator::OverallProgress(const uint64_t total_processed, const uint64_t total_size)
-		{
-			if(nullptr != server_progress)
-				return server_progress->OverallProgress(total_processed, total_size);
-			return progress_state_t::quiet;
-		}
 	}
 }

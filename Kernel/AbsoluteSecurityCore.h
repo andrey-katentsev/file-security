@@ -57,7 +57,6 @@ namespace KAA
 
 			progress_state_t OperationStarted(const std::string& name);
 			progress_state_t ChunkProcessed(uint64_t total_bytes_processed, uint64_t total_file_size);
-			progress_state_t OverallProgress(uint64_t total_bytes_processed, uint64_t total_size);
 		};
 	}
 }

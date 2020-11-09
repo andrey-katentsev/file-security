@@ -60,11 +60,6 @@ namespace
 			}
 			return KAA::progress_state_t::proceed;
 		}
-
-		KAA::progress_state_t IOverallProgress(uint64_t total_processed, uint64_t total_size) override
-		{
-			return KAA::progress_state_t::proceed;
-		}
 	};
 
 	// DEFECT: KAA: global data.
