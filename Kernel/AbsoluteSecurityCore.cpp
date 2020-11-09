@@ -158,7 +158,7 @@ namespace KAA
 		progress_state_t AbsoluteSecurityCore::OperationStarted(const std::string& name)
 		{
 			if(nullptr != core_progress)
-				return core_progress->OperationStarted(name);
+				return core_progress->ProcessingStarted(name);
 			return progress_state_t::quiet;
 		}
 
