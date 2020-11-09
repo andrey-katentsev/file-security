@@ -27,10 +27,10 @@ namespace KAA
 			return progress_state_t::quiet;
 		}
 
-		progress_state_t CoreProgressDispatcher::IChunkProcessed(uint64_t overall_processed)
+		progress_state_t CoreProgressDispatcher::IChunkProcessed(uint64_t size)
 		{
 			if(nullptr != communicator_progress)
-				return communicator_progress->OperationProgress(overall_processed);
+				return communicator_progress->OperationProgress(size);
 			return progress_state_t::quiet;
 		}
 	}

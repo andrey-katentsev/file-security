@@ -21,7 +21,7 @@ namespace KAA
 		private:
 			std::shared_ptr<CoreProgressHandler> core_progress;
 
-			progress_state_t IChunkProcessed(uint64_t overall_bytes_processed) override;
+			progress_state_t IChunkProcessed(uint64_t size) override;
 		};
 	}
 }

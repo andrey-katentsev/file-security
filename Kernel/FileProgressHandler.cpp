@@ -4,9 +4,9 @@ namespace KAA
 {
 	namespace FileSecurity
 	{
-		progress_state_t FileProgressHandler::ChunkProcessed(uint64_t overall_bytes_processed)
+		progress_state_t FileProgressHandler::ChunkProcessed(uint64_t size)
 		{
-			return IChunkProcessed(overall_bytes_processed);
+			return IChunkProcessed(size);
 		}
 	}
 }

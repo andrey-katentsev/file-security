@@ -15,11 +15,11 @@ namespace KAA
 		{
 		public:
 			progress_state_t ProcessingStarted(const std::string& name, uint64_t size);
-			progress_state_t ChunkProcessed(uint64_t overall_processed);
+			progress_state_t ChunkProcessed(uint64_t size);
 
 		private:
 			virtual progress_state_t IProcessingStarted(const std::string& name, uint64_t size) = 0;
-			virtual progress_state_t IChunkProcessed(uint64_t overall_processed) = 0;
+			virtual progress_state_t IChunkProcessed(uint64_t size) = 0;
 		};
 	}
 }

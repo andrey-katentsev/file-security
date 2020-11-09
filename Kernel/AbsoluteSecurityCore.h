@@ -56,7 +56,7 @@ namespace KAA
 			void CreateKeyFile(const filesystem::path::file& path, const std::vector<uint8_t>& data);
 
 			progress_state_t OperationStarted(const std::string& name, uint64_t file_size);
-			progress_state_t ChunkProcessed(uint64_t overall_bytes_processed);
+			progress_state_t ChunkProcessed(uint64_t size);
 		};
 	}
 }

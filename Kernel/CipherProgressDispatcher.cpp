@@ -20,10 +20,10 @@ namespace KAA
 			return handler;
 		}
 
-		progress_state_t CipherProgressDispatcher::IChunkProcessed(const uint64_t overall_bytes_processed)
+		progress_state_t CipherProgressDispatcher::IChunkProcessed(uint64_t size)
 		{
 			if(nullptr != core_progress)
-				return core_progress->ChunkProcessed(overall_bytes_processed);
+				return core_progress->ChunkProcessed(size);
 			return progress_state_t::quiet;
 		}
 	}

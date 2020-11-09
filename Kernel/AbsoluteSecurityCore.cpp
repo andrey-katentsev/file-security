@@ -128,15 +128,14 @@ namespace KAA
 				for(auto chunk = 0U; chunk < chunks_total; ++chunk)
 				{
 					KAA::cryptography::generate(chunk_size, &buffer[chunk * chunk_size]);
-					const auto bytes_processed = (static_cast<uint64_t>(chunk) + 1) * chunk_size;
-					ChunkProcessed(bytes_processed);
+					ChunkProcessed(chunk_size);
 				}
 
 				size_t last_chunk_size = bytes_to_generate % chunk_size;
 				if(0 < last_chunk_size)
 				{
 					KAA::cryptography::generate(last_chunk_size, &buffer[chunks_total * chunk_size]);
-					ChunkProcessed(bytes_to_generate);
+					ChunkProcessed(last_chunk_size);
 				}
 			}
 			return buffer;
@@ -165,10 +164,10 @@ namespace KAA
 			return progress_state_t::quiet;
 		}
 
-		progress_state_t AbsoluteSecurityCore::ChunkProcessed(uint64_t overall_bytes_processed)
+		progress_state_t AbsoluteSecurityCore::ChunkProcessed(uint64_t size)
 		{
 			if(nullptr != core_progress)
-				return core_progress->ChunkProcessed(overall_bytes_processed);
+				return core_progress->ChunkProcessed(size);
 			return progress_state_t::quiet;
 		}
 	}

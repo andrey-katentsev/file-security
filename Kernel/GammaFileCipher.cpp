@@ -42,8 +42,6 @@ namespace KAA
 			std::vector<uint8_t> master_buffer(chunk_size);
 			std::vector<uint8_t> key_buffer(chunk_size);
 
-			size_t total_bytes_written = 0;
-
 			bool stop = false;
 			bool chunk_processed = false;
 			auto progress = progress_state_t::proceed;
@@ -53,11 +51,11 @@ namespace KAA
 				key->read(bytes_read, &key_buffer[0]);
 				cryptography::gamma(&master_buffer[0], &key_buffer[0], &master_buffer[0], bytes_read);
 				master->seek(-static_cast<_off_t>(bytes_read), filesystem::file::current);
-				total_bytes_written += master->write(&master_buffer[0], bytes_read);
+				const auto bytes_written = master->write(&master_buffer[0], bytes_read);
 				{
 					chunk_processed = ( 0 != bytes_read );
 					if(chunk_processed && ( progress_state_t::quiet != progress ))
-						progress = ChunkProcessed(total_bytes_written);
+						progress = ChunkProcessed(bytes_written);
 					stop = ( !chunk_processed ) || ( progress_state_t::cancel == progress ) || ( progress_state_t::stop == progress );
 				}
 			} while(!stop);
@@ -75,10 +73,10 @@ namespace KAA
 			return previous;
 		}
 
-		progress_state_t GammaFileCipher::ChunkProcessed(uint64_t overall_bytes_processed)
+		progress_state_t GammaFileCipher::ChunkProcessed(uint64_t size)
 		{
 			if(nullptr != cipher_progress)
-				return cipher_progress->ChunkProcessed(overall_bytes_processed);
+				return cipher_progress->ChunkProcessed(size);
 			return progress_state_t::quiet;
 		}
 	}

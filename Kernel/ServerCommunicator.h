@@ -71,7 +71,7 @@ namespace KAA
 			void CopyFile(const filesystem::path::file& from, const filesystem::path::file& to);
 
 			progress_state_t OperationStarted(const std::string& name, uint64_t size);
-			progress_state_t PortionProcessed(uint64_t overall_processed);
+			progress_state_t PortionProcessed(uint64_t size);
 		};
 	}
 }

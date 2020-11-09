@@ -9,9 +9,9 @@ namespace KAA
 			return IProcessingStarted(name, size);
 		}
 
-		progress_state_t CoreProgressHandler::ChunkProcessed(uint64_t overall_processed)
+		progress_state_t CoreProgressHandler::ChunkProcessed(uint64_t size)
 		{
-			return IChunkProcessed(overall_processed);
+			return IChunkProcessed(size);
 		}
 	}
 }

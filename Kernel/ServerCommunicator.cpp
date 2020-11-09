@@ -357,14 +357,11 @@ namespace KAA
 				{
 					size_t bytes_read = 0;
 					size_t bytes_written = 0;
-					size_t total_bytes_written = 0;
-
 					do
 					{
 						bytes_read = source->read(chunk_size, &buffer[0]);
 						bytes_written = destination->write(&buffer[0], bytes_read);
-						total_bytes_written += bytes_written;
-						PortionProcessed(total_bytes_written);
+						PortionProcessed(bytes_written);
 
 						if(bytes_read != bytes_written)
 						{
@@ -384,10 +381,10 @@ namespace KAA
 			return progress_state_t::quiet;
 		}
 
-		progress_state_t ServerCommunicator::PortionProcessed(uint64_t overall_processed)
+		progress_state_t ServerCommunicator::PortionProcessed(uint64_t size)
 		{
 			if(nullptr != server_progress)
-				return server_progress->OperationProgress(overall_processed);
+				return server_progress->OperationProgress(size);
 			return progress_state_t::quiet;
 		}
 	}

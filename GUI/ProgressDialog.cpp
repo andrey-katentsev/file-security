@@ -37,15 +37,18 @@ namespace
 	public:
 		ProgressDialogHandler(const HWND dialog) :
 		dialog(dialog),
-		operation_size { 0 }
+		operation_size { 0 },
+		overall_processed { 0 }
 		{}
 
 	private:
 		HWND dialog;
 		uint64_t operation_size;
+		uint64_t overall_processed;
 
 		KAA::progress_state_t IOperationStarted(const std::string& name, uint64_t size) override
 		{
+			overall_processed = 0;
 			operation_size = size;
 			::SetDlgItemTextW(dialog, IDC_PROGRESS_CURRENT_OPERATION_STATIC, to_UTF16(name).c_str());
 			{
@@ -55,8 +58,9 @@ namespace
 			return KAA::progress_state_t::proceed;
 		}
 
-		KAA::progress_state_t IOperationProgress(uint64_t overall_processed) override
+		KAA::progress_state_t IOperationProgress(uint64_t processed) override
 		{ // DEFECT: KAA: extra call.
+			overall_processed += processed;
 			{
 				const HWND progress = ::GetDlgItem(dialog, IDC_PROGRESS_TOTAL_PROGRESS);
 				::SendMessageW(progress, PBM_SETPOS, PercentComplete(overall_processed, operation_size), 0);

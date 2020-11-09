@@ -70,9 +70,9 @@ namespace KAA
 			return previous;
 		}
 
-		progress_state_t UserSessionKeyFileCipher::ChunkProcessed(const uint64_t overall_bytes_processed)
+		progress_state_t UserSessionKeyFileCipher::ChunkProcessed(uint64_t size)
 		{
-			return cipher_progress ? cipher_progress->ChunkProcessed(overall_bytes_processed) : progress_state_t::quiet;
+			return cipher_progress ? cipher_progress->ChunkProcessed(size) : progress_state_t::quiet;
 		}
 	}
 }
