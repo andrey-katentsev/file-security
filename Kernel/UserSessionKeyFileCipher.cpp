@@ -65,9 +65,8 @@ namespace KAA
 
 		std::shared_ptr<FileProgressHandler> UserSessionKeyFileCipher::ISetProgressCallback(std::shared_ptr<FileProgressHandler> handler)
 		{
-			auto previous = cipher_progress;
-			cipher_progress = handler;
-			return previous;
+			cipher_progress.swap(handler);
+			return handler;
 		}
 
 		progress_state_t UserSessionKeyFileCipher::ChunkProcessed(uint64_t size)
